@@ -85,7 +85,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.searchByIsin(isin);
+        var result = fmpClient.search().byIsin(isin);
 
         // then
         assertValidResult(result, 3, FmpSearchByIsin.class);
@@ -104,7 +104,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.searchByName(query);
+        var result = fmpClient.search().byName(query);
 
         // then
         assertValidResult(result, 5, FmpSearchByName.class);
@@ -123,7 +123,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.searchByCusip(cusip);
+        var result = fmpClient.search().byCusip(cusip);
 
         // then
         assertValidResult(result, 3, FmpSearchByCusip.class);
@@ -142,7 +142,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.searchBySymbol(query);
+        var result = fmpClient.search().bySymbol(query);
 
         // then
         assertValidResult(result, 1, FmpSearchBySymbol.class);

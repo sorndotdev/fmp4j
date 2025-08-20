@@ -75,10 +75,7 @@ public class FmpClient {
     protected final FmpHttpClient fmpHttpClient;
 
     // Search
-    protected final FmpService<FmpSearchByName[]> fmpSearchByNameService;
-    protected final FmpService<FmpSearchBySymbol[]> fmpSearchBySymbolService;
-    protected final FmpService<FmpSearchByIsin[]> fmpSearchByIsinService;
-    protected final FmpService<FmpSearchByCusip[]> fmpSearchByCusipService;
+    protected final FmpSearchService fmpSearchService;
 
     // Directory
     protected final FmpService<FmpStock[]> fmpStockListService;
@@ -136,10 +133,7 @@ public class FmpClient {
             fmpHttpClient,
 
             // Search
-            new FmpSearchByIsinService(fmpConfig, fmpHttpClient),
-            new FmpSearchByNameService(fmpConfig, fmpHttpClient),
-            new FmpSearchBySymbolService(fmpConfig, fmpHttpClient),
-            new FmpSearchByCusipService(fmpConfig, fmpHttpClient),
+            new FmpSearchService(fmpConfig, fmpHttpClient),
 
             // Directory
             new FmpStockListService(fmpConfig, fmpHttpClient),
@@ -194,10 +188,7 @@ public class FmpClient {
         FmpHttpClient fmpHttpClient,
 
         // Search
-        FmpSearchByIsinService fmpSearchByIsinService,
-        FmpSearchByNameService fmpSearchByNameService,
-        FmpSearchBySymbolService fmpSearchBySymbolService,
-        FmpSearchByCusipService fmpSearchByCusipService,
+        FmpSearchService fmpSearchService,
 
         // Directory
         FmpStockListService fmpStockListService,
@@ -249,10 +240,7 @@ public class FmpClient {
         this.fmpHttpClient = fmpHttpClient;
 
         // Search
-        this.fmpSearchByIsinService = fmpSearchByIsinService;
-        this.fmpSearchByNameService = fmpSearchByNameService;
-        this.fmpSearchBySymbolService = fmpSearchBySymbolService;
-        this.fmpSearchByCusipService = fmpSearchByCusipService;
+        this.fmpSearchService = fmpSearchService;
 
         // Directory
         this.fmpStockListService = fmpStockListService;
@@ -301,26 +289,6 @@ public class FmpClient {
         this.shortQuoteService = shortQuoteService;
     }
 
-    public synchronized FmpSearchByIsin[] searchByIsin(String isin) {
-        fmpSearchByIsinService.param("isin", isin);
-        return fmpSearchByIsinService.download();
-    }
-
-    public synchronized FmpSearchByName[] searchByName(String query) {
-        fmpSearchByNameService.param("query", query);
-        return fmpSearchByNameService.download();
-    }
-
-    public synchronized FmpSearchByCusip[] searchByCusip(String cusip) {
-        fmpSearchByCusipService.param("cusip", cusip);
-        return fmpSearchByCusipService.download();
-    }
-
-    public synchronized FmpSearchBySymbol[] searchBySymbol(String query) {
-        fmpSearchBySymbolService.param("query", query);
-        return fmpSearchBySymbolService.download();
-    }
-
     public synchronized FmpStock[] stockList() {
         return fmpStockListService.download();
     }
@@ -345,6 +313,10 @@ public class FmpClient {
     public synchronized FmpEarning[] earnings(String symbol) {
         fmpEarningsService.param("symbol", symbol);
         return fmpEarningsService.download();
+    }
+
+    public FmpSearchService search() {
+        return fmpSearchService;
     }
 
     public synchronized FmpHistoricalPriceEodLight[] historicalPriceEodLight(String symbol, Optional<String> from, Optional<String> to) {
