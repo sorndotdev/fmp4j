@@ -160,7 +160,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.stockList();
+        var result = fmpClient.list().stock();
 
         // then
         assertValidResult(result, 2, FmpStock.class);
@@ -178,7 +178,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.etfList();
+        var result = fmpClient.list().etf() ;
 
         // then
         assertValidResult(result, 4, FmpEtf.class);
@@ -196,7 +196,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.dividendsCalendar();
+        var result = fmpClient.calendar().dividendsCalendar();
 
         // then
         assertValidResult(result, 4, FmpDividendsCalendar.class, Set.of("declarationDate"));
@@ -215,7 +215,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.dividends(symbol);
+        var result = fmpClient.calendar().dividendOf(symbol);
 
         // then
         assertValidResult(result, 4, FmpDividend.class, Set.of("declarationDate"));
@@ -233,7 +233,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.earningsCalendar();
+        var result = fmpClient.calendar().earningsCalendar();
 
         // then
         assertValidResult(result, 4, FmpEarningsCalendar.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
@@ -252,7 +252,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.earnings(symbol);
+        var result = fmpClient.calendar().earningOf(symbol);
 
         // then
         assertValidResult(result, 4, FmpEarning.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
@@ -273,7 +273,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.historicalPriceEodLight(symbol, Optional.of(from), Optional.of(to));
+        var result = fmpClient.chart().historicalPriceEodLight(symbol, Optional.of(from), Optional.of(to));
 
         // then
         assertValidResult(result, 5, FmpHistoricalPriceEodLight.class, emptySet());
@@ -294,7 +294,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.historicalPriceEodFull(symbol, Optional.of(from), Optional.of(to));
+        var result = fmpClient.chart().historicalPriceEodFull(symbol, Optional.of(from), Optional.of(to));
 
         // then
         assertValidResult(result, 5, FmpHistoricalPriceEodFull.class, emptySet());
@@ -323,7 +323,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.historicalCharts(interval, symbol, Optional.of(from), Optional.of(to));
+        var result = fmpClient.chart().historicalCharts(interval, symbol, Optional.of(from), Optional.of(to));
 
         // then
         assertValidResult(result, 2, FmpHistoricalChart.class, emptySet());

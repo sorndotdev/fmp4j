@@ -1,0 +1,41 @@
+package dev.sorn.fmp4j.clients;
+
+import dev.sorn.fmp4j.cfg.FmpConfig;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.models.*;
+import dev.sorn.fmp4j.services.*;
+
+public class FmpCalendarClient {
+
+    protected final FmpService<FmpDividend[]> fmpDividendService;
+    protected final FmpService<FmpDividendsCalendar[]> fmpDividendsCalendarService;
+    protected final FmpService<FmpEarning[]> fmpEarningsService;
+    protected final FmpService<FmpEarningsCalendar[]> fmpEarningsCalendarService;
+
+
+    public FmpCalendarClient(FmpConfig fmpConfig,
+                             FmpHttpClient fmpHttpClient) {
+        this.fmpDividendService = new FmpDividendService(fmpConfig, fmpHttpClient);
+        this.fmpDividendsCalendarService = new FmpDividendsCalendarService(fmpConfig, fmpHttpClient);
+        this.fmpEarningsService = new FmpEarningService(fmpConfig, fmpHttpClient);
+        this.fmpEarningsCalendarService = new FmpEarningsCalendarService(fmpConfig, fmpHttpClient);
+    }
+
+    public synchronized FmpDividendsCalendar[] dividendsCalendar() {
+        return fmpDividendsCalendarService.download();
+    }
+
+    public synchronized FmpDividend[] dividendOf(String symbol) {
+        fmpDividendService.param("symbol", symbol);
+        return fmpDividendService.download();
+    }
+
+    public synchronized FmpEarningsCalendar[] earningsCalendar() {
+        return fmpEarningsCalendarService.download();
+    }
+
+    public synchronized FmpEarning[] earningOf(String symbol) {
+        fmpEarningsService.param("symbol", symbol);
+        return fmpEarningsService.download();
+    }
+}

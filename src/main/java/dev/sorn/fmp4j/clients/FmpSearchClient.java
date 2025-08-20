@@ -1,4 +1,4 @@
-package dev.sorn.fmp4j.services;
+package dev.sorn.fmp4j.clients;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -6,8 +6,9 @@ import dev.sorn.fmp4j.models.FmpSearchByCusip;
 import dev.sorn.fmp4j.models.FmpSearchByIsin;
 import dev.sorn.fmp4j.models.FmpSearchByName;
 import dev.sorn.fmp4j.models.FmpSearchBySymbol;
+import dev.sorn.fmp4j.services.*;
 
-public class FmpSearchService {
+public class FmpSearchClient {
 
     protected final FmpService<FmpSearchByName[]> fmpSearchByNameService;
     protected final FmpService<FmpSearchBySymbol[]> fmpSearchBySymbolService;
@@ -15,8 +16,8 @@ public class FmpSearchService {
     protected final FmpService<FmpSearchByCusip[]> fmpSearchByCusipService;
 
 
-    public FmpSearchService(FmpConfig fmpConfig,
-                            FmpHttpClient fmpHttpClient) {
+    public FmpSearchClient(FmpConfig fmpConfig,
+                           FmpHttpClient fmpHttpClient) {
         this.fmpSearchByIsinService = new FmpSearchByIsinService(fmpConfig, fmpHttpClient);
         this.fmpSearchByNameService = new FmpSearchByNameService(fmpConfig, fmpHttpClient);
         this.fmpSearchBySymbolService = new FmpSearchBySymbolService(fmpConfig, fmpHttpClient);

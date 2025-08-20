@@ -1,24 +1,20 @@
 package dev.sorn.fmp4j;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
+import dev.sorn.fmp4j.clients.FmpCalendarClient;
+import dev.sorn.fmp4j.clients.FmpChartClient;
+import dev.sorn.fmp4j.clients.FmpDirectoryClient;
+import dev.sorn.fmp4j.clients.FmpSearchClient;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatement;
 import dev.sorn.fmp4j.models.FmpCashFlowStatement;
 import dev.sorn.fmp4j.models.FmpCompany;
-import dev.sorn.fmp4j.models.FmpDividend;
-import dev.sorn.fmp4j.models.FmpDividendsCalendar;
-import dev.sorn.fmp4j.models.FmpEarning;
-import dev.sorn.fmp4j.models.FmpEarningsCalendar;
 import dev.sorn.fmp4j.models.FmpEnterpriseValue;
-import dev.sorn.fmp4j.models.FmpEtf;
 import dev.sorn.fmp4j.models.FmpEtfAssetExposure;
 import dev.sorn.fmp4j.models.FmpEtfCountryWeighting;
 import dev.sorn.fmp4j.models.FmpEtfHolding;
 import dev.sorn.fmp4j.models.FmpEtfInfo;
 import dev.sorn.fmp4j.models.FmpEtfSectorWeighting;
-import dev.sorn.fmp4j.models.FmpHistoricalChart;
-import dev.sorn.fmp4j.models.FmpHistoricalPriceEodFull;
-import dev.sorn.fmp4j.models.FmpHistoricalPriceEodLight;
 import dev.sorn.fmp4j.models.FmpIncomeStatement;
 import dev.sorn.fmp4j.models.FmpKeyMetric;
 import dev.sorn.fmp4j.models.FmpKeyMetricTtm;
@@ -27,44 +23,8 @@ import dev.sorn.fmp4j.models.FmpRatio;
 import dev.sorn.fmp4j.models.FmpRatioTtm;
 import dev.sorn.fmp4j.models.FmpRevenueGeographicSegmentation;
 import dev.sorn.fmp4j.models.FmpRevenueProductSegmentation;
-import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import dev.sorn.fmp4j.models.FmpSearchByIsin;
-import dev.sorn.fmp4j.models.FmpSearchByName;
-import dev.sorn.fmp4j.models.FmpSearchBySymbol;
 import dev.sorn.fmp4j.models.FmpShortQuote;
-import dev.sorn.fmp4j.models.FmpStock;
-import dev.sorn.fmp4j.services.FmpBalanceSheetStatementService;
-import dev.sorn.fmp4j.services.FmpCashFlowStatementService;
-import dev.sorn.fmp4j.services.FmpCompanyService;
-import dev.sorn.fmp4j.services.FmpDividendService;
-import dev.sorn.fmp4j.services.FmpDividendsCalendarService;
-import dev.sorn.fmp4j.services.FmpEarningService;
-import dev.sorn.fmp4j.services.FmpEarningsCalendarService;
-import dev.sorn.fmp4j.services.FmpEnterpriseValuesService;
-import dev.sorn.fmp4j.services.FmpEtfAssetExposureService;
-import dev.sorn.fmp4j.services.FmpEtfCountryWeightingService;
-import dev.sorn.fmp4j.services.FmpEtfHoldingService;
-import dev.sorn.fmp4j.services.FmpEtfInfoService;
-import dev.sorn.fmp4j.services.FmpEtfListService;
-import dev.sorn.fmp4j.services.FmpEtfSectorWeightingService;
-import dev.sorn.fmp4j.services.FmpHistoricalChartService;
-import dev.sorn.fmp4j.services.FmpHistoricalPriceEodFullService;
-import dev.sorn.fmp4j.services.FmpHistoricalPriceEodLightService;
-import dev.sorn.fmp4j.services.FmpIncomeStatementService;
-import dev.sorn.fmp4j.services.FmpKeyMetricService;
-import dev.sorn.fmp4j.services.FmpKeyMetricTtmService;
-import dev.sorn.fmp4j.services.FmpQuoteService;
-import dev.sorn.fmp4j.services.FmpRatioService;
-import dev.sorn.fmp4j.services.FmpRatioTtmService;
-import dev.sorn.fmp4j.services.FmpRevenueGeographicSegmentationService;
-import dev.sorn.fmp4j.services.FmpRevenueProductSegmentationService;
-import dev.sorn.fmp4j.services.FmpSearchByCusipService;
-import dev.sorn.fmp4j.services.FmpSearchByIsinService;
-import dev.sorn.fmp4j.services.FmpSearchByNameService;
-import dev.sorn.fmp4j.services.FmpSearchBySymbolService;
-import dev.sorn.fmp4j.services.FmpService;
-import dev.sorn.fmp4j.services.FmpShortQuoteService;
-import dev.sorn.fmp4j.services.FmpStockListService;
+import dev.sorn.fmp4j.services.*;
 import java.util.Optional;
 import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
 import static dev.sorn.fmp4j.http.FmpHttpClientImpl.FMP_HTTP_CLIENT;
@@ -75,27 +35,16 @@ public class FmpClient {
     protected final FmpHttpClient fmpHttpClient;
 
     // Search
-    protected final FmpSearchService fmpSearchService;
+    protected final FmpSearchClient fmpSearchClient;
 
     // Directory
-    protected final FmpService<FmpStock[]> fmpStockListService;
-    protected final FmpService<FmpEtf[]> fmpEtfListService;
+    protected final FmpDirectoryClient fmpDirectoryClient;
 
     // Calendar
-    protected final FmpService<FmpDividend[]> fmpDividendService;
-    protected final FmpService<FmpDividendsCalendar[]> fmpDividendsCalendarService;
-    protected final FmpService<FmpEarning[]> fmpEarningsService;
-    protected final FmpService<FmpEarningsCalendar[]> fmpEarningsCalendarService;
+    protected final FmpCalendarClient fmpCalendarClient;
 
     // Chart
-    protected final FmpService<FmpHistoricalPriceEodLight[]> fmpHistoricalPriceEodLightService;
-    protected final FmpService<FmpHistoricalPriceEodFull[]> fmpHistoricalPriceEodFullService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService5MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService15MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService30MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1HourService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService4HourService;
+    protected final FmpChartClient fmpChartClient;
 
     // Company
     protected final FmpService<FmpCompany[]> fmpCompanyService;
@@ -133,27 +82,16 @@ public class FmpClient {
             fmpHttpClient,
 
             // Search
-            new FmpSearchService(fmpConfig, fmpHttpClient),
+            new FmpSearchClient(fmpConfig, fmpHttpClient),
 
             // Directory
-            new FmpStockListService(fmpConfig, fmpHttpClient),
-            new FmpEtfListService(fmpConfig, fmpHttpClient),
+            new FmpDirectoryClient(fmpConfig, fmpHttpClient),
 
             // Calendar
-            new FmpDividendService(fmpConfig, fmpHttpClient),
-            new FmpDividendsCalendarService(fmpConfig, fmpHttpClient),
-            new FmpEarningService(fmpConfig, fmpHttpClient),
-            new FmpEarningsCalendarService(fmpConfig, fmpHttpClient),
+            new FmpCalendarClient(fmpConfig, fmpHttpClient),
 
             // Chart
-            new FmpHistoricalPriceEodLightService(fmpConfig, fmpHttpClient),
-            new FmpHistoricalPriceEodFullService(fmpConfig, fmpHttpClient),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "1min"),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "5min"),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "15min"),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "30min"),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "1hour"),
-            new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "4hour"),
+            new FmpChartClient(fmpConfig, fmpHttpClient),
 
             // Company
             new FmpCompanyService(fmpConfig, fmpHttpClient),
@@ -188,27 +126,16 @@ public class FmpClient {
         FmpHttpClient fmpHttpClient,
 
         // Search
-        FmpSearchService fmpSearchService,
+        FmpSearchClient fmpSearchClient,
 
         // Directory
-        FmpStockListService fmpStockListService,
-        FmpEtfListService fmpEtfListService,
+        FmpDirectoryClient fmpDirectoryClient,
 
         // Calendar
-        FmpDividendService fmpDividendService,
-        FmpDividendsCalendarService fmpDividendsCalendarService,
-        FmpEarningService fmpEarningService,
-        FmpEarningsCalendarService fmpEarningsCalendarService,
+        FmpCalendarClient fmpCalendarClient,
 
         // Chart
-        FmpHistoricalPriceEodLightService fmpHistoricalPriceEodLightService,
-        FmpHistoricalPriceEodFullService fmpHistoricalPriceEodFullService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1MinService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService5MinService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService15MinService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService30MinService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1HourService,
-        FmpService<FmpHistoricalChart[]> fmpHistoricalChartService4HourService,
+        FmpChartClient fmpChartClient,
 
         // Company
         FmpCompanyService fmpCompanyService,
@@ -240,30 +167,19 @@ public class FmpClient {
         this.fmpHttpClient = fmpHttpClient;
 
         // Search
-        this.fmpSearchService = fmpSearchService;
+        this.fmpSearchClient = fmpSearchClient;
 
         // Directory
-        this.fmpStockListService = fmpStockListService;
-        this.fmpEtfListService = fmpEtfListService;
+        this.fmpDirectoryClient = fmpDirectoryClient;
+
+        // Calendar
+        this.fmpCalendarClient = fmpCalendarClient;
+
+        // Chart
+        this.fmpChartClient = fmpChartClient;
 
         // Company
         this.fmpCompanyService = fmpCompanyService;
-
-        // Calendar
-        this.fmpDividendService = fmpDividendService;
-        this.fmpDividendsCalendarService = fmpDividendsCalendarService;
-        this.fmpEarningsService = fmpEarningService;
-        this.fmpEarningsCalendarService = fmpEarningsCalendarService;
-
-        // Chart
-        this.fmpHistoricalPriceEodLightService = fmpHistoricalPriceEodLightService;
-        this.fmpHistoricalPriceEodFullService = fmpHistoricalPriceEodFullService;
-        this.fmpHistoricalChartService1MinService = fmpHistoricalChartService1MinService;
-        this.fmpHistoricalChartService5MinService = fmpHistoricalChartService5MinService;
-        this.fmpHistoricalChartService15MinService = fmpHistoricalChartService15MinService;
-        this.fmpHistoricalChartService30MinService = fmpHistoricalChartService30MinService;
-        this.fmpHistoricalChartService1HourService = fmpHistoricalChartService1HourService;
-        this.fmpHistoricalChartService4HourService = fmpHistoricalChartService4HourService;
 
         // Statements
         this.incomeStatementService = incomeStatementService;
@@ -289,90 +205,22 @@ public class FmpClient {
         this.shortQuoteService = shortQuoteService;
     }
 
-    public synchronized FmpStock[] stockList() {
-        return fmpStockListService.download();
+
+
+    public FmpSearchClient search() {
+        return fmpSearchClient;
     }
 
-    public synchronized FmpEtf[] etfList() {
-        return fmpEtfListService.download();
+    public FmpDirectoryClient list() {
+        return fmpDirectoryClient;
     }
 
-    public synchronized FmpDividendsCalendar[] dividendsCalendar() {
-        return fmpDividendsCalendarService.download();
+    public FmpCalendarClient calendar() {
+        return fmpCalendarClient;
     }
 
-    public synchronized FmpDividend[] dividends(String symbol) {
-        fmpDividendService.param("symbol", symbol);
-        return fmpDividendService.download();
-    }
-
-    public synchronized FmpEarningsCalendar[] earningsCalendar() {
-        return fmpEarningsCalendarService.download();
-    }
-
-    public synchronized FmpEarning[] earnings(String symbol) {
-        fmpEarningsService.param("symbol", symbol);
-        return fmpEarningsService.download();
-    }
-
-    public FmpSearchService search() {
-        return fmpSearchService;
-    }
-
-    public synchronized FmpHistoricalPriceEodLight[] historicalPriceEodLight(String symbol, Optional<String> from, Optional<String> to) {
-        fmpHistoricalPriceEodLightService.param("symbol", symbol);
-        from.ifPresent(date -> fmpHistoricalPriceEodLightService.param("from", date));
-        to.ifPresent(date -> fmpHistoricalPriceEodLightService.param("to", date));
-        return fmpHistoricalPriceEodLightService.download();
-    }
-
-    public synchronized FmpHistoricalPriceEodFull[] historicalPriceEodFull(String symbol, Optional<String> from, Optional<String> to) {
-        fmpHistoricalPriceEodFullService.param("symbol", symbol);
-        from.ifPresent(date -> fmpHistoricalPriceEodFullService.param("from", date));
-        to.ifPresent(date -> fmpHistoricalPriceEodFullService.param("to", date));
-        return fmpHistoricalPriceEodFullService.download();
-    }
-
-    public synchronized FmpHistoricalChart[] historicalCharts(String interval, String symbol, Optional<String> from, Optional<String> to) {
-        return switch (interval) {
-            case "1min" -> {
-                fmpHistoricalChartService1MinService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService1MinService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService1MinService.param("to", date));
-                yield fmpHistoricalChartService1MinService.download();
-            }
-            case "5min" -> {
-                fmpHistoricalChartService5MinService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService5MinService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService5MinService.param("to", date));
-                yield fmpHistoricalChartService5MinService.download();
-            }
-            case "15min" -> {
-                fmpHistoricalChartService15MinService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService15MinService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService15MinService.param("to", date));
-                yield fmpHistoricalChartService15MinService.download();
-            }
-            case "30min" -> {
-                fmpHistoricalChartService30MinService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService30MinService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService30MinService.param("to", date));
-                yield fmpHistoricalChartService30MinService.download();
-            }
-            case "1hour" -> {
-                fmpHistoricalChartService1HourService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService1HourService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService1HourService.param("to", date));
-                yield fmpHistoricalChartService1HourService.download();
-            }
-            case "4hour" -> {
-                fmpHistoricalChartService4HourService.param("symbol", symbol);
-                from.ifPresent(date -> fmpHistoricalChartService4HourService.param("from", date));
-                to.ifPresent(date -> fmpHistoricalChartService4HourService.param("to", date));
-                yield fmpHistoricalChartService4HourService.download();
-            }
-            default -> throw new IllegalStateException("Unexpected interval: " + interval);
-        };
+    public FmpChartClient chart() {
+        return fmpChartClient;
     }
 
     public synchronized FmpCompany[] company(String symbol) {
