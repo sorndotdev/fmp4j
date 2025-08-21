@@ -17,11 +17,11 @@ public class FmpDirectoryClient {
         this.fmpEtfListService = new FmpEtfListService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpStock[] stock() {
+    public synchronized FmpStock[] stocks() {
         return fmpStockListService.download();
     }
 
-    public synchronized FmpEtf[] etf() {
+    public synchronized FmpEtf[] etfs() {
         return fmpEtfListService.download();
     }
 }

@@ -160,7 +160,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.list().stock();
+        var result = fmpClient.list().stocks();
 
         // then
         assertValidResult(result, 2, FmpStock.class);
@@ -178,7 +178,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.list().etf() ;
+        var result = fmpClient.list().etfs() ;
 
         // then
         assertValidResult(result, 4, FmpEtf.class);
@@ -215,7 +215,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.calendar().dividendOf(symbol);
+        var result = fmpClient.calendar().dividends(symbol);
 
         // then
         assertValidResult(result, 4, FmpDividend.class, Set.of("declarationDate"));
@@ -252,7 +252,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.calendar().earningOf(symbol);
+        var result = fmpClient.calendar().earnings(symbol);
 
         // then
         assertValidResult(result, 4, FmpEarning.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));

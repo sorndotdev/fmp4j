@@ -25,7 +25,7 @@ public class FmpCalendarClient {
         return fmpDividendsCalendarService.download();
     }
 
-    public synchronized FmpDividend[] dividendOf(String symbol) {
+    public synchronized FmpDividend[] dividends(String symbol) {
         fmpDividendService.param("symbol", symbol);
         return fmpDividendService.download();
     }
@@ -34,7 +34,7 @@ public class FmpCalendarClient {
         return fmpEarningsCalendarService.download();
     }
 
-    public synchronized FmpEarning[] earningOf(String symbol) {
+    public synchronized FmpEarning[] earnings(String symbol) {
         fmpEarningsService.param("symbol", symbol);
         return fmpEarningsService.download();
     }
