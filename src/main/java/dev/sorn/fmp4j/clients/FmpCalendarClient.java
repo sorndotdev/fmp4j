@@ -6,7 +6,11 @@ import dev.sorn.fmp4j.models.FmpDividend;
 import dev.sorn.fmp4j.models.FmpDividendsCalendar;
 import dev.sorn.fmp4j.models.FmpEarning;
 import dev.sorn.fmp4j.models.FmpEarningsCalendar;
-import dev.sorn.fmp4j.services.*;
+import dev.sorn.fmp4j.services.FmpDividendService;
+import dev.sorn.fmp4j.services.FmpDividendsCalendarService;
+import dev.sorn.fmp4j.services.FmpEarningService;
+import dev.sorn.fmp4j.services.FmpEarningsCalendarService;
+import dev.sorn.fmp4j.services.FmpService;
 
 public class FmpCalendarClient {
 

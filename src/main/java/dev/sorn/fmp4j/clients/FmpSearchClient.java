@@ -6,7 +6,11 @@ import dev.sorn.fmp4j.models.FmpSearchByCusip;
 import dev.sorn.fmp4j.models.FmpSearchByIsin;
 import dev.sorn.fmp4j.models.FmpSearchByName;
 import dev.sorn.fmp4j.models.FmpSearchBySymbol;
-import dev.sorn.fmp4j.services.*;
+import dev.sorn.fmp4j.services.FmpSearchByCusipService;
+import dev.sorn.fmp4j.services.FmpSearchByIsinService;
+import dev.sorn.fmp4j.services.FmpSearchByNameService;
+import dev.sorn.fmp4j.services.FmpSearchBySymbolService;
+import dev.sorn.fmp4j.services.FmpService;
 
 public class FmpSearchClient {
 
@@ -24,7 +28,7 @@ public class FmpSearchClient {
         this.fmpSearchByCusipService = new FmpSearchByCusipService(fmpConfig, fmpHttpClient);
     }
 
-     public synchronized FmpSearchByIsin[] byIsin(String isin) {
+    public synchronized FmpSearchByIsin[] byIsin(String isin) {
         fmpSearchByIsinService.param("isin", isin);
         return fmpSearchByIsinService.download();
     }
