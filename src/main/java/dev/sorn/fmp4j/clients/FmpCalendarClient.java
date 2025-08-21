@@ -2,7 +2,10 @@ package dev.sorn.fmp4j.clients;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.models.*;
+import dev.sorn.fmp4j.models.FmpDividend;
+import dev.sorn.fmp4j.models.FmpDividendsCalendar;
+import dev.sorn.fmp4j.models.FmpEarning;
+import dev.sorn.fmp4j.models.FmpEarningsCalendar;
 import dev.sorn.fmp4j.services.*;
 
 public class FmpCalendarClient {

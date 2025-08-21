@@ -2,8 +2,13 @@ package dev.sorn.fmp4j.clients;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.models.*;
-import dev.sorn.fmp4j.services.*;
+import dev.sorn.fmp4j.models.FmpHistoricalChart;
+import dev.sorn.fmp4j.models.FmpHistoricalPriceEodFull;
+import dev.sorn.fmp4j.models.FmpHistoricalPriceEodLight;
+import dev.sorn.fmp4j.services.FmpHistoricalChartService;
+import dev.sorn.fmp4j.services.FmpHistoricalPriceEodFullService;
+import dev.sorn.fmp4j.services.FmpHistoricalPriceEodLightService;
+import dev.sorn.fmp4j.services.FmpService;
 
 import java.util.Optional;
 
