@@ -50,7 +50,7 @@ public class FmpChartClient {
         return fmpHistoricalPriceEodFullService.download();
     }
 
-    public synchronized FmpHistoricalChart[] historicalCharts(String interval, String symbol, Optional<String> from, Optional<String> to) {
+    public synchronized FmpHistoricalChart[] historical(String interval, String symbol, Optional<String> from, Optional<String> to) {
         return switch (interval) {
             case "1min" -> {
                 fmpHistoricalChartService1MinService.param("symbol", symbol);

@@ -28,7 +28,7 @@ public class FmpCalendarClient {
         this.fmpEarningsCalendarService = new FmpEarningsCalendarService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpDividendsCalendar[] dividendsCalendar() {
+    public synchronized FmpDividendsCalendar[] dividends() {
         return fmpDividendsCalendarService.download();
     }
 
@@ -37,7 +37,7 @@ public class FmpCalendarClient {
         return fmpDividendService.download();
     }
 
-    public synchronized FmpEarningsCalendar[] earningsCalendar() {
+    public synchronized FmpEarningsCalendar[] earnings() {
         return fmpEarningsCalendarService.download();
     }
 

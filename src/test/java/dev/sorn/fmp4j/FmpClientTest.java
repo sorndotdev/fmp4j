@@ -198,7 +198,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.calendar().dividendsCalendar();
+        var result = fmpClient.calendar().dividends();
 
         // then
         assertValidResult(result, 4, FmpDividendsCalendar.class, Set.of("declarationDate"));
@@ -235,7 +235,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.calendar().earningsCalendar();
+        var result = fmpClient.calendar().earnings();
 
         // then
         assertValidResult(result, 4, FmpEarningsCalendar.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
@@ -325,7 +325,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.chart().historicalCharts(interval, symbol, Optional.of(from), Optional.of(to));
+        var result = fmpClient.chart().historical(interval, symbol, Optional.of(from), Optional.of(to));
 
         // then
         assertValidResult(result, 2, FmpHistoricalChart.class, emptySet());
@@ -487,7 +487,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.statement().keyMetricTtm(symbol);
+        var result = fmpClient.statement().keyMetricsTtm(symbol);
 
         // then
         assertValidResult(result, 1, FmpKeyMetricTtm.class);
@@ -591,7 +591,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.etf().etfCountryWeightings(symbol);
+        var result = fmpClient.etf().countryWeightings(symbol);
 
         // then
         assertValidResult(result, 6, FmpEtfCountryWeighting.class, emptySet());
@@ -613,7 +613,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.etf().etfHoldings(symbol);
+        var result = fmpClient.etf().holdings(symbol);
 
         // then
         assertValidResult(result, holdings, FmpEtfHolding.class, emptySet());
@@ -632,7 +632,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.etf().etfInfo(symbol);
+        var result = fmpClient.etf().info(symbol);
 
         // then
         assertValidResult(result, 1, FmpEtfInfo.class, emptySet());
@@ -651,7 +651,7 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.etf().etfSectorWeightings(symbol);
+        var result = fmpClient.etf().sectorWeightings(symbol);
 
         // then
         assertValidResult(result, 11, FmpEtfSectorWeighting.class, emptySet());

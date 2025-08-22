@@ -35,22 +35,22 @@ public class FmpEtfClient {
         return etfAssetExposureService.download();
     }
 
-    public synchronized FmpEtfCountryWeighting[] etfCountryWeightings(String symbol) {
+    public synchronized FmpEtfCountryWeighting[] countryWeightings(String symbol) {
         etfCountryWeightingService.param("symbol", symbol);
         return etfCountryWeightingService.download();
     }
 
-    public synchronized FmpEtfHolding[] etfHoldings(String symbol) {
+    public synchronized FmpEtfHolding[] holdings(String symbol) {
         etfHoldingService.param("symbol", symbol);
         return etfHoldingService.download();
     }
 
-    public synchronized FmpEtfInfo[] etfInfo(String symbol) {
+    public synchronized FmpEtfInfo[] info(String symbol) {
         etfInfoService.param("symbol", symbol);
         return etfInfoService.download();
     }
 
-    public synchronized FmpEtfSectorWeighting[] etfSectorWeightings(String symbol) {
+    public synchronized FmpEtfSectorWeighting[] sectorWeightings(String symbol) {
         etfSectorWeightingService.param("symbol", symbol);
         return etfSectorWeightingService.download();
     }

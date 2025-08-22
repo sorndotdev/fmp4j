@@ -103,7 +103,7 @@ public class FmpStatementClient {
         return keyMetricService.download();
     }
 
-    public synchronized FmpKeyMetricTtm[] keyMetricTtm(String symbol) {
+    public synchronized FmpKeyMetricTtm[] keyMetricsTtm(String symbol) {
         keyMetricTtmService.param("symbol", symbol);
         return keyMetricTtmService.download();
     }
