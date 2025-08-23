@@ -14,11 +14,7 @@ public abstract class FmpService<R> {
     protected final ConcurrentHashMap<String, Object> params = new ConcurrentHashMap<>();
     protected final TypeReference<R> typeRef;
 
-    protected FmpService(
-        FmpConfig cfg,
-        FmpHttpClient http,
-        TypeReference<R> typeRef
-    ) {
+    protected FmpService(FmpConfig cfg, FmpHttpClient http, TypeReference<R> typeRef) {
         this.cfg = cfg;
         this.http = http;
         this.typeRef = typeRef;

@@ -19,9 +19,7 @@ public class FmpCalendarClient {
     protected final FmpService<FmpEarning[]> fmpEarningsService;
     protected final FmpService<FmpEarningsCalendar[]> fmpEarningsCalendarService;
 
-
-    public FmpCalendarClient(FmpConfig fmpConfig,
-                             FmpHttpClient fmpHttpClient) {
+    public FmpCalendarClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpDividendService = new FmpDividendService(fmpConfig, fmpHttpClient);
         this.fmpDividendsCalendarService = new FmpDividendsCalendarService(fmpConfig, fmpHttpClient);
         this.fmpEarningsService = new FmpEarningService(fmpConfig, fmpHttpClient);

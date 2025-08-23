@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles version="12">
+    <profile kind="CodeFormatterProfile" name="CustomStyle" version="12">
+        <!-- Blank lines -->
+        <setting id="org.eclipse.jdt.core.formatter.blank_lines_before_package" value="0"/>
+        <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_imports" value="1"/>
+        <setting id="org.eclipse.jdt.core.formatter.blank_lines_between_type_declarations" value="1"/>
+
+        <!-- Indentation -->
+        <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
+        <setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>
+        <setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
+        <setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="1"/>
+
+        <!-- Line wrapping -->
+        <setting id="org.eclipse.jdt.core.formatter.lineSplit" value="120"/>
+
+        <!-- Force each parameter on new line when wrapping -->
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_parameters_in_method_declaration" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_method_invocation" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_explicit_constructor_call" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_qualified_allocation_expression" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_object_allocation" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_parameters_in_constructor_declaration" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_parameters_in_record_declaration" value="16"/>
+
+        <!-- Wrapping settings -->
+        <setting id="org.eclipse.jdt.core.formatter.wrap_before_binary_operator" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.wrap_before_or_operator_multicatch" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.wrap_before_conditional_operator" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line" value="false"/>
+
+        <!-- Spacing -->
+        <setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_method_declaration" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_method_invocation_arguments" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_space_around_operators" value="true"/>
+
+        <!-- Comment formatting -->
+        <setting id="org.eclipse.jdt.core.formatter.comment.line_length" value="80"/>
+    </profile>
+</profiles>

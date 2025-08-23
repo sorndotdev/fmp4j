@@ -10,9 +10,7 @@ public class FmpCompanyClient {
 
     protected final FmpService<FmpCompany[]> fmpCompanyService;
 
-
-    public FmpCompanyClient(FmpConfig fmpConfig,
-                            FmpHttpClient fmpHttpClient) {
+    public FmpCompanyClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpCompanyService = new FmpCompanyService(fmpConfig, fmpHttpClient);
     }
 

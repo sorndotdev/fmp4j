@@ -1,5 +1,13 @@
 package dev.sorn.fmp4j.services;
 
+import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
+import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
+import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static java.util.stream.IntStream.range;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.RatioTestData;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -9,13 +17,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
-import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
-import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.stream.IntStream.range;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FmpRatioServiceTest implements RatioTestData {
     private final HttpClientStub httpStub = httpClientStub();
@@ -55,9 +56,9 @@ class FmpRatioServiceTest implements RatioTestData {
         var symbol = "AAPL";
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/ratios/?symbol=%s.json", symbol))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/ratios/?symbol=%s.json", symbol))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
@@ -76,9 +77,9 @@ class FmpRatioServiceTest implements RatioTestData {
         var limit = 3;
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/ratios/?symbol=%s&period=%s&limit=%d.json", symbol, period, limit))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/ratios/?symbol=%s&period=%s&limit=%d.json", symbol, period, limit))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

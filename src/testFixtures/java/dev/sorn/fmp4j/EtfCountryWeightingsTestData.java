@@ -4,9 +4,6 @@ import dev.sorn.fmp4j.models.FmpEtfCountryWeighting;
 
 public interface EtfCountryWeightingsTestData {
     default FmpEtfCountryWeighting anEtfCountryWeighting() {
-        return new FmpEtfCountryWeighting(
-            "United States",
-            "99.51%"
-        );
+        return new FmpEtfCountryWeighting("United States", "99.51%");
     }
 }

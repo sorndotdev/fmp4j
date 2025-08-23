@@ -1,5 +1,10 @@
 package dev.sorn.fmp4j;
 
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static java.lang.String.format;
+import static java.util.Collections.emptySet;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,10 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Set;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.lang.String.format;
-import static java.util.Collections.emptySet;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public final class TestUtils {
     private TestUtils() {
@@ -32,14 +33,14 @@ public final class TestUtils {
 
     public static String jsonTestResource(String filename, Object... args) {
         var encoded = format(filename, args)
-            .replace("?", "%3F")
-            .replace(":", "%3A")
-            .replace("*", "%2A")
-            .replace("<", "%3C")
-            .replace(">", "%3E")
-            .replace("|", "%7C");
+                .replace("?", "%3F")
+                .replace(":", "%3A")
+                .replace("*", "%2A")
+                .replace("<", "%3C")
+                .replace(">", "%3E")
+                .replace("|", "%7C");
         try (final var inputStream = TestUtils.class.getClassLoader().getResourceAsStream(encoded)) {
-            System.out.printf("Reading: %s", encoded);
+            //            System.out.printf("Reading: %s", encoded);
             return new String(inputStream.readAllBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -114,8 +115,8 @@ public final class TestUtils {
         // Verify against existing snapshot
         byte[] expected = Files.readAllBytes(snapshotPath);
         if (!Arrays.equals(expected, currentData)) {
-            throw new AssertionError("Serialization data mismatch for " + clazz.getSimpleName() +
-                ". Update serialVersionUID if this is intentional.");
+            throw new AssertionError("Serialization data mismatch for " + clazz.getSimpleName()
+                    + ". Update serialVersionUID if this is intentional.");
         }
     }
 
@@ -136,7 +137,7 @@ public final class TestUtils {
     }
 
     private static void createSnapshotWithVersion(byte[] data, long version, Path snapshotPath, Path versionPath)
-        throws IOException {
+            throws IOException {
         Files.createDirectories(snapshotPath.getParent());
         Files.write(snapshotPath, data);
 
@@ -146,12 +147,12 @@ public final class TestUtils {
     }
 
     private static Path getSnapshotPath(Class<?> clazz) {
-        return Paths.get("src", "testFixtures", "resources", "models", "serialization",
-            clazz.getSimpleName() + ".snapshot");
+        return Paths.get(
+                "src", "testFixtures", "resources", "models", "serialization", clazz.getSimpleName() + ".snapshot");
     }
 
     private static Path getVersionPath(Class<?> clazz) {
-        return Paths.get("src", "testFixtures", "resources", "models", "serialization",
-            clazz.getSimpleName() + ".version");
+        return Paths.get(
+                "src", "testFixtures", "resources", "models", "serialization", clazz.getSimpleName() + ".version");
     }
 }

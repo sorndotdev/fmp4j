@@ -1,5 +1,8 @@
 package dev.sorn.fmp4j.clients;
 
+import static java.lang.String.join;
+import static java.util.Optional.empty;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpNews;
@@ -8,8 +11,6 @@ import dev.sorn.fmp4j.services.FmpService;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
-import static java.lang.String.join;
-import static java.util.Optional.empty;
 
 public class FmpNewsClient {
     protected FmpService<FmpNews[]> fmpCryptoNewsService;
@@ -34,19 +35,40 @@ public class FmpNewsClient {
         return stock(symbols, empty(), empty(), empty(), empty());
     }
 
-    public synchronized FmpNews[] crypto(Set<String> symbols, Optional<LocalDate> from, Optional<LocalDate> to, Optional<Integer> page, Optional<Integer> limit) {
+    public synchronized FmpNews[] crypto(
+            Set<String> symbols,
+            Optional<LocalDate> from,
+            Optional<LocalDate> to,
+            Optional<Integer> page,
+            Optional<Integer> limit) {
         return news(fmpCryptoNewsService, symbols, from, to, page, limit);
     }
 
-    public synchronized FmpNews[] forex(Set<String> symbols, Optional<LocalDate> from, Optional<LocalDate> to, Optional<Integer> page, Optional<Integer> limit) {
+    public synchronized FmpNews[] forex(
+            Set<String> symbols,
+            Optional<LocalDate> from,
+            Optional<LocalDate> to,
+            Optional<Integer> page,
+            Optional<Integer> limit) {
         return news(fmpForexNewsService, symbols, from, to, page, limit);
     }
 
-    public synchronized FmpNews[] stock(Set<String> symbols, Optional<LocalDate> from, Optional<LocalDate> to, Optional<Integer> page, Optional<Integer> limit) {
+    public synchronized FmpNews[] stock(
+            Set<String> symbols,
+            Optional<LocalDate> from,
+            Optional<LocalDate> to,
+            Optional<Integer> page,
+            Optional<Integer> limit) {
         return news(fmpStockNewsService, symbols, from, to, page, limit);
     }
 
-    protected synchronized FmpNews[] news(FmpService<FmpNews[]> service, Set<String> symbols, Optional<LocalDate> from, Optional<LocalDate> to, Optional<Integer> page, Optional<Integer> limit) {
+    protected synchronized FmpNews[] news(
+            FmpService<FmpNews[]> service,
+            Set<String> symbols,
+            Optional<LocalDate> from,
+            Optional<LocalDate> to,
+            Optional<Integer> page,
+            Optional<Integer> limit) {
         service.param("symbols", join(",", symbols));
         from.ifPresent(date -> service.param("from", date));
         to.ifPresent(date -> service.param("to", date));

@@ -1,11 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpEarning;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
@@ -15,6 +9,13 @@ import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpEarning;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
 
 class FmpEarningServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
@@ -54,9 +55,9 @@ class FmpEarningServiceTest {
         var symbol = "AAPL";
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/earnings/?symbol=%s.json", symbol))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/earnings/?symbol=%s.json", symbol))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
@@ -64,6 +65,8 @@ class FmpEarningServiceTest {
         // then
         assertEquals(4, result.length);
         range(0, 4).forEach(i -> assertInstanceOf(FmpEarning.class, result[i]));
-        range(0, 4).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
+        range(0, 4)
+                .forEach(i -> assertAllFieldsNonNull(
+                        result[i], Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
     }
 }

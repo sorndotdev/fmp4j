@@ -1,23 +1,18 @@
 package dev.sorn.fmp4j.types;
 
-import dev.sorn.fmp4j.exceptions.FmpInvalidPeriodException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import dev.sorn.fmp4j.exceptions.FmpInvalidPeriodException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 class FmpPeriodTest {
     @ParameterizedTest
     @CsvSource({
-        "annual",
-        "quarter",
-        "Q1",
-        "Q2",
-        "Q3",
-        "Q4",
-        "FY",
+        "annual", "quarter", "Q1", "Q2", "Q3", "Q4", "FY",
     })
     void valid_period(String value) {
         // when

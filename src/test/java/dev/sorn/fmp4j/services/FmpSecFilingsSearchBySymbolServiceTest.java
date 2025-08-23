@@ -1,12 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.FinancialGrowthTestData;
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
@@ -15,10 +8,19 @@ import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import dev.sorn.fmp4j.FinancialGrowthTestData;
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
 class FmpSecFilingsSearchBySymbolServiceTest implements FinancialGrowthTestData {
     private final HttpClientStub httpStub = httpClientStub();
     private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpSecFilingsSearchBySymbol[]> service = new FmpSecFilingsSearchBySymbolService(FMP_CONFIG, http);
+    private final FmpService<FmpSecFilingsSearchBySymbol[]> service =
+            new FmpSecFilingsSearchBySymbolService(FMP_CONFIG, http);
 
     @Test
     void relative_url() {
@@ -61,9 +63,11 @@ class FmpSecFilingsSearchBySymbolServiceTest implements FinancialGrowthTestData 
         service.param("page", page);
         service.param("limit", limit);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/sec-filings-search/symbol/?symbol=%s&from=%s&to=%s&page=%d&limit=%d.json", symbol, from, to, page, limit))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource(
+                        "stable/sec-filings-search/symbol/?symbol=%s&from=%s&to=%s&page=%d&limit=%d.json",
+                        symbol, from, to, page, limit))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

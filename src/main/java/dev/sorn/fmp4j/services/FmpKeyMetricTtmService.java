@@ -1,17 +1,15 @@
 package dev.sorn.fmp4j.services;
 
+import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static java.util.Collections.emptySet;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpKeyMetricTtm;
 import java.util.Set;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 public class FmpKeyMetricTtmService extends FmpService<FmpKeyMetricTtm[]> {
-    public FmpKeyMetricTtmService(
-        FmpConfig cfg,
-        FmpHttpClient http
-    ) {
+    public FmpKeyMetricTtmService(FmpConfig cfg, FmpHttpClient http) {
         super(cfg, http, typeRef(FmpKeyMetricTtm[].class));
     }
 

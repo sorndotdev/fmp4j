@@ -21,8 +21,7 @@ public class FmpEtfClient {
     protected final FmpService<FmpEtfInfo[]> etfInfoService;
     protected final FmpService<FmpEtfSectorWeighting[]> etfSectorWeightingService;
 
-    public FmpEtfClient(FmpConfig fmpConfig,
-                        FmpHttpClient fmpHttpClient) {
+    public FmpEtfClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.etfAssetExposureService = new FmpEtfAssetExposureService(fmpConfig, fmpHttpClient);
         this.etfCountryWeightingService = new FmpEtfCountryWeightingService(fmpConfig, fmpHttpClient);
         this.etfHoldingService = new FmpEtfHoldingService(fmpConfig, fmpHttpClient);

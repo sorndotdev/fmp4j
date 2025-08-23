@@ -1,13 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import org.junit.jupiter.api.Test;
-
-import java.util.Set;
-
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
@@ -17,6 +9,13 @@ import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpSearchByCusip;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
 
 class FmpSearchByCusipServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
@@ -56,9 +55,9 @@ class FmpSearchByCusipServiceTest {
         var cusip = "037833100";
         service.param("cusip", cusip);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/search-cusip/?cusip=%s.json", cusip))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/search-cusip/?cusip=%s.json", cusip))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

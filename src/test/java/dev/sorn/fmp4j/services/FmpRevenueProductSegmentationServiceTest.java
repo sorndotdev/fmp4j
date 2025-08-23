@@ -1,12 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.RevenueProductSegmentationTestData;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpRevenueProductSegmentation;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
@@ -15,10 +8,19 @@ import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.RevenueProductSegmentationTestData;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpRevenueProductSegmentation;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
 class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmentationTestData {
     private final HttpClientStub httpStub = httpClientStub();
     private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpRevenueProductSegmentation[]> service = new FmpRevenueProductSegmentationService(FMP_CONFIG, http);
+    private final FmpService<FmpRevenueProductSegmentation[]> service =
+            new FmpRevenueProductSegmentationService(FMP_CONFIG, http);
 
     @Test
     void relative_url() {
@@ -53,9 +55,9 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
         var symbol = "AAPL";
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/revenue-product-segmentation/?symbol=%s.json", symbol))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/revenue-product-segmentation/?symbol=%s.json", symbol))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
@@ -74,9 +76,11 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
         var structure = "flat";
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/revenue-product-segmentation/?symbol=%s&period=%s&structure=%s.json", symbol, period, structure))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource(
+                        "stable/revenue-product-segmentation/?symbol=%s&period=%s&structure=%s.json",
+                        symbol, period, structure))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
@@ -94,9 +98,11 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
         var structure = "flat";
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/revenue-product-segmentation/?symbol=%s&period=%s&structure=%s.json", symbol, period, structure))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource(
+                        "stable/revenue-product-segmentation/?symbol=%s&period=%s&structure=%s.json",
+                        symbol, period, structure))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

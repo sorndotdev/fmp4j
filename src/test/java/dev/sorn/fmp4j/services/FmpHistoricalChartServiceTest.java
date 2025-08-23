@@ -1,12 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpHistoricalChart;
-import java.util.Set;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
@@ -17,19 +10,23 @@ import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpHistoricalChart;
+import java.util.Set;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 class FmpHistoricalChartServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
     private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "1hour",
-        "4hour",
-    })
+    @ValueSource(
+            strings = {
+                "1min", "5min", "15min", "30min", "1hour", "4hour",
+            })
     void relative_url(String interval) {
         // given
         var service = new FmpHistoricalChartService(FMP_CONFIG, http, interval);
@@ -42,14 +39,10 @@ class FmpHistoricalChartServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "1hour",
-        "4hour",
-    })
+    @ValueSource(
+            strings = {
+                "1min", "5min", "15min", "30min", "1hour", "4hour",
+            })
     void required_params(String interval) {
         // given
         var service = new FmpHistoricalChartService(FMP_CONFIG, http, interval);
@@ -62,14 +55,10 @@ class FmpHistoricalChartServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "1hour",
-        "4hour",
-    })
+    @ValueSource(
+            strings = {
+                "1min", "5min", "15min", "30min", "1hour", "4hour",
+            })
     void optional_params(String interval) {
         // given
         var service = new FmpHistoricalChartService(FMP_CONFIG, http, interval);
@@ -82,14 +71,10 @@ class FmpHistoricalChartServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "1hour",
-        "4hour",
-    })
+    @ValueSource(
+            strings = {
+                "1min", "5min", "15min", "30min", "1hour", "4hour",
+            })
     void successful_download(String interval) {
         // given
         var service = new FmpHistoricalChartService(FMP_CONFIG, http, interval);
@@ -100,9 +85,10 @@ class FmpHistoricalChartServiceTest {
         service.param("from", from);
         service.param("to", to);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/historical-chart/%s/?symbol=%s&from=%s&to=%s.json", interval, symbol, from, to))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource(
+                        "stable/historical-chart/%s/?symbol=%s&from=%s&to=%s.json", interval, symbol, from, to))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

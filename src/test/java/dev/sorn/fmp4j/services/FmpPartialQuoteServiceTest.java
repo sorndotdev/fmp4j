@@ -1,14 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.QuoteTestData;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpPartialQuote;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
@@ -18,6 +9,16 @@ import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import dev.sorn.fmp4j.HttpClientStub;
+import dev.sorn.fmp4j.QuoteTestData;
+import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.http.FmpHttpClientImpl;
+import dev.sorn.fmp4j.models.FmpPartialQuote;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import org.junit.jupiter.api.Test;
 
 class FmpPartialQuoteServiceTest implements QuoteTestData {
     private final HttpClientStub httpStub = httpClientStub();
@@ -56,15 +57,15 @@ class FmpPartialQuoteServiceTest implements QuoteTestData {
         // given
         service.param("symbol", "AAPL");
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/quote-short/?symbol=AAPL.json"))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/quote-short/?symbol=AAPL.json"))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
 
         // then
-        var expected = new FmpPartialQuote[]{aPartialQuote()};
+        var expected = new FmpPartialQuote[] {aPartialQuote()};
         assertArrayEquals(expected, result);
     }
 
@@ -88,6 +89,7 @@ class FmpPartialQuoteServiceTest implements QuoteTestData {
 
         // then
         var e = assertThrows(FmpServiceException.class, () -> f.accept(key, value));
-        assertEquals(format("'unknown' is not a recognized query param for endpoint [%s]", service.url()), e.getMessage());
+        assertEquals(
+                format("'unknown' is not a recognized query param for endpoint [%s]", service.url()), e.getMessage());
     }
 }

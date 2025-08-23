@@ -1,7 +1,8 @@
 package dev.sorn.fmp4j.types;
 
-import dev.sorn.fmp4j.exceptions.FmpInvalidPeriodException;
 import static java.util.Arrays.stream;
+
+import dev.sorn.fmp4j.exceptions.FmpInvalidPeriodException;
 
 public enum FmpPeriod implements FmpValueObject<String> {
     ANNUAL("annual"),
@@ -20,9 +21,9 @@ public enum FmpPeriod implements FmpValueObject<String> {
 
     public static FmpPeriod period(String value) {
         return stream(FmpPeriod.values())
-            .filter(p -> p.value.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new FmpInvalidPeriodException("[%s] is not a valid period", value));
+                .filter(p -> p.value.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new FmpInvalidPeriodException("[%s] is not a valid period", value));
     }
 
     @Override

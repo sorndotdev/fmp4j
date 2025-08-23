@@ -5,10 +5,5 @@ import java.net.URI;
 import java.util.Map;
 
 public interface FmpHttpClient {
-    <T> T get(
-        TypeReference<T> type,
-        URI uri,
-        Map<String, String> headers,
-        Map<String, Object> queryParams
-    );
+    <T> T get(TypeReference<T> type, URI uri, Map<String, String> headers, Map<String, Object> queryParams);
 }

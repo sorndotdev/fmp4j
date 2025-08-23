@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public record FmpFinancialStatementAsReported(
-    String symbol,
-    Integer fiscalYear,
-    String period,
-    String reportedCurrency,
-    LocalDate date,
-    Map<String, Number> data
-) implements FmpModel {
+        String symbol,
+        Integer fiscalYear,
+        String period,
+        String reportedCurrency,
+        LocalDate date,
+        Map<String, Number> data)
+        implements FmpModel {
     @Serial
     private static final long serialVersionUID = 1L;
 }

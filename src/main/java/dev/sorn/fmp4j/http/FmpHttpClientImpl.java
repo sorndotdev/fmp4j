@@ -1,5 +1,9 @@
 package dev.sorn.fmp4j.http;
 
+import static dev.sorn.fmp4j.http.FmpUriUtils.uriWithParams;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static java.util.Objects.requireNonNull;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.json.FmpJsonDeserializer;
 import java.io.IOException;
@@ -11,9 +15,6 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import static dev.sorn.fmp4j.http.FmpUriUtils.uriWithParams;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.Objects.requireNonNull;
 
 public class FmpHttpClientImpl implements FmpHttpClient {
     public static final FmpHttpClient FMP_HTTP_CLIENT = new FmpHttpClientImpl();
@@ -24,21 +25,13 @@ public class FmpHttpClientImpl implements FmpHttpClient {
         this(HttpClients.createDefault(), FMP_JSON_DESERIALIZER);
     }
 
-    public FmpHttpClientImpl(
-        HttpClient httpClient,
-        FmpJsonDeserializer deserializer
-    ) {
+    public FmpHttpClientImpl(HttpClient httpClient, FmpJsonDeserializer deserializer) {
         this.http = requireNonNull(httpClient, "'httpClient' is required");
         this.deserializer = requireNonNull(deserializer, "'deserializer' is required");
     }
 
     @Override
-    public <T> T get(
-        TypeReference<T> type,
-        URI uri,
-        Map<String, String> headers,
-        Map<String, Object> queryParams
-    ) {
+    public <T> T get(TypeReference<T> type, URI uri, Map<String, String> headers, Map<String, Object> queryParams) {
         try {
             HttpGet request = buildRequest(uri, headers, queryParams);
             String responseBody = executeRequest(request);
@@ -48,10 +41,7 @@ public class FmpHttpClientImpl implements FmpHttpClient {
         }
     }
 
-    protected HttpGet buildRequest(
-        URI uri, Map<String, String> headers,
-        Map<String, Object> queryParams
-    ) {
+    protected HttpGet buildRequest(URI uri, Map<String, String> headers, Map<String, Object> queryParams) {
         final URI finalUri = uriWithParams(uri, queryParams);
         final HttpGet request = new HttpGet(finalUri);
         if (headers != null) {

@@ -16,9 +16,9 @@ public enum FmpStructure implements FmpValueObject<String> {
 
     public static FmpStructure structure(String value) {
         return stream(values())
-          .filter(structure -> Objects.equals(structure.value, value))
-          .findFirst()
-          .orElseThrow(() -> new FmpInvalidStructureException("[%s] is not a valid structure", value));
+                .filter(structure -> Objects.equals(structure.value, value))
+                .findFirst()
+                .orElseThrow(() -> new FmpInvalidStructureException("[%s] is not a valid structure", value));
     }
 
     @Override

@@ -16,7 +16,8 @@ public class FmpSecFilingsSearchClient {
         this.fmpSecFilingsSearchBySymbol = new FmpSecFilingsSearchBySymbolService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpSecFilingsSearchBySymbol[] bySymbol(String symbol, String from, String to, Optional<Integer> page, Optional<Integer> limit) {
+    public synchronized FmpSecFilingsSearchBySymbol[] bySymbol(
+            String symbol, String from, String to, Optional<Integer> page, Optional<Integer> limit) {
         fmpSecFilingsSearchBySymbol.param("symbol", symbol);
         fmpSecFilingsSearchBySymbol.param("from", from);
         fmpSecFilingsSearchBySymbol.param("to", to);

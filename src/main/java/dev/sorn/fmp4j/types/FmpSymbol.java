@@ -1,15 +1,18 @@
 package dev.sorn.fmp4j.types;
 
+import static java.util.Objects.compare;
+
 import dev.sorn.fmp4j.exceptions.FmpInvalidSymbolException;
 import java.io.Serial;
 import java.util.regex.Pattern;
-import static java.util.Objects.compare;
 
 public final class FmpSymbol implements Comparable<FmpSymbol>, FmpValueObject<String> {
-    public static final Pattern FMP_SYMBOL_PATTERN = Pattern.compile("^([A-Z]{1,6}:)?[A-Z0-9]{1,6}([./-][A-Z][A-Z0-9]{0,3})?$");
+    public static final Pattern FMP_SYMBOL_PATTERN =
+            Pattern.compile("^([A-Z]{1,6}:)?[A-Z0-9]{1,6}([./-][A-Z][A-Z0-9]{0,3})?$");
 
     @Serial
     private static final long serialVersionUID = 1L;
+
     private final String value;
 
     private FmpSymbol(String value) {
@@ -21,7 +24,8 @@ public final class FmpSymbol implements Comparable<FmpSymbol>, FmpValueObject<St
             throw new FmpInvalidSymbolException("'value' is required");
         }
         if (!FMP_SYMBOL_PATTERN.matcher(value).matches()) {
-            throw new FmpInvalidSymbolException("'value' [%s] does not match pattern [%s]", value, FMP_SYMBOL_PATTERN.pattern());
+            throw new FmpInvalidSymbolException(
+                    "'value' [%s] does not match pattern [%s]", value, FMP_SYMBOL_PATTERN.pattern());
         }
         return new FmpSymbol(value);
     }

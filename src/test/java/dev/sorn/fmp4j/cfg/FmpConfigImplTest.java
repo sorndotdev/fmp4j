@@ -1,9 +1,10 @@
 package dev.sorn.fmp4j.cfg;
 
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
 
 class FmpConfigImplTest {
     @Test

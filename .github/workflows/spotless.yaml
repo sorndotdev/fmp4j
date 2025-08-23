@@ -1,0 +1,24 @@
+name: Check code formatting
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [master]
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run Spotless check
+        run: ./gradlew spotlessCheck

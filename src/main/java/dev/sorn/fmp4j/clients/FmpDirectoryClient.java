@@ -13,9 +13,7 @@ public class FmpDirectoryClient {
     protected final FmpService<FmpStock[]> fmpStockListService;
     protected final FmpService<FmpEtf[]> fmpEtfListService;
 
-
-    public FmpDirectoryClient(FmpConfig fmpConfig,
-                              FmpHttpClient fmpHttpClient) {
+    public FmpDirectoryClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpStockListService = new FmpStockListService(fmpConfig, fmpHttpClient);
         this.fmpEtfListService = new FmpEtfListService(fmpConfig, fmpHttpClient);
     }

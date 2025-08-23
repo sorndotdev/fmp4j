@@ -47,22 +47,24 @@ public class FmpStatementClient {
     protected final FmpService<FmpRevenueGeographicSegmentation[]> revenueGeographicSegmentationService;
     protected final FmpService<FmpRevenueProductSegmentation[]> revenueProductSegmentationService;
 
-
-    public FmpStatementClient(FmpConfig fmpConfig,
-                              FmpHttpClient fmpHttpClient) {
+    public FmpStatementClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.incomeStatementService = new FmpIncomeStatementService(fmpConfig, fmpHttpClient);
         this.balanceSheetStatementService = new FmpBalanceSheetStatementService(fmpConfig, fmpHttpClient);
         this.cashFlowStatementService = new FmpCashFlowStatementService(fmpConfig, fmpHttpClient);
-        this.incomeStatementAsReportedService = new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "income");
-        this.balanceSheetStatementAsReportedService = new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "balance-sheet");
-        this.cashFlowStatementAsReportedService = new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "cash-flow");
+        this.incomeStatementAsReportedService =
+                new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "income");
+        this.balanceSheetStatementAsReportedService =
+                new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "balance-sheet");
+        this.cashFlowStatementAsReportedService =
+                new FmpFinancialStatementAsReportedService(fmpConfig, fmpHttpClient, "cash-flow");
         this.financialGrowthService = new FmpFinancialGrowthService(fmpConfig, fmpHttpClient);
         this.ratioService = new FmpRatioService(fmpConfig, fmpHttpClient);
         this.ratioTtmService = new FmpRatioTtmService(fmpConfig, fmpHttpClient);
         this.keyMetricService = new FmpKeyMetricService(fmpConfig, fmpHttpClient);
         this.keyMetricTtmService = new FmpKeyMetricTtmService(fmpConfig, fmpHttpClient);
         this.enterpriseValuesService = new FmpEnterpriseValuesService(fmpConfig, fmpHttpClient);
-        this.revenueGeographicSegmentationService = new FmpRevenueGeographicSegmentationService(fmpConfig, fmpHttpClient);
+        this.revenueGeographicSegmentationService =
+                new FmpRevenueGeographicSegmentationService(fmpConfig, fmpHttpClient);
         this.revenueProductSegmentationService = new FmpRevenueProductSegmentationService(fmpConfig, fmpHttpClient);
     }
 
@@ -73,42 +75,48 @@ public class FmpStatementClient {
         return incomeStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] incomeAsReported(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpFinancialStatementAsReported[] incomeAsReported(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         incomeStatementAsReportedService.param("symbol", symbol);
         incomeStatementAsReportedService.param("period", period.orElse("annual"));
         incomeStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return incomeStatementAsReportedService.download();
     }
 
-    public synchronized FmpBalanceSheetStatement[] balanceSheet(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpBalanceSheetStatement[] balanceSheet(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         balanceSheetStatementService.param("symbol", symbol);
         balanceSheetStatementService.param("period", period.orElse("annual"));
         balanceSheetStatementService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] balanceSheetAsReported(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpFinancialStatementAsReported[] balanceSheetAsReported(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         balanceSheetStatementAsReportedService.param("symbol", symbol);
         balanceSheetStatementAsReportedService.param("period", period.orElse("annual"));
         balanceSheetStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementAsReportedService.download();
     }
 
-    public synchronized FmpCashFlowStatement[] cashFlow(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpCashFlowStatement[] cashFlow(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         cashFlowStatementService.param("symbol", symbol);
         cashFlowStatementService.param("period", period.orElse("annual"));
         cashFlowStatementService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] cashFlowAsReported(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpFinancialStatementAsReported[] cashFlowAsReported(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         cashFlowStatementAsReportedService.param("symbol", symbol);
         cashFlowStatementAsReportedService.param("period", period.orElse("annual"));
         cashFlowStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementAsReportedService.download();
     }
 
-    public synchronized FmpFinancialGrowth[] financialGrowth(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpFinancialGrowth[] financialGrowth(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         financialGrowthService.param("symbol", symbol);
         financialGrowthService.param("period", period.orElse("annual"));
         financialGrowthService.param("limit", limit.orElse(DEFAULT_LIMIT));
@@ -139,21 +147,24 @@ public class FmpStatementClient {
         return keyMetricTtmService.download();
     }
 
-    public synchronized FmpEnterpriseValue[] enterpriseValues(String symbol, Optional<String> period, Optional<Integer> limit) {
+    public synchronized FmpEnterpriseValue[] enterpriseValues(
+            String symbol, Optional<String> period, Optional<Integer> limit) {
         enterpriseValuesService.param("symbol", symbol);
         enterpriseValuesService.param("period", period.orElse("annual"));
         enterpriseValuesService.param("limit", limit.orElse(DEFAULT_LIMIT));
         return enterpriseValuesService.download();
     }
 
-    public synchronized FmpRevenueGeographicSegmentation[] revenueGeographicSegmentations(String symbol, Optional<String> period, Optional<String> structure) {
+    public synchronized FmpRevenueGeographicSegmentation[] revenueGeographicSegmentations(
+            String symbol, Optional<String> period, Optional<String> structure) {
         revenueGeographicSegmentationService.param("symbol", symbol);
         revenueGeographicSegmentationService.param("period", period.orElse("annual"));
         revenueGeographicSegmentationService.param("structure", structure.orElse("flat"));
         return revenueGeographicSegmentationService.download();
     }
 
-    public synchronized FmpRevenueProductSegmentation[] revenueProductSegmentations(String symbol, Optional<String> period, Optional<String> structure) {
+    public synchronized FmpRevenueProductSegmentation[] revenueProductSegmentations(
+            String symbol, Optional<String> period, Optional<String> structure) {
         revenueProductSegmentationService.param("symbol", symbol);
         revenueProductSegmentationService.param("period", period.orElse("annual"));
         revenueProductSegmentationService.param("structure", structure.orElse("flat"));

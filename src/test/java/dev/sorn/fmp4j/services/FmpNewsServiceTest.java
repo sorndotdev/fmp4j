@@ -1,5 +1,13 @@
 package dev.sorn.fmp4j.services;
 
+import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
+import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
+import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static java.util.stream.IntStream.range;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.NewsTestData;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -8,13 +16,6 @@ import java.util.Set;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
-import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
-import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.stream.IntStream.range;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FmpNewsServiceTest implements NewsTestData {
     private final HttpClientStub httpStub = httpClientStub();
@@ -59,7 +60,6 @@ class FmpNewsServiceTest implements NewsTestData {
         assertEquals(Set.of("from", "to", "page", "limit"), params);
     }
 
-
     @ParameterizedTest
     @CsvSource({
         "crypto,BTCUSD",
@@ -71,9 +71,9 @@ class FmpNewsServiceTest implements NewsTestData {
         var service = new FmpNewsService(FMP_CONFIG, http, type);
         service.param("symbols", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/news/%s/?symbols=%s.json", type, symbol))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource("stable/news/%s/?symbols=%s.json", type, symbol))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();

@@ -19,9 +19,7 @@ public class FmpSearchClient {
     protected final FmpService<FmpSearchByIsin[]> fmpSearchByIsinService;
     protected final FmpService<FmpSearchByCusip[]> fmpSearchByCusipService;
 
-
-    public FmpSearchClient(FmpConfig fmpConfig,
-                           FmpHttpClient fmpHttpClient) {
+    public FmpSearchClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpSearchByIsinService = new FmpSearchByIsinService(fmpConfig, fmpHttpClient);
         this.fmpSearchByNameService = new FmpSearchByNameService(fmpConfig, fmpHttpClient);
         this.fmpSearchBySymbolService = new FmpSearchBySymbolService(fmpConfig, fmpHttpClient);
@@ -47,5 +45,4 @@ public class FmpSearchClient {
         fmpSearchBySymbolService.param("query", query);
         return fmpSearchBySymbolService.download();
     }
-
 }

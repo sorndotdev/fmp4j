@@ -1,11 +1,12 @@
 package dev.sorn.fmp4j.models;
 
-import java.io.IOException;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.TestUtils.deserialize;
 import static dev.sorn.fmp4j.TestUtils.serialize;
 import static dev.sorn.fmp4j.TestUtils.verifySerialization;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
+import org.junit.jupiter.api.Test;
 
 class FmpStockTest {
     @Test

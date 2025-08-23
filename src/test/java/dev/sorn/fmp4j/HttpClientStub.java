@@ -1,5 +1,8 @@
 package dev.sorn.fmp4j;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +18,6 @@ import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.apache.hc.core5.http.protocol.HttpContext;
 import org.junit.jupiter.api.BeforeEach;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * <a href="https://chat.deepseek.com">https://chat.deepseek.com</a>
@@ -78,9 +79,7 @@ public class HttpClientStub implements HttpClient {
         HttpEntity entity = mock(HttpEntity.class);
 
         try {
-            InputStream content = new ByteArrayInputStream(
-                config.body.getBytes(StandardCharsets.UTF_8)
-            );
+            InputStream content = new ByteArrayInputStream(config.body.getBytes(StandardCharsets.UTF_8));
             when(entity.getContent()).thenReturn(content);
             when(entity.getContentLength()).thenReturn((long) config.body.getBytes().length);
             when(entity.getContentType()).thenReturn(config.contentType);
@@ -119,7 +118,8 @@ public class HttpClientStub implements HttpClient {
     }
 
     @Override
-    public <T> T execute(ClassicHttpRequest request, HttpClientResponseHandler<? extends T> responseHandler) throws IOException {
+    public <T> T execute(ClassicHttpRequest request, HttpClientResponseHandler<? extends T> responseHandler)
+            throws IOException {
         try {
             return responseHandler.handleResponse(createResponse());
         } catch (HttpException e) {
@@ -128,7 +128,9 @@ public class HttpClientStub implements HttpClient {
     }
 
     @Override
-    public <T> T execute(ClassicHttpRequest request, HttpContext context, HttpClientResponseHandler<? extends T> responseHandler) throws IOException {
+    public <T> T execute(
+            ClassicHttpRequest request, HttpContext context, HttpClientResponseHandler<? extends T> responseHandler)
+            throws IOException {
         try {
             return responseHandler.handleResponse(createResponse());
         } catch (HttpException e) {
@@ -137,7 +139,9 @@ public class HttpClientStub implements HttpClient {
     }
 
     @Override
-    public <T> T execute(HttpHost target, ClassicHttpRequest request, HttpClientResponseHandler<? extends T> responseHandler) throws IOException {
+    public <T> T execute(
+            HttpHost target, ClassicHttpRequest request, HttpClientResponseHandler<? extends T> responseHandler)
+            throws IOException {
         try {
             return responseHandler.handleResponse(createResponse());
         } catch (HttpException e) {
@@ -146,7 +150,12 @@ public class HttpClientStub implements HttpClient {
     }
 
     @Override
-    public <T> T execute(HttpHost target, ClassicHttpRequest request, HttpContext context, HttpClientResponseHandler<? extends T> responseHandler) throws IOException {
+    public <T> T execute(
+            HttpHost target,
+            ClassicHttpRequest request,
+            HttpContext context,
+            HttpClientResponseHandler<? extends T> responseHandler)
+            throws IOException {
         try {
             return responseHandler.handleResponse(createResponse());
         } catch (HttpException e) {

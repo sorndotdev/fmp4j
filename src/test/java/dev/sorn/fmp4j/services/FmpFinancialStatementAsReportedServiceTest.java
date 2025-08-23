@@ -1,5 +1,13 @@
 package dev.sorn.fmp4j.services;
 
+import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
+import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
+import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static java.util.stream.IntStream.range;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import dev.sorn.fmp4j.FinancialStatementAsReportedTestData;
 import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -11,13 +19,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
-import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
-import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.cfg.FmpConfigImpl.FMP_CONFIG;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.stream.IntStream.range;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FmpFinancialStatementAsReportedServiceTest implements FinancialStatementAsReportedTestData {
     private final HttpClientStub httpStub = httpClientStub();
@@ -70,9 +71,11 @@ class FmpFinancialStatementAsReportedServiceTest implements FinancialStatementAs
         var limit = 2;
         service.param("symbol", symbol);
         httpStub.configureResponse()
-            .body(jsonTestResource("stable/%s-statement-as-reported/?symbol=%s&period=%s&limit=%d.json", type, symbol, period, limit))
-            .statusCode(200)
-            .apply();
+                .body(jsonTestResource(
+                        "stable/%s-statement-as-reported/?symbol=%s&period=%s&limit=%d.json",
+                        type, symbol, period, limit))
+                .statusCode(200)
+                .apply();
 
         // when
         var result = service.download();
@@ -86,13 +89,7 @@ class FmpFinancialStatementAsReportedServiceTest implements FinancialStatementAs
         var reports = List.of("income", "balance-sheet", "cash-flow");
         var symbols = List.of("KO", "O");
         var periods = List.of("annual", "quarter");
-        return reports.stream()
-            .flatMap(report ->
-                symbols.stream()
-                    .flatMap(company ->
-                        periods.stream()
-                            .map(period -> Arguments.of(report, company, period))
-                    )
-            );
+        return reports.stream().flatMap(report -> symbols.stream()
+                .flatMap(company -> periods.stream().map(period -> Arguments.of(report, company, period))));
     }
 }

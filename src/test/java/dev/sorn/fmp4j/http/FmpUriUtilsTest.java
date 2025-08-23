@@ -1,10 +1,11 @@
 package dev.sorn.fmp4j.http;
 
-import java.util.Map;
-import org.junit.jupiter.api.Test;
 import static dev.sorn.fmp4j.http.FmpUriUtils.uri;
 import static dev.sorn.fmp4j.http.FmpUriUtils.uriWithParams;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Map;
+import org.junit.jupiter.api.Test;
 
 class FmpUriUtilsTest {
     @Test

@@ -10,9 +10,9 @@ import java.io.IOException;
 public final class FmpJsonDeserializerImpl implements FmpJsonDeserializer {
     public static final FmpJsonDeserializerImpl FMP_JSON_DESERIALIZER = new FmpJsonDeserializerImpl();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-        .registerModule(new JavaTimeModule());
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+            .registerModule(new JavaTimeModule());
 
     private FmpJsonDeserializerImpl() {
         // prevent direct instantiation
@@ -22,7 +22,8 @@ public final class FmpJsonDeserializerImpl implements FmpJsonDeserializer {
         try {
             return OBJECT_MAPPER.readValue(json, type);
         } catch (IOException e) {
-            throw new FmpJsonException(e, "Failed to deserialize JSON to '%s': %s", type.getType().getTypeName(), json);
+            throw new FmpJsonException(
+                    e, "Failed to deserialize JSON to '%s': %s", type.getType().getTypeName(), json);
         }
     }
 }

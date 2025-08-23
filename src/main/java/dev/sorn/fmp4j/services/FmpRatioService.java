@@ -1,16 +1,14 @@
 package dev.sorn.fmp4j.services;
 
+import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpRatio;
 import java.util.Set;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 
 public class FmpRatioService extends FmpService<FmpRatio[]> {
-    public FmpRatioService(
-        FmpConfig cfg,
-        FmpHttpClient http
-    ) {
+    public FmpRatioService(FmpConfig cfg, FmpHttpClient http) {
         super(cfg, http, typeRef(FmpRatio[].class));
     }
 

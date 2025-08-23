@@ -9,7 +9,6 @@ import dev.sorn.fmp4j.services.FmpHistoricalChartService;
 import dev.sorn.fmp4j.services.FmpHistoricalPriceEodFullService;
 import dev.sorn.fmp4j.services.FmpHistoricalPriceEodLightService;
 import dev.sorn.fmp4j.services.FmpService;
-
 import java.util.Optional;
 
 public class FmpChartClient {
@@ -23,9 +22,7 @@ public class FmpChartClient {
     protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1HourService;
     protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService4HourService;
 
-
-    public FmpChartClient(FmpConfig fmpConfig,
-                          FmpHttpClient fmpHttpClient) {
+    public FmpChartClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpHistoricalPriceEodLightService = new FmpHistoricalPriceEodLightService(fmpConfig, fmpHttpClient);
         this.fmpHistoricalPriceEodFullService = new FmpHistoricalPriceEodFullService(fmpConfig, fmpHttpClient);
         this.fmpHistoricalChartService1MinService = new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "1min");
@@ -36,21 +33,24 @@ public class FmpChartClient {
         this.fmpHistoricalChartService4HourService = new FmpHistoricalChartService(fmpConfig, fmpHttpClient, "4hour");
     }
 
-    public synchronized FmpHistoricalPriceEodLight[] historicalPriceEodLight(String symbol, Optional<String> from, Optional<String> to) {
+    public synchronized FmpHistoricalPriceEodLight[] historicalPriceEodLight(
+            String symbol, Optional<String> from, Optional<String> to) {
         fmpHistoricalPriceEodLightService.param("symbol", symbol);
         from.ifPresent(date -> fmpHistoricalPriceEodLightService.param("from", date));
         to.ifPresent(date -> fmpHistoricalPriceEodLightService.param("to", date));
         return fmpHistoricalPriceEodLightService.download();
     }
 
-    public synchronized FmpHistoricalPriceEodFull[] historicalPriceEodFull(String symbol, Optional<String> from, Optional<String> to) {
+    public synchronized FmpHistoricalPriceEodFull[] historicalPriceEodFull(
+            String symbol, Optional<String> from, Optional<String> to) {
         fmpHistoricalPriceEodFullService.param("symbol", symbol);
         from.ifPresent(date -> fmpHistoricalPriceEodFullService.param("from", date));
         to.ifPresent(date -> fmpHistoricalPriceEodFullService.param("to", date));
         return fmpHistoricalPriceEodFullService.download();
     }
 
-    public synchronized FmpHistoricalChart[] historical(String interval, String symbol, Optional<String> from, Optional<String> to) {
+    public synchronized FmpHistoricalChart[] historical(
+            String interval, String symbol, Optional<String> from, Optional<String> to) {
         return switch (interval) {
             case "1min" -> {
                 fmpHistoricalChartService1MinService.param("symbol", symbol);

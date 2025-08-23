@@ -1,5 +1,19 @@
 package dev.sorn.fmp4j;
 
+import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
+import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static java.lang.String.format;
+import static java.util.Collections.emptySet;
+import static java.util.stream.IntStream.range;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -49,19 +63,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
-import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.lang.String.format;
-import static java.util.Collections.emptySet;
-import static java.util.stream.IntStream.range;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class FmpClientTest {
     private static final String BASE_URL = "https://financialmodelingprep.com/stable";
@@ -241,7 +242,11 @@ class FmpClientTest {
         var result = fmpClient.calendar().earnings();
 
         // then
-        assertValidResult(result, 4, FmpEarningsCalendar.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
+        assertValidResult(
+                result,
+                4,
+                FmpEarningsCalendar.class,
+                Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
     }
 
     @Test
@@ -260,7 +265,8 @@ class FmpClientTest {
         var result = fmpClient.calendar().earnings(symbol);
 
         // then
-        assertValidResult(result, 4, FmpEarning.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
+        assertValidResult(
+                result, 4, FmpEarning.class, Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated"));
     }
 
     @Test
@@ -306,14 +312,10 @@ class FmpClientTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "1min",
-        "5min",
-        "15min",
-        "30min",
-        "1hour",
-        "4hour",
-    })
+    @ValueSource(
+            strings = {
+                "1min", "5min", "15min", "30min", "1hour", "4hour",
+            })
     void historicalChart(String interval) {
         // given
         var typeRef = typeRef(FmpHistoricalChart[].class);
@@ -497,13 +499,16 @@ class FmpClientTest {
         var result = fmpClient.statement().financialGrowth(symbol, Optional.of(period), Optional.of(limit));
 
         // then
-        assertValidResult(result, limit, FmpFinancialGrowth.class, Set.of(
-            "ebitdaGrowth",
-            "growthCapitalExpenditure",
-            "tenYBottomLineNetIncomeGrowthPerShare",
-            "fiveYBottomLineNetIncomeGrowthPerShare",
-            "threeYBottomLineNetIncomeGrowthPerShare"
-        ));
+        assertValidResult(
+                result,
+                limit,
+                FmpFinancialGrowth.class,
+                Set.of(
+                        "ebitdaGrowth",
+                        "growthCapitalExpenditure",
+                        "tenYBottomLineNetIncomeGrowthPerShare",
+                        "fiveYBottomLineNetIncomeGrowthPerShare",
+                        "threeYBottomLineNetIncomeGrowthPerShare"));
     }
 
     @ParameterizedTest
@@ -587,10 +592,10 @@ class FmpClientTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "annual",
-        "quarter",
-    })
+    @ValueSource(
+            strings = {
+                "annual", "quarter",
+            })
     void enterpriseValues(String period) {
         // given
         var symbol = "AAPL";
@@ -625,7 +630,8 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.statement().revenueProductSegmentations(symbol, Optional.of(period), Optional.of(structure));
+        var result =
+                fmpClient.statement().revenueProductSegmentations(symbol, Optional.of(period), Optional.of(structure));
 
         // then
         assertValidResult(result, expectedCount, FmpRevenueProductSegmentation.class, Set.of("reportedCurrency"));
@@ -646,7 +652,9 @@ class FmpClientTest {
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
-        var result = fmpClient.statement().revenueGeographicSegmentations(symbol, Optional.of(period), Optional.of(structure));
+        var result = fmpClient
+                .statement()
+                .revenueGeographicSegmentations(symbol, Optional.of(period), Optional.of(structure));
 
         // then
         assertValidResult(result, expectedCount, FmpRevenueGeographicSegmentation.class, Set.of("reportedCurrency"));
@@ -877,7 +885,8 @@ class FmpClientTest {
         var uri = buildUri(endpoint);
         var headers = defaultHeaders();
         var params = buildParams(Map.of("symbol", symbol, "from", from, "to", to, "page", page, "limit", limit));
-        var file = format("stable/%s/?symbol=%s&from=%s&to=%s&page=%d&limit=%d.json", endpoint, symbol, from, to, page, limit);
+        var file = format(
+                "stable/%s/?symbol=%s&from=%s&to=%s&page=%d&limit=%d.json", endpoint, symbol, from, to, page, limit);
 
         // when
         mockHttpGet(uri, headers, params, file, typeRef);
@@ -904,7 +913,8 @@ class FmpClientTest {
         };
     }
 
-    private <T> void mockHttpGet(URI uri, Map<String, String> headers, Map<String, Object> params, String file, TypeReference<T> typeRef) {
+    private <T> void mockHttpGet(
+            URI uri, Map<String, String> headers, Map<String, Object> params, String file, TypeReference<T> typeRef) {
         when(fmpHttpClient.get(any(), eq(uri), eq(headers), eq(params))).thenReturn(jsonTestResource(typeRef, file));
     }
 
@@ -912,7 +922,8 @@ class FmpClientTest {
         assertValidResult(result, expectedLength, expectedType, emptySet());
     }
 
-    private <T> void assertValidResult(T[] result, int expectedLength, Class<?> expectedType, Set<String> ignoreFields) {
+    private <T> void assertValidResult(
+            T[] result, int expectedLength, Class<?> expectedType, Set<String> ignoreFields) {
         assertNotNull(result, "result was null, likely a missing stub");
         assertEquals(expectedLength, result.length);
         range(0, expectedLength).forEach(i -> assertInstanceOf(expectedType, result[i]));
