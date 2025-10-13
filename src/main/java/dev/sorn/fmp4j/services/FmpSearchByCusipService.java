@@ -1,12 +1,12 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpCusip;
+import java.util.Map;
 
 public class FmpSearchByCusipService extends FmpService<FmpSearchByCusip[]> {
     public FmpSearchByCusipService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +19,12 @@ public class FmpSearchByCusipService extends FmpService<FmpSearchByCusip[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("cusip");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("cusip", FmpCusip.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }

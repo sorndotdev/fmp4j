@@ -5,7 +5,9 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpHistoricalPriceEodFull;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 public class FmpHistoricalPriceEodFullService extends FmpService<FmpHistoricalPriceEodFull[]> {
     public FmpHistoricalPriceEodFullService(FmpConfig cfg, FmpHttpClient http) {
@@ -18,12 +20,12 @@ public class FmpHistoricalPriceEodFullService extends FmpService<FmpHistoricalPr
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("symbol");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("symbol", FmpSymbol.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return Set.of("from", "to");
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of("from", LocalDateTime.class, "to", LocalDateTime.class);
     }
 }

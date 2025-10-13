@@ -5,7 +5,6 @@ import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import java.net.URI;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class FmpService<R> {
@@ -27,19 +26,33 @@ public abstract class FmpService<R> {
         return URI.create(cfg.fmpBaseUrl() + relativeUrl());
     }
 
-    protected abstract Set<String> requiredParams();
+    protected abstract Map<String, Class<?>> requiredParams();
 
-    protected abstract Set<String> optionalParams();
+    protected abstract Map<String, Class<?>> optionalParams();
 
     protected R filter(R r) {
         return r;
     }
 
-    public final void param(String key, Object value) {
-        if (!requiredParams().contains(key) && !optionalParams().contains(key)) {
+    private void validateParamKey(String key) {
+        if (!requiredParams().containsKey(key) && !optionalParams().containsKey(key)) {
             throw new FmpServiceException("'%s' is not a recognized query param for endpoint [%s]", key, url());
         }
+    }
+
+    public final void param(String key, Object value) {
+        validateParamKey(key);
+        validateParamType(key, value);
         params.put(key, value);
+    }
+
+    private void validateParamType(String key, Object value) {
+        var expectedClass = requiredParams().getOrDefault(key, optionalParams().get(key));
+        if (!expectedClass.isInstance(value)) {
+            throw new FmpServiceException(
+                    "'%s' is not a valid type for query param [%s] for endpoint [%s]. Expected type is [%s]",
+                    value.getClass(), key, url(), expectedClass.getSimpleName());
+        }
     }
 
     protected final Map<String, String> headers() {
@@ -48,7 +61,7 @@ public abstract class FmpService<R> {
 
     public final R download() {
         final var required = requiredParams();
-        for (final var req : required) {
+        for (final var req : required.keySet()) {
             if (!params.containsKey(req)) {
                 throw new FmpServiceException("'%s' is a required query param for endpoint [%s]", req, url());
             }

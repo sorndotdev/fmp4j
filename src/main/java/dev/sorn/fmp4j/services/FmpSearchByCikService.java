@@ -1,12 +1,12 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSearchByCik;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpCik;
+import java.util.Map;
 
 public class FmpSearchByCikService extends FmpService<FmpSearchByCik[]> {
     public FmpSearchByCikService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +19,12 @@ public class FmpSearchByCikService extends FmpService<FmpSearchByCik[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("cik");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("cik", FmpCik.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }

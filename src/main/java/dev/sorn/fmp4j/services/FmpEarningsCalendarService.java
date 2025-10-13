@@ -1,12 +1,11 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpEarningsCalendar;
-import java.util.Set;
+import java.util.Map;
 
 public class FmpEarningsCalendarService extends FmpService<FmpEarningsCalendar[]> {
     public FmpEarningsCalendarService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +18,12 @@ public class FmpEarningsCalendarService extends FmpService<FmpEarningsCalendar[]
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return emptySet();
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of();
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }

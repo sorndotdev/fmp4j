@@ -1,12 +1,12 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpTreasuryRate;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 public class FmpTreasuryRatesService extends FmpService<FmpTreasuryRate[]> {
     public FmpTreasuryRatesService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +19,12 @@ public class FmpTreasuryRatesService extends FmpService<FmpTreasuryRate[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("from", "to");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("from", LocalDateTime.class, "to", LocalDateTime.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }
