@@ -3,6 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.lang.String.format;
 import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -15,9 +16,11 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpPartialQuote;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import dev.sorn.fmp4j.types.FmpSymbol;
 import org.junit.jupiter.api.Test;
 
 class FmpPartialQuoteServiceTest implements QuoteTestData {
@@ -40,7 +43,7 @@ class FmpPartialQuoteServiceTest implements QuoteTestData {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("symbol"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -49,13 +52,14 @@ class FmpPartialQuoteServiceTest implements QuoteTestData {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        service.param("symbol", "AAPL");
+        var symbol = symbol("AAPL");
+        service.param("symbol", symbol);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/quote-short/?symbol=AAPL.json"))
                 .statusCode(200)

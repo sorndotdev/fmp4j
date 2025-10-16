@@ -4,6 +4,7 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpIsin.isin;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +15,9 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchByIsin;
+import java.util.Map;
 import java.util.Set;
+import dev.sorn.fmp4j.types.FmpIsin;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchByIsinServiceTest {
@@ -37,7 +40,7 @@ class FmpSearchByIsinServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("isin"), params);
+        assertEquals(Map.of("isin", FmpIsin.class), params);
     }
 
     @Test
@@ -46,13 +49,13 @@ class FmpSearchByIsinServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var isin = "NL0012969182";
+        var isin = isin( "NL0012969182");
         service.param("isin", isin);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-isin/?isin=%s.json", isin))

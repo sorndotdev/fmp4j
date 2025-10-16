@@ -13,7 +13,9 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchByCik;
+import java.util.Map;
 import java.util.Set;
+import dev.sorn.fmp4j.types.FmpCik;
 import org.junit.jupiter.api.Test;
 
 public class FmpSearchBycikServiceTest {
@@ -36,7 +38,7 @@ public class FmpSearchBycikServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("cik"), params);
+        assertEquals(Map.of("cik", FmpCik.class), params);
     }
 
     @Test
@@ -45,13 +47,13 @@ public class FmpSearchBycikServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var cik = "0000320193";
+        var cik = FmpCik.cik("0000320193");
         service.param("cik", cik);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-cik/?cik=%s.json", cik))

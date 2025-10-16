@@ -7,7 +7,7 @@ import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpHistoricalChart;
 import dev.sorn.fmp4j.types.FmpInterval;
 import dev.sorn.fmp4j.types.FmpSymbol;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FmpHistoricalChartService extends FmpService<FmpHistoricalChart[]> {
@@ -30,6 +30,6 @@ public class FmpHistoricalChartService extends FmpService<FmpHistoricalChart[]> 
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("from", LocalDateTime.class, "to", LocalDateTime.class);
+        return Map.of("from", LocalDate.class, "to", LocalDate.class);
     }
 }

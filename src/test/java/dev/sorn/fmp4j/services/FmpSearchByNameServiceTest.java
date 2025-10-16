@@ -14,6 +14,7 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchByName;
+import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,7 @@ class FmpSearchByNameServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("query"), params);
+        assertEquals(Map.of("query", String.class), params);
     }
 
     @Test
@@ -46,7 +47,7 @@ class FmpSearchByNameServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test

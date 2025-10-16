@@ -8,7 +8,7 @@ import dev.sorn.fmp4j.models.FmpNews;
 import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FmpNewsService extends FmpService<FmpNews[]> {
@@ -31,8 +31,8 @@ public class FmpNewsService extends FmpService<FmpNews[]> {
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("from", LocalDateTime.class,
-                "to", LocalDateTime.class,
+        return Map.of("from", LocalDate.class,
+                "to", LocalDate.class,
                 "page", FmpPage.class ,
                 "limit", FmpLimit.class);
     }

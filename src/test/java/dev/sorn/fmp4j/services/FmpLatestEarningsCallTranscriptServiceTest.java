@@ -4,6 +4,8 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpLimit.limit;
+import static dev.sorn.fmp4j.types.FmpPage.page;
 import static java.lang.String.format;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
@@ -17,9 +19,12 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpLatestEarningsCallTranscript;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPage;
 import org.junit.jupiter.api.Test;
 
 class FmpLatestEarningsCallTranscriptServiceTest implements LatestEarningsCallTranscriptTestData {
@@ -43,7 +48,7 @@ class FmpLatestEarningsCallTranscriptServiceTest implements LatestEarningsCallTr
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("limit", "page"), params);
+        assertEquals(Map.of("limit", FmpLimit.class, "page", FmpPage.class), params);
     }
 
     @Test
@@ -52,7 +57,7 @@ class FmpLatestEarningsCallTranscriptServiceTest implements LatestEarningsCallTr
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
@@ -61,8 +66,8 @@ class FmpLatestEarningsCallTranscriptServiceTest implements LatestEarningsCallTr
         var limit = 2;
         var page = "0";
         var endpoint = "earning-call-transcript-latest";
-        service.param("limit", limit);
-        service.param("page", page);
+        service.param("limit", limit(limit));
+        service.param("page", page(page));
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/%s/?page=%s&limit=%s.json", endpoint, page, limit))
                 .statusCode(200)

@@ -4,6 +4,7 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +14,11 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpRevenueProductSegmentation;
+import java.util.Map;
 import java.util.Set;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpStructure;
+import dev.sorn.fmp4j.types.FmpSymbol;
 import org.junit.jupiter.api.Test;
 
 class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmentationTestData {
@@ -37,7 +42,7 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("symbol"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -46,13 +51,13 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
         var params = service.optionalParams();
 
         // then
-        assertEquals(Set.of("period", "structure"), params);
+        assertEquals(Map.of("period", FmpPeriod.class, "structure", FmpStructure.class), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var symbol = "AAPL";
+        var symbol = symbol("AAPL");
         service.param("symbol", symbol);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/revenue-product-segmentation/?symbol=%s.json", symbol))
@@ -71,7 +76,7 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
     @Test
     void successful_download_annual_flat() {
         // given
-        var symbol = "AAPL";
+        var symbol = symbol("AAPL");
         var period = "annual";
         var structure = "flat";
         service.param("symbol", symbol);
@@ -93,7 +98,7 @@ class FmpRevenueProductSegmentationServiceTest implements RevenueProductSegmenta
     @Test
     void successful_download_quarter_flat() {
         // given
-        var symbol = "AAPL";
+        var symbol = symbol("AAPL");
         var period = "quarter";
         var structure = "flat";
         service.param("symbol", symbol);

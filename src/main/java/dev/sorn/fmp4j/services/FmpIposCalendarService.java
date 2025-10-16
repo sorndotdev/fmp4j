@@ -5,7 +5,7 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpIposCalendar;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FmpIposCalendarService extends FmpService<FmpIposCalendar[]> {
@@ -25,6 +25,6 @@ public class FmpIposCalendarService extends FmpService<FmpIposCalendar[]> {
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("from", LocalDateTime.class, "to", LocalDateTime.class);
+        return Map.of("from", LocalDate.class, "to", LocalDate.class);
     }
 }

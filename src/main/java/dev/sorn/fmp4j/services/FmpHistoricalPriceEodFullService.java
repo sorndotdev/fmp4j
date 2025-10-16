@@ -6,7 +6,7 @@ import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpHistoricalPriceEodFull;
 import dev.sorn.fmp4j.types.FmpSymbol;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FmpHistoricalPriceEodFullService extends FmpService<FmpHistoricalPriceEodFull[]> {
@@ -26,6 +26,6 @@ public class FmpHistoricalPriceEodFullService extends FmpService<FmpHistoricalPr
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("from", LocalDateTime.class, "to", LocalDateTime.class);
+        return Map.of("from", LocalDate.class, "to", LocalDate.class);
     }
 }

@@ -14,6 +14,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpTreasuryRate;
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +39,7 @@ class FmpTreasuryRatesServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("from", "to"), params);
+        assertEquals(Map.of("from", LocalDate.class, "to", LocalDate.class), params);
     }
 
     @Test
@@ -46,14 +48,14 @@ class FmpTreasuryRatesServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var from = "2024-12-30";
-        var to = "2025-01-01";
+        var from = LocalDate.parse("2024-12-30");
+        var to = LocalDate.parse("2025-01-01");
         service.param("from", from);
         service.param("to", to);
         httpStub.configureResponse()

@@ -15,6 +15,7 @@ import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpEtf;
 import org.junit.jupiter.api.Test;
+import java.util.Map;
 
 class FmpEtfListServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
@@ -36,7 +37,7 @@ class FmpEtfListServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
@@ -45,7 +46,7 @@ class FmpEtfListServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test

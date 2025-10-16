@@ -4,8 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import java.net.URI;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public abstract class FmpService<R> {
     protected final FmpConfig cfg;
@@ -47,12 +52,33 @@ public abstract class FmpService<R> {
     }
 
     private void validateParamType(String key, Object value) {
-        var expectedClass = requiredParams().getOrDefault(key, optionalParams().get(key));
-        if (!expectedClass.isInstance(value)) {
+        Class<?> expectedClass = getExpectedClass(key);
+        Optional<? extends  Class<?>> actualClass = Optional.of(value.getClass());
+
+        if (value instanceof Collection<?> collection) {
+            // assuming all elements are the same type
+            actualClass = getCollectionElementType(collection);
+        }
+
+        if (value instanceof Optional<?> optional) {
+            actualClass = optional.map(Object::getClass);
+        }
+
+        if (actualClass.isPresent() && actualClass.get() != expectedClass) {
             throw new FmpServiceException(
                     "'%s' is not a valid type for query param [%s] for endpoint [%s]. Expected type is [%s]",
                     value.getClass(), key, url(), expectedClass.getSimpleName());
         }
+    }
+
+    private Class<?> getExpectedClass(String key) {
+        return requiredParams().getOrDefault(key, optionalParams().get(key));
+    }
+
+    private Optional<? extends Class<?>> getCollectionElementType(Collection<?> collection) {
+        return collection.stream()
+                .map(Object::getClass)
+                .findFirst();
     }
 
     protected final Map<String, String> headers() {

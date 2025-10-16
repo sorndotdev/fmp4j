@@ -8,7 +8,7 @@ import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
 import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilingsSearchBySymbol[]> {
@@ -23,7 +23,7 @@ public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilings
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("symbol", FmpSymbol.class, "from", LocalDateTime.class, "to", LocalDateTime.class);
+        return Map.of("symbol", FmpSymbol.class, "from", LocalDate.class, "to", LocalDate.class);
     }
 
     @Override
