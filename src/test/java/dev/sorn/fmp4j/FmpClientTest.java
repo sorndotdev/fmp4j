@@ -12,6 +12,7 @@ import static dev.sorn.fmp4j.types.FmpPage.page;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpStructure.FLAT;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.types.FmpYear.year;
 import static java.lang.String.format;
 import static java.lang.String.join;
 import static java.lang.System.setProperty;
@@ -131,6 +132,23 @@ class FmpClientTest {
 
         // then
         assertValidResult(result, 3, FmpSearchByIsin.class);
+    }
+
+    @Test
+    void cashFlowStatementGrowthBulk() {
+        var year = year("2025");
+        var period = period("quarter");
+        var typeRef = typeRef(FmpCashFlowStatementGrowth[].class);
+        var endpoint = "v4/cash-flow-statement-growth-bulk";
+        var uri = buildUri(endpoint);
+        var headers = defaultHeaders();
+        var params = buildParams(Map.of("year", year, "period", period));
+        var file = format("stable/cash-flow-statement-growth-bulk/?year=%s&period=%s.json", year, period);
+
+        mockHttpGet(uri, headers, params, file, typeRef);
+        var result = fmpClient.bulk().cashFlowStatementGrowth(year, period);
+
+        assertValidResult(result, 2, FmpCashFlowStatementGrowth.class);
     }
 
     @Test

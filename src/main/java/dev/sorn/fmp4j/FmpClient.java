@@ -4,6 +4,7 @@ import static dev.sorn.fmp4j.http.FmpHttpClientImpl.FMP_HTTP_CLIENT;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.cfg.FmpConfigImpl;
+import dev.sorn.fmp4j.clients.FmpBulkClient;
 import dev.sorn.fmp4j.clients.FmpCalendarClient;
 import dev.sorn.fmp4j.clients.FmpChartClient;
 import dev.sorn.fmp4j.clients.FmpCompanyClient;
@@ -23,6 +24,7 @@ public class FmpClient {
     protected final FmpHttpClient fmpHttpClient;
 
     // Alphabetical order
+    protected final FmpBulkClient fmpBulkClient;
     protected final FmpCalendarClient fmpCalendarClient;
     protected final FmpChartClient fmpChartClient;
     protected final FmpCompanyClient fmpCompanyClient;
@@ -46,6 +48,7 @@ public class FmpClient {
                 fmpHttpClient,
 
                 // Alphabetical order
+                new FmpBulkClient(fmpConfig, fmpHttpClient),
                 new FmpCalendarClient(fmpConfig, fmpHttpClient),
                 new FmpChartClient(fmpConfig, fmpHttpClient),
                 new FmpCompanyClient(fmpConfig, fmpHttpClient),
@@ -65,6 +68,7 @@ public class FmpClient {
             FmpHttpClient fmpHttpClient,
 
             // Alphabetical order
+            FmpBulkClient fmpBulkClient,
             FmpCalendarClient fmpCalendarClient,
             FmpChartClient fmpChartClient,
             FmpCompanyClient fmpCompanyClient,
@@ -77,21 +81,28 @@ public class FmpClient {
             FmpSearchClient fmpSearchClient,
             FmpSecFilingsSearchClient fmpSecFilingsSearchClient,
             FmpStatementClient fmpStatementClient) {
+        FmpEtfClient fmpEtfClient1;
         // Alphabetical order
         this.fmpConfig = fmpConfig;
         this.fmpHttpClient = fmpHttpClient;
+        this.fmpBulkClient = fmpBulkClient;
         this.fmpCalendarClient = fmpCalendarClient;
         this.fmpChartClient = fmpChartClient;
         this.fmpCompanyClient = fmpCompanyClient;
         this.fmpDirectoryClient = fmpDirectoryClient;
-        this.fmpEtfClient = fmpEtfClient;
         this.fmpEarningsCallTranscriptClient = fmpEarningsCallTranscriptClient;
+        fmpEtfClient1 = fmpEtfClient;
+        this.fmpEtfClient = fmpEtfClient1;
         this.fmpEconomicsClient = fmpEconomicsClient;
         this.fmpNewsClient = fmpNewsClient;
         this.fmpQuoteClient = fmpQuoteClient;
         this.fmpSecFilingsSearchClient = fmpSecFilingsSearchClient;
         this.fmpSearchClient = fmpSearchClient;
         this.fmpStatementClient = fmpStatementClient;
+    }
+
+    public FmpBulkClient bulk() {
+        return fmpBulkClient;
     }
 
     public FmpCalendarClient calendar() {
