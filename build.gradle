@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonCsvVersion}")
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("org.apache.httpcomponents.client5:httpclient5:${apacheHttpComponentsVersion}")
     implementation("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
