@@ -28,4 +28,9 @@ public class FmpCashFlowStatementBulkService extends FmpService<FmpCashFlowState
     protected Map<String, Class<?>> optionalParams() {
         return Map.of();
     }
+
+    @Override
+    protected Map<String, String> headers() {
+        return Map.of("Content-Type", "text/csv");
+    }
 }

@@ -25,15 +25,24 @@ public final class FmpCsvDeserializer implements FmpDeserializer {
 
     private FmpCsvDeserializer() {}
 
+    private String removeByteOrderMark(String content) {
+        if (content.startsWith("\uFEFF")) {
+            return content.substring(1);
+        } else {
+            return content;
+        }
+    }
+
     @Override
     public <T> T deserialize(String content, TypeReference<T> type) {
         try {
+            String cleanedCsv = removeByteOrderMark(content);
             JavaType javaType = CSV_MAPPER.getTypeFactory().constructType(type.getType());
 
             JavaType componentType = javaType.getContentType();
             CsvSchema schema = CsvSchema.emptySchema().withHeader().withNullValue("");
             ObjectReader reader = CSV_MAPPER.readerFor(componentType).with(schema);
-            MappingIterator<?> iterator = reader.readValues(new StringReader(content));
+            MappingIterator<?> iterator = reader.readValues(new StringReader(cleanedCsv));
             var list = iterator.readAll();
 
             Object array = Array.newInstance(componentType.getRawClass(), list.size());

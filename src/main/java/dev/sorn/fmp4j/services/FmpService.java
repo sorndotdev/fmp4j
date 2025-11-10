@@ -69,7 +69,7 @@ public abstract class FmpService<R> {
         }
     }
 
-    protected final Map<String, String> headers() {
+    protected Map<String, String> headers() {
         return Map.of("Content-Type", "application/json");
     }
 
