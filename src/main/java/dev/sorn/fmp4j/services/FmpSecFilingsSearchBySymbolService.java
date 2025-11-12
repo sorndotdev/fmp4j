@@ -5,7 +5,11 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPage;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.time.LocalDate;
+import java.util.Map;
 
 public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilingsSearchBySymbol[]> {
     public FmpSecFilingsSearchBySymbolService(FmpConfig cfg, FmpHttpClient http) {
@@ -18,12 +22,12 @@ public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilings
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("symbol", "from", "to");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("symbol", FmpSymbol.class, "from", LocalDate.class, "to", LocalDate.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return Set.of("page", "limit");
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of("page", FmpPage.class, "limit", FmpLimit.class);
     }
 }

@@ -4,7 +4,7 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.Collections.emptySet;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
@@ -13,7 +13,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchBySymbol;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchBySymbolServiceTest {
@@ -36,7 +37,7 @@ class FmpSearchBySymbolServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("query"), params);
+        assertEquals(Map.of("query", FmpSymbol.class), params);
     }
 
     @Test
@@ -45,13 +46,13 @@ class FmpSearchBySymbolServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void ignores_exchange_full_name_in_response() {
         // given
-        var query = "ADYEN2";
+        var query = symbol("ADYEN2");
         service.param("query", query);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-symbol/?query=%s.json", query))
@@ -68,7 +69,7 @@ class FmpSearchBySymbolServiceTest {
     @Test
     void successful_download() {
         // given
-        var query = "ADYEN";
+        var query = symbol("ADYEN");
         service.param("query", query);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-symbol/?query=%s.json", query))

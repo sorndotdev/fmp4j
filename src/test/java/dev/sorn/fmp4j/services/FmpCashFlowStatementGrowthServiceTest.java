@@ -4,6 +4,7 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +14,10 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -39,7 +43,7 @@ class FmpCashFlowStatementGrowthServiceTest implements CashFlowStatementGrowthTe
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("symbol"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -48,14 +52,14 @@ class FmpCashFlowStatementGrowthServiceTest implements CashFlowStatementGrowthTe
         var params = service.optionalParams();
 
         // then
-        assertEquals(Set.of("period", "limit"), params);
+        assertEquals(Map.of("period", FmpPeriod.class, "limit", FmpLimit.class), params);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"annual", "quarter"})
     void successful_download_with_optional_period_and_limit(String period) {
         // given
-        var symbol = "AAPL";
+        var symbol = symbol("AAPL");
         var limit = 2;
         service.param("symbol", symbol);
         httpStub.configureResponse()

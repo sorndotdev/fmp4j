@@ -4,6 +4,7 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +15,9 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpHistoricalPriceEodLight;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.time.LocalDate;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpHistoricalPriceEodLightServiceTest {
@@ -38,7 +41,7 @@ class FmpHistoricalPriceEodLightServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("symbol"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -47,15 +50,15 @@ class FmpHistoricalPriceEodLightServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Set.of("from", "to"), params);
+        assertEquals(Map.of("from", LocalDate.class, "to", LocalDate.class), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var symbol = "AAPL";
-        var from = "2024-02-22";
-        var to = "2024-02-28";
+        var symbol = symbol("AAPL");
+        var from = LocalDate.parse("2024-02-22");
+        var to = LocalDate.parse("2024-02-28");
         service.param("symbol", symbol);
         service.param("from", from);
         service.param("to", to);

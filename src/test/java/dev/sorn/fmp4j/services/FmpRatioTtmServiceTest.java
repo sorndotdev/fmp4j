@@ -3,7 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static java.util.Collections.emptySet;
+import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dev.sorn.fmp4j.HttpClientStub;
@@ -12,7 +12,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpRatioTtm;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpRatioTtmServiceTest implements RatioTtmTestData {
@@ -35,7 +36,7 @@ class FmpRatioTtmServiceTest implements RatioTtmTestData {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("symbol"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -44,13 +45,13 @@ class FmpRatioTtmServiceTest implements RatioTtmTestData {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var symbol = "AAPL";
+        var symbol = symbol("AAPL");
         service.param("symbol", symbol);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/ratios-ttm/?symbol=%s.json", symbol))

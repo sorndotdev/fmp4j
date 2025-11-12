@@ -5,7 +5,10 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatementGrowth;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 
 public class FmpBalanceSheetStatementGrowthService extends FmpService<FmpBalanceSheetStatementGrowth[]> {
     public FmpBalanceSheetStatementGrowthService(FmpConfig cfg, FmpHttpClient http) {
@@ -18,12 +21,12 @@ public class FmpBalanceSheetStatementGrowthService extends FmpService<FmpBalance
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("symbol");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("symbol", FmpSymbol.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return Set.of("limit", "period");
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of("period", FmpPeriod.class, "limit", FmpLimit.class);
     }
 }

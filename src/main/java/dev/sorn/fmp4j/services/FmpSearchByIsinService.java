@@ -1,12 +1,12 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSearchByIsin;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpIsin;
+import java.util.Map;
 
 public class FmpSearchByIsinService extends FmpService<FmpSearchByIsin[]> {
     public FmpSearchByIsinService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +19,12 @@ public class FmpSearchByIsinService extends FmpService<FmpSearchByIsin[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("isin");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("isin", FmpIsin.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }
