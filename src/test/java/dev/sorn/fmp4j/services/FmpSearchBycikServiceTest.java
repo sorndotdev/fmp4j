@@ -3,8 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static java.util.Collections.emptySet;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
@@ -13,7 +12,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchByCik;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpCik;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class FmpSearchBycikServiceTest {
@@ -36,7 +36,7 @@ public class FmpSearchBycikServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("cik"), params);
+        assertEquals(Map.of("cik", FmpCik.class), params);
     }
 
     @Test
@@ -45,13 +45,13 @@ public class FmpSearchBycikServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var cik = "0000320193";
+        var cik = FmpCik.cik("0000320193");
         service.param("cik", cik);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-cik/?cik=%s.json", cik))

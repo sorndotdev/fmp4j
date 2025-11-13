@@ -2,12 +2,11 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static java.util.Arrays.stream;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpStock;
-import java.util.Set;
+import java.util.Map;
 
 public class FmpStockListService extends FmpService<FmpStock[]> {
     public FmpStockListService(FmpConfig cfg, FmpHttpClient http) {
@@ -20,13 +19,13 @@ public class FmpStockListService extends FmpService<FmpStock[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return emptySet();
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of();
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 
     @Override

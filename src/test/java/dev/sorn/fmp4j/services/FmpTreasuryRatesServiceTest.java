@@ -3,8 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static java.util.Collections.emptySet;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -14,7 +13,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpTreasuryRate;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpTreasuryRatesServiceTest {
@@ -37,7 +37,7 @@ class FmpTreasuryRatesServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("from", "to"), params);
+        assertEquals(Map.of("from", LocalDate.class, "to", LocalDate.class), params);
     }
 
     @Test
@@ -46,14 +46,14 @@ class FmpTreasuryRatesServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var from = "2024-12-30";
-        var to = "2025-01-01";
+        var from = LocalDate.parse("2024-12-30");
+        var to = LocalDate.parse("2025-01-01");
         service.param("from", from);
         service.param("to", to);
         httpStub.configureResponse()

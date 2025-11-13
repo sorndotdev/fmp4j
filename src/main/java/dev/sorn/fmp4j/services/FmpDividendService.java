@@ -1,12 +1,12 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-import static java.util.Collections.emptySet;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpDividend;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 
 public class FmpDividendService extends FmpService<FmpDividend[]> {
     public FmpDividendService(FmpConfig cfg, FmpHttpClient http) {
@@ -19,12 +19,12 @@ public class FmpDividendService extends FmpService<FmpDividend[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("symbol");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("symbol", FmpSymbol.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return emptySet();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }

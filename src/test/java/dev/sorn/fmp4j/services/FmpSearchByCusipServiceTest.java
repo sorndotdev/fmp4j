@@ -3,8 +3,8 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static java.util.Collections.emptySet;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.types.FmpCusip.cusip;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -14,7 +14,8 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpCusip;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchByCusipServiceTest {
@@ -37,7 +38,7 @@ class FmpSearchByCusipServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("cusip"), params);
+        assertEquals(Map.of("cusip", FmpCusip.class), params);
     }
 
     @Test
@@ -46,13 +47,13 @@ class FmpSearchByCusipServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(emptySet(), params);
+        assertEquals(Map.of(), params);
     }
 
     @Test
     void successful_download() {
         // given
-        var cusip = "037833100";
+        var cusip = cusip("037833100");
         service.param("cusip", cusip);
         httpStub.configureResponse()
                 .body(jsonTestResource("stable/search-cusip/?cusip=%s.json", cusip))

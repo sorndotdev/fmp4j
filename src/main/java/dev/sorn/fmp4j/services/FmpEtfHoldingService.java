@@ -5,7 +5,8 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpEtfHolding;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 
 public class FmpEtfHoldingService extends FmpService<FmpEtfHolding[]> {
     public FmpEtfHoldingService(FmpConfig cfg, FmpHttpClient http) {
@@ -18,12 +19,12 @@ public class FmpEtfHoldingService extends FmpService<FmpEtfHolding[]> {
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("symbol");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("symbol", FmpSymbol.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return Set.of();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
 }
