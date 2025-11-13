@@ -145,7 +145,7 @@ class FmpClientTest {
         var typeRef = typeRef(FmpCashFlowStatementGrowth[].class);
         var endpoint = "cash-flow-statement-growth-bulk";
         var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
+        var headers = Map.of("Content-Type", "text/csv");
         var params = buildParams(Map.of("year", year, "period", period));
         var file = format("stable/%s/%%3Fyear=%s&period=%s.csv", endpoint, year, period);
 

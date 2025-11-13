@@ -14,7 +14,10 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
-import java.util.Set;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FmpCashFlowStatementGrowthBulkServiceTest {
@@ -38,7 +41,7 @@ class FmpCashFlowStatementGrowthBulkServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Set.of("year", "period"), params);
+        assertEquals(Map.of("symbol", FmpSymbol.class), params);
     }
 
     @Test
@@ -47,7 +50,7 @@ class FmpCashFlowStatementGrowthBulkServiceTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Set.of(), params);
+        assertEquals(Map.of("period", FmpPeriod.class, "limit", FmpLimit.class), params);
     }
 
     @Test

@@ -7,9 +7,7 @@ import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpYear;
-
 import java.util.Map;
-import java.util.Set;
 
 public class FmpCashFlowStatementGrowthBulkService extends FmpService<FmpCashFlowStatementGrowth[]> {
     public FmpCashFlowStatementGrowthBulkService(FmpConfig cfg, FmpHttpClient http) {
@@ -35,5 +33,4 @@ public class FmpCashFlowStatementGrowthBulkService extends FmpService<FmpCashFlo
     protected Map<String, String> headers() {
         return Map.of("Content-Type", "text/csv");
     }
-
 }

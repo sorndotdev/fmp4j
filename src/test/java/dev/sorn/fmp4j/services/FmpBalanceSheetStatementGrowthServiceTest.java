@@ -58,7 +58,7 @@ class FmpBalanceSheetStatementGrowthServiceTest implements BalanceSheetStatement
     @ValueSource(strings = {"annual", "quarter"})
     void successful_download_with_optional_period_and_limit(String period) {
         // given
-        var symbol = symbol("AAPL");
+        var symbol = "AAPL";
         var limit = 2;
         service.param("symbol", symbol);
         httpStub.configureResponse()
