@@ -3,7 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpYear.year;
 import static java.util.stream.IntStream.range;
@@ -29,7 +29,7 @@ class FmpCashFlowStatementGrowthBulkServiceTest {
         var relativeUrl = service.relativeUrl();
 
         // then
-        assertEquals("/v4/cash-flow-statement-growth-bulk", relativeUrl);
+        assertEquals("/cash-flow-statement-growth-bulk", relativeUrl);
     }
 
     @Test
@@ -58,7 +58,7 @@ class FmpCashFlowStatementGrowthBulkServiceTest {
         service.param("year", year);
         service.param("period", period);
         httpStub.configureResponse()
-                .body(jsonTestResource("stable/cash-flow-statement-growth-bulk/?year=%s&period=%s.json", year, period))
+                .body(jsonTestResource("stable/cash-flow-statement-growth-bulk/?year=%s&period=%s.csv", year, period))
                 .statusCode(200)
                 .apply();
 
@@ -66,7 +66,7 @@ class FmpCashFlowStatementGrowthBulkServiceTest {
         var result = service.download();
 
         // then
-        assertEquals(2, result.length);
+        assertEquals(1, result.length);
         range(0, result.length).forEach(i -> assertAllFieldsNonNull(result[i]));
     }
 }

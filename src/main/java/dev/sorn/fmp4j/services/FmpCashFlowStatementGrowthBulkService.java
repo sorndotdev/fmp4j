@@ -5,6 +5,10 @@ import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpYear;
+
+import java.util.Map;
 import java.util.Set;
 
 public class FmpCashFlowStatementGrowthBulkService extends FmpService<FmpCashFlowStatementGrowth[]> {
@@ -14,16 +18,22 @@ public class FmpCashFlowStatementGrowthBulkService extends FmpService<FmpCashFlo
 
     @Override
     protected String relativeUrl() {
-        return "/v4/cash-flow-statement-growth-bulk";
+        return "/cash-flow-statement-growth-bulk";
     }
 
     @Override
-    protected Set<String> requiredParams() {
-        return Set.of("year", "period");
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of("year", FmpYear.class, "period", FmpPeriod.class);
     }
 
     @Override
-    protected Set<String> optionalParams() {
-        return Set.of();
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
     }
+
+    @Override
+    protected Map<String, String> headers() {
+        return Map.of("Content-Type", "text/csv");
+    }
+
 }

@@ -6,6 +6,8 @@ import static java.util.Collections.emptySet;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpDividendsCalendar;
+
+import java.util.Map;
 import java.util.Set;
 
 public class FmpDividendsCalendarService extends FmpService<FmpDividendsCalendar[]> {
@@ -19,7 +21,7 @@ public class FmpDividendsCalendarService extends FmpService<FmpDividendsCalendar
     }
 
     @Override
-    protected Set<String> requiredParams() {
+    protected Map<String> requiredParams() {
         return emptySet();
     }
 
