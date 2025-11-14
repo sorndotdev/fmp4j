@@ -55,7 +55,6 @@ public abstract class FmpService<R> {
 
         if (value instanceof Collection<?> collection) {
             actualClass = collection.stream().map(Object::getClass).findFirst();
-            ;
         }
 
         if (value instanceof Optional<?> optional) {
@@ -69,7 +68,7 @@ public abstract class FmpService<R> {
         }
     }
 
-    protected final Map<String, String> headers() {
+    protected Map<String, String> headers() {
         return Map.of("Content-Type", "application/json");
     }
 

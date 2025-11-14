@@ -1,10 +1,13 @@
 package dev.sorn.fmp4j.http;
 
+import static dev.sorn.fmp4j.csv.FmpCsvDeserializer.FMP_CSV_DESERIALIZER;
 import static dev.sorn.fmp4j.http.FmpUriUtils.uriWithParams;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static java.util.Objects.requireNonNull;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import dev.sorn.fmp4j.csv.FmpCsvDeserializer;
+import dev.sorn.fmp4j.csv.FmpCsvException;
 import dev.sorn.fmp4j.json.FmpJsonDeserializer;
 import dev.sorn.fmp4j.json.FmpJsonException;
 import dev.sorn.fmp4j.types.FmpApiKey;
@@ -23,15 +26,22 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 public class FmpHttpClientImpl implements FmpHttpClient {
     public static final FmpHttpClient FMP_HTTP_CLIENT = new FmpHttpClientImpl();
     private final HttpClient http;
-    private final FmpJsonDeserializer deserializer;
+    private final FmpJsonDeserializer jsonDeserializer;
+    private final FmpCsvDeserializer csvDeserializer;
 
     private FmpHttpClientImpl() {
-        this(HttpClients.createDefault(), FMP_JSON_DESERIALIZER);
+        this(HttpClients.createDefault(), FMP_JSON_DESERIALIZER, FMP_CSV_DESERIALIZER);
     }
 
-    public FmpHttpClientImpl(HttpClient httpClient, FmpJsonDeserializer deserializer) {
+    public FmpHttpClientImpl(HttpClient httpClient, FmpJsonDeserializer jsonDeserializer) {
+        this(httpClient, jsonDeserializer, FMP_CSV_DESERIALIZER);
+    }
+
+    public FmpHttpClientImpl(
+            HttpClient httpClient, FmpJsonDeserializer jsonDeserializer, FmpCsvDeserializer csvDeserializer) {
         this.http = requireNonNull(httpClient, "'httpClient' is required");
-        this.deserializer = requireNonNull(deserializer, "'deserializer' is required");
+        this.jsonDeserializer = requireNonNull(jsonDeserializer, "'jsonDeserializer' is required");
+        this.csvDeserializer = requireNonNull(csvDeserializer, "'csvDeserializer' is required");
     }
 
     @Override
@@ -46,13 +56,27 @@ public class FmpHttpClientImpl implements FmpHttpClient {
                         "Unauthorized for type [%s], uri [%s], headers [%s], queryParams [%s];\nresponseBody: %s",
                         type.getType(), uri, headers, queryParams, responseBody);
             }
-            return deserializer.fromJson(responseBody, type);
+
+            String contentType = headers != null ? headers.get("Content-Type") : null;
+            if ("text/csv".equals(contentType)) {
+                return csvDeserializer.deserialize(responseBody, type);
+            } else {
+                return jsonDeserializer.deserialize(responseBody, type);
+            }
         } catch (FmpUnauthorizedException e) {
             throw e;
         } catch (FmpJsonException e) {
             throw new FmpHttpException(
                     e,
                     "JSON deserialization failed for type [%s], uri [%s], headers [%s], queryParams [%s]",
+                    type.getType(),
+                    uri,
+                    headers,
+                    queryParams);
+        } catch (FmpCsvException e) {
+            throw new FmpHttpException(
+                    e,
+                    "CSV deserialization failed for type [%s], uri [%s], headers [%s], queryParams [%s]",
                     type.getType(),
                     uri,
                     headers,

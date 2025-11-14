@@ -491,7 +491,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#bulk
 
 |    | Since | Endpoint                               |
 |:--:|:-----:|----------------------------------------|
-| ❌️ |   -   | `/profile-bulk`                        |
+| ✅️ | 0.3.0 | `/profile-bulk`                        |
 | ❌️ |   -   | `/rating-bulk`                         |
 | ❌️ |   -   | `/dcf-bulk`                            |
 | ❌️ |   -   | `/scores-bulk`                         |

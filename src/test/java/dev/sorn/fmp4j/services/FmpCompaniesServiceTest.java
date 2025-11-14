@@ -3,9 +3,8 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.csv.FmpCsvDeserializer.FMP_CSV_DESERIALIZER;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.types.FmpCusip.cusip;
-import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
@@ -13,15 +12,15 @@ import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import dev.sorn.fmp4j.types.FmpCusip;
+import dev.sorn.fmp4j.models.FmpCompany;
+import dev.sorn.fmp4j.types.FmpPart;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class FmpSearchByCusipServiceTest {
+class FmpCompaniesServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpSearchByCusip[]> service = new FmpSearchByCusipService(new FmpConfigImpl(), http);
+    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER, FMP_CSV_DESERIALIZER);
+    private final FmpService<FmpCompany[]> service = new FmpCompaniesService(new FmpConfigImpl(), http);
 
     @Test
     void relative_url() {
@@ -29,7 +28,7 @@ class FmpSearchByCusipServiceTest {
         var relativeUrl = service.relativeUrl();
 
         // then
-        assertEquals("/search-cusip", relativeUrl);
+        assertEquals("/profile-bulk", relativeUrl);
     }
 
     @Test
@@ -38,7 +37,7 @@ class FmpSearchByCusipServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("cusip", FmpCusip.class), params);
+        assertEquals(Map.of("part", FmpPart.class), params);
     }
 
     @Test
@@ -53,10 +52,11 @@ class FmpSearchByCusipServiceTest {
     @Test
     void successful_download() {
         // given
-        var cusip = cusip("037833100");
-        service.param("cusip", cusip);
+        var part = FmpPart.part("0");
+
+        service.param("part", part);
         httpStub.configureResponse()
-                .body(jsonTestResource("stable/search-cusip/?cusip=%s.json", cusip))
+                .body(jsonTestResource("stable/profile-bulk/?part=%s.csv", part))
                 .statusCode(200)
                 .apply();
 
@@ -64,8 +64,8 @@ class FmpSearchByCusipServiceTest {
         var result = service.download();
 
         // then
-        assertEquals(3, result.length);
-        range(0, 3).forEach(i -> assertInstanceOf(FmpSearchByCusip.class, result[i]));
-        range(0, 3).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(1, result.length);
+        assertInstanceOf(FmpCompany.class, result[0]);
+        assertAllFieldsNonNull(result[0]);
     }
 }
