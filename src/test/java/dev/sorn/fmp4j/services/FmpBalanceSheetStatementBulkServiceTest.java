@@ -3,10 +3,13 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
+import static dev.sorn.fmp4j.csv.FmpCsvDeserializer.FMP_CSV_DESERIALIZER;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.types.FmpPeriod.period;
+import static dev.sorn.fmp4j.types.FmpYear.year;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import dev.sorn.fmp4j.BalanceSheetStatementTestData;
 import dev.sorn.fmp4j.HttpClientStub;
@@ -14,17 +17,18 @@ import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatement;
-import dev.sorn.fmp4j.types.FmpLimit;
-import dev.sorn.fmp4j.types.FmpSymbol;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpYear;
 import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-class FmpBalanceSheetStatementTtmServiceTest implements BalanceSheetStatementTestData {
+class FmpBalanceSheetStatementBulkServiceTest implements BalanceSheetStatementTestData {
     private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
+    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER, FMP_CSV_DESERIALIZER);
     private final FmpService<FmpBalanceSheetStatement[]> service =
-            new FmpBalanceSheetStatementTtmService(new FmpConfigImpl(), http);
+            new FmpBalanceSheetStatementBulkService(new FmpConfigImpl(), http);
 
     @Test
     void relative_url() {
@@ -32,7 +36,7 @@ class FmpBalanceSheetStatementTtmServiceTest implements BalanceSheetStatementTes
         var relativeUrl = service.relativeUrl();
 
         // then
-        assertEquals("/balance-sheet-statement-ttm", relativeUrl);
+        assertEquals("/balance-sheet-statement-bulk", relativeUrl);
     }
 
     @Test
@@ -41,7 +45,7 @@ class FmpBalanceSheetStatementTtmServiceTest implements BalanceSheetStatementTes
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of("year", FmpYear.class, "period", FmpPeriod.class), params);
     }
 
     @Test
@@ -50,17 +54,19 @@ class FmpBalanceSheetStatementTtmServiceTest implements BalanceSheetStatementTes
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("limit", FmpLimit.class), params);
+        assertEquals(Map.of(), params);
     }
 
-    @Test
-    void successful_download() {
+    @ParameterizedTest
+    @ValueSource(strings = {"quarter"})
+    void successful_download_with_required_params(String periodString) {
         // given
-        var symbol = symbol("AAPL");
-        var limit = 2;
-        service.param("symbol", symbol);
+        var year = year("2023");
+        var period = period(periodString);
+        service.param("year", year);
+        service.param("period", period);
         httpStub.configureResponse()
-                .body(jsonTestResource("stable/balance-sheet-statement-ttm/?symbol=%s&limit=%d.json", symbol, limit))
+                .body(jsonTestResource("stable/balance-sheet-statement-bulk/?year=%s&period=%s.csv", year, period))
                 .statusCode(200)
                 .apply();
 
@@ -68,7 +74,7 @@ class FmpBalanceSheetStatementTtmServiceTest implements BalanceSheetStatementTes
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("capitalLeaseObligationsNonCurrent")));
+        assertTrue(result.length > 0);
+        range(0, result.length).forEach(i -> assertAllFieldsNonNull(result[i]));
     }
 }
