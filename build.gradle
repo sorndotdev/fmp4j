@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id 'java-library'
     id 'java-test-fixtures'
@@ -7,7 +5,6 @@ plugins {
     id 'jacoco'
     id 'com.vanniktech.maven.publish' version '0.34.0'
     id 'com.diffplug.spotless' version '7.2.0'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 apply plugin: dev.sorn.fmp4j.CoveragePlugin
@@ -155,81 +152,5 @@ tasks.withType(Javadoc).configureEach {
 afterEvaluate {
     tasks.named('generateMetadataFileForMavenPublication') {
         dependsOn(tasks.named('plainJavadocJar'))
-    }
-}
-
-tasks.register('fatJar', ShadowJar) {
-    archiveClassifier.set('all')
-    configurations = [project.configurations.runtimeClasspath]
-    from sourceSets.main.output
-}
-
-def pythonDir = "$projectDir/python"
-def venvDir = "$buildDir/venv"
-def pipPath = "${venvDir}/bin/pip"
-def pythonPath = "${venvDir}/bin/python"
-def pytestPath = "${venvDir}/bin/pytest"
-def jarPath = "$buildDir/libs/${project.name}-${project.version}-all.jar"
-
-tasks.register('createVirtualEnv', Exec) {
-    description = "Create Python virtual environment"
-    outputs.dir venvDir
-    commandLine 'python3', '-m', 'venv', venvDir
-    onlyIf { !file(pythonPath).exists() }
-}
-
-tasks.register('installPythonDependencies', Exec) {
-    description = "Install Python dependencies using pip"
-    dependsOn 'createVirtualEnv'
-    workingDir pythonDir
-    commandLine pipPath, 'install', '-r', 'requirements.txt'
-}
-
-tasks.register('generatePythonStubs', Exec) {
-    group = 'Code Generation'
-    description = 'Generates Python type stubs for Java classes'
-    dependsOn 'fatJar', 'installPythonDependencies'
-
-    def javaHome = javaToolchains.launcherFor(java.toolchain).get().metadata.installationPath.asFile.absolutePath
-
-    def jvmPath
-    if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
-        jvmPath = "${javaHome}/lib/libjli.dylib" // macOS
-    } else {
-        jvmPath = "notsupported" // Windows
-    }
-
-    def fatJarTask = tasks.named('fatJar', ShadowJar).get()
-    def generatedJarPath = fatJarTask.archiveFile.get().asFile.absolutePath
-    commandLine pythonPath, '-m', 'stubgenj',
-            '--jvmpath', jvmPath,
-            '--classpath', generatedJarPath,
-            '--output-dir', "${projectDir}/python/typings",
-            "--no-stubs-suffix",
-            'dev.sorn.fmp4j'
-
-    doFirst {
-        file("${projectDir}/python/typings").mkdirs()
-        println "Using JVM Path: ${jvmPath}"
-        println "Using JAR: ${generatedJarPath}"
-        println "Generating Python stubs for package: dev.sorn.fmp4j"
-        if (!file(jvmPath).exists()) {
-            throw new GradleException("JVM library not found at: ${jvmPath}. Please check your Java installation.")
-        }
-    }
-}
-
-tasks.register('runPythonTests', Exec) {
-    description = "Run Python tests with pytest"
-    dependsOn 'generatePythonStubs', 'installPythonDependencies'
-    def fatJarTask = tasks.named('fatJar', ShadowJar).get()
-    def testJarPath = fatJarTask.archiveFile.get().asFile.absolutePath
-    workingDir pythonDir
-    environment "FMP_JAR_PATH", testJarPath
-    environment "PYTHONPATH", "${pythonDir}:${venvDir}/lib/python3.13/site-packages"
-    commandLine pytestPath, '-s', '-p', 'no:faulthandler', '--maxfail=1', 'tests'
-    doFirst {
-        println "PYTHONPATH: ${environment['PYTHONPATH']}"
-        println "JAR path: ${testJarPath}"
     }
 }

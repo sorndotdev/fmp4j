@@ -41,12 +41,6 @@ implementation 'dev.sorn:fmp4j:0.2.3'
 </dependency>
 ```
 
-**Python**
-
-```sh
-pip install fmp4j==0.2.3
-```
-
 ### Configuration
 
 Set environment variables

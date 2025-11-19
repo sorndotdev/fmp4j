@@ -73,6 +73,7 @@ import dev.sorn.fmp4j.models.FmpSearchByCusip;
 import dev.sorn.fmp4j.models.FmpSearchByIsin;
 import dev.sorn.fmp4j.models.FmpSearchByName;
 import dev.sorn.fmp4j.models.FmpSearchBySymbol;
+import dev.sorn.fmp4j.models.FmpSearchPressRelease;
 import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
 import dev.sorn.fmp4j.models.FmpStock;
 import dev.sorn.fmp4j.models.FmpStockPriceChange;
@@ -115,6 +116,25 @@ class FmpClientTest {
         assertDoesNotThrow(() -> new FmpClient());
         FmpClient client = new FmpClient();
         assertNotNull(client);
+    }
+
+    @Test
+    void searchPressReleases() {
+        // given
+        var symbol = symbol("V");
+        var typeRef = typeRef(FmpSearchPressRelease[].class);
+        var endpoint = "news/press-releases";
+        var uri = buildUri(endpoint);
+        var headers = defaultHeaders();
+        var params = buildParams(Map.of("symbols", symbol));
+        var file = format("stable/%s/?symbols=%s.json", endpoint, symbol);
+
+        // when
+        mockHttpGet(uri, headers, params, file, typeRef);
+        var result = fmpClient.search().pressReleases(symbol);
+
+        // then
+        assertValidResult(result, 3, FmpSearchPressRelease.class);
     }
 
     @Test
