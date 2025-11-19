@@ -9,6 +9,8 @@ import dev.sorn.fmp4j.models.FmpEarningsCalendar;
 import dev.sorn.fmp4j.models.FmpIposCalendar;
 import dev.sorn.fmp4j.models.FmpIposDisclosure;
 import dev.sorn.fmp4j.models.FmpIposProspectus;
+import dev.sorn.fmp4j.models.FmpSplit;
+import dev.sorn.fmp4j.models.FmpSplitsCalendar;
 import dev.sorn.fmp4j.services.FmpDividendService;
 import dev.sorn.fmp4j.services.FmpDividendsCalendarService;
 import dev.sorn.fmp4j.services.FmpEarningService;
@@ -17,6 +19,8 @@ import dev.sorn.fmp4j.services.FmpIposCalendarService;
 import dev.sorn.fmp4j.services.FmpIposDisclosureService;
 import dev.sorn.fmp4j.services.FmpIposProspectusService;
 import dev.sorn.fmp4j.services.FmpService;
+import dev.sorn.fmp4j.services.FmpSplitService;
+import dev.sorn.fmp4j.services.FmpSplitsCalendarService;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -31,6 +35,8 @@ public class FmpCalendarClient {
     protected final FmpService<FmpIposCalendar[]> fmpIposCalendarService;
     protected final FmpService<FmpIposDisclosure[]> fmpIposDisclosureService;
     protected final FmpService<FmpIposProspectus[]> fmpIposProspectusService;
+    protected final FmpService<FmpSplit[]> fmpSplitService;
+    protected final FmpService<FmpSplitsCalendar[]> fmpSplitsCalendarService;
 
     public FmpCalendarClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpDividendService = new FmpDividendService(fmpConfig, fmpHttpClient);
@@ -40,6 +46,8 @@ public class FmpCalendarClient {
         this.fmpIposCalendarService = new FmpIposCalendarService(fmpConfig, fmpHttpClient);
         this.fmpIposDisclosureService = new FmpIposDisclosureService(fmpConfig, fmpHttpClient);
         this.fmpIposProspectusService = new FmpIposProspectusService(fmpConfig, fmpHttpClient);
+        this.fmpSplitService = new FmpSplitService(fmpConfig, fmpHttpClient);
+        this.fmpSplitsCalendarService = new FmpSplitsCalendarService(fmpConfig, fmpHttpClient);
     }
 
     public synchronized FmpDividendsCalendar[] dividends() {
@@ -76,5 +84,14 @@ public class FmpCalendarClient {
         fmpIposProspectusService.param("from", from);
         fmpIposProspectusService.param("to", to);
         return fmpIposProspectusService.download();
+    }
+
+    public synchronized FmpSplitsCalendar[] splits() {
+        return fmpSplitsCalendarService.download();
+    }
+
+    public synchronized FmpSplit[] splits(FmpSymbol symbol) {
+        fmpSplitService.param("symbol", symbol);
+        return fmpSplitService.download();
     }
 }
