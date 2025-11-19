@@ -3,7 +3,7 @@ package dev.sorn.fmp4j.types;
 import static dev.sorn.fmp4j.TestUtils.deserialize;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.TestUtils.serialize;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.types.FmpSymbol.FMP_SYMBOL_PATTERN;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
@@ -225,7 +225,7 @@ class FmpSymbolTest {
 
         // given
         var res = jsonTestResource("stable/financial-statement-symbol-list/full.json");
-        var symbols = FMP_JSON_DESERIALIZER.fromJson(res, typeRef(String[].class));
+        var symbols = FMP_JSON_DESERIALIZER.deserialize(res, typeRef(String[].class));
 
         var failedSymbols = new ArrayList<String>();
         stream(symbols).forEach(symbol -> {

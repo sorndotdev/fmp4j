@@ -3,8 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -59,7 +58,7 @@ class FmpCashFlowStatementGrowthServiceTest implements CashFlowStatementGrowthTe
     @ValueSource(strings = {"annual", "quarter"})
     void successful_download_with_optional_period_and_limit(String period) {
         // given
-        var symbol = symbol("AAPL");
+        var symbol = "AAPL";
         var limit = 2;
         service.param("symbol", symbol);
         httpStub.configureResponse()

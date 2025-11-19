@@ -4,24 +4,26 @@ import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.types.FmpCusip.cusip;
+import static dev.sorn.fmp4j.types.FmpPeriod.period;
+import static dev.sorn.fmp4j.types.FmpYear.year;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.cfg.FmpConfigImpl;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.http.FmpHttpClientImpl;
-import dev.sorn.fmp4j.models.FmpSearchByCusip;
-import dev.sorn.fmp4j.types.FmpCusip;
+import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
+import dev.sorn.fmp4j.types.FmpPeriod;
+import dev.sorn.fmp4j.types.FmpYear;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class FmpSearchByCusipServiceTest {
+class FmpCashFlowStatementGrowthBulkServiceTest {
     private final HttpClientStub httpStub = httpClientStub();
     private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpSearchByCusip[]> service = new FmpSearchByCusipService(new FmpConfigImpl(), http);
+    private final FmpService<FmpCashFlowStatementGrowth[]> service =
+            new FmpCashFlowStatementGrowthBulkService(new FmpConfigImpl(), http);
 
     @Test
     void relative_url() {
@@ -29,7 +31,7 @@ class FmpSearchByCusipServiceTest {
         var relativeUrl = service.relativeUrl();
 
         // then
-        assertEquals("/search-cusip", relativeUrl);
+        assertEquals("/cash-flow-statement-growth-bulk", relativeUrl);
     }
 
     @Test
@@ -38,7 +40,7 @@ class FmpSearchByCusipServiceTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("cusip", FmpCusip.class), params);
+        assertEquals(Map.of("year", FmpYear.class, "period", FmpPeriod.class), params);
     }
 
     @Test
@@ -53,10 +55,12 @@ class FmpSearchByCusipServiceTest {
     @Test
     void successful_download() {
         // given
-        var cusip = cusip("037833100");
-        service.param("cusip", cusip);
+        var year = year("2025");
+        var period = period("quarter");
+        service.param("year", year);
+        service.param("period", period);
         httpStub.configureResponse()
-                .body(jsonTestResource("stable/search-cusip/?cusip=%s.json", cusip))
+                .body(jsonTestResource("stable/cash-flow-statement-growth-bulk/?year=%s&period=%s.csv", year, period))
                 .statusCode(200)
                 .apply();
 
@@ -64,8 +68,7 @@ class FmpSearchByCusipServiceTest {
         var result = service.download();
 
         // then
-        assertEquals(3, result.length);
-        range(0, 3).forEach(i -> assertInstanceOf(FmpSearchByCusip.class, result[i]));
-        range(0, 3).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(1, result.length);
+        range(0, result.length).forEach(i -> assertAllFieldsNonNull(result[i]));
     }
 }

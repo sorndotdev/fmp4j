@@ -1,6 +1,6 @@
 package dev.sorn.fmp4j;
 
-import static dev.sorn.fmp4j.json.FmpJsonDeserializerImpl.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static java.lang.String.format;
 import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,7 +28,7 @@ public final class TestUtils {
 
     public static <T> T jsonTestResource(TypeReference<T> typeRef, String filename, Object... args) {
         final var json = jsonTestResource(filename, args);
-        return FMP_JSON_DESERIALIZER.fromJson(json, typeRef);
+        return FMP_JSON_DESERIALIZER.deserialize(json, typeRef);
     }
 
     public static String jsonTestResource(String filename, Object... args) {
