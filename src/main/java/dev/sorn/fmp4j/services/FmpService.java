@@ -3,6 +3,7 @@ package dev.sorn.fmp4j.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
+import dev.sorn.fmp4j.types.FmpSymbol;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
@@ -44,8 +45,23 @@ public abstract class FmpService<R> {
 
     public final void param(String key, Object value) {
         validateParamKey(key);
-        validateParamType(key, value);
-        params.put(key, value);
+        Object normalizedValue = normalizeValue(key, value);
+        validateParamType(key, normalizedValue);
+        params.put(key, normalizedValue);
+    }
+
+    private Object normalizeValue(String key, Object value) {
+        Class<?> expectedClass =
+                requiredParams().getOrDefault(key, optionalParams().get(key));
+        if (expectedClass == null || value == null) {
+            return value;
+        }
+
+        if (expectedClass == FmpSymbol.class && value instanceof String symbol) {
+            return FmpSymbol.symbol(symbol);
+        }
+
+        return value;
     }
 
     private void validateParamType(String key, Object value) {
