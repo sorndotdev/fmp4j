@@ -7,8 +7,8 @@ import dev.sorn.fmp4j.models.FmpCashFlowStatement;
 import dev.sorn.fmp4j.models.FmpCashFlowStatementGrowth;
 import dev.sorn.fmp4j.models.FmpCompanies;
 import dev.sorn.fmp4j.services.FmpBulkBalanceSheetStatementService;
-import dev.sorn.fmp4j.services.FmpBulkCashFlowStatementService;
 import dev.sorn.fmp4j.services.FmpBulkCashFlowStatementGrowthService;
+import dev.sorn.fmp4j.services.FmpBulkCashFlowStatementService;
 import dev.sorn.fmp4j.services.FmpBulkCompaniesService;
 import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.types.FmpPart;
@@ -41,7 +41,7 @@ public class FmpBulkClient {
         fmpBulkBalanceSheetService.param("period", period);
         return fmpBulkBalanceSheetService.download();
     }
-      
+
     public synchronized FmpCashFlowStatement[] cashFlowStatements(FmpYear year, FmpPeriod period) {
         fmpBulkCashFlowService.param("year", year);
         fmpBulkCashFlowService.param("period", period);
