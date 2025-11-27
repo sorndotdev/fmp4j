@@ -181,6 +181,27 @@ class FmpClientTest {
         assertValidResult(result, 5, FmpSearchByName.class);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"quarter"})
+    void cashFlowStatementGrowthBulk(String p) {
+        // given
+        var year = year("2025");
+        var period = period(p);
+        var typeRef = typeRef(FmpCashFlowStatementGrowth[].class);
+        var endpoint = "cash-flow-statement-growth-bulk";
+        var uri = buildUri(endpoint);
+        var headers = Map.of("Content-Type", "text/csv");
+        var params = buildParams(Map.of("year", year, "period", period));
+        var file = format("stable/%s/?year=%s&period=%s.csv", endpoint, year, period);
+
+        // when
+        mockHttpGet(uri, headers, params, file, typeRef);
+        var result = fmpClient.bulk().cashFlowStatementGrowth(year, period);
+
+        // then
+        assertValidResult(result, 1, FmpCashFlowStatementGrowth.class);
+    }
+
     @Test
     void searchByCusip() {
         // given
