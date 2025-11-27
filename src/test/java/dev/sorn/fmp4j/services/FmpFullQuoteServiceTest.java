@@ -76,7 +76,7 @@ class FmpFullQuoteServiceTest extends HttpTest implements QuoteTestData {
 
         // then
         var e = assertThrows(FmpServiceException.class, () -> f.accept(service));
-        assertEquals(format("'symbol' is a required query param for endpoint [%s]", service.url()), e.getMessage());
+        assertEquals(format("[symbol] are required query params for endpoint [%s]", service.url()), e.getMessage());
     }
 
     @Test

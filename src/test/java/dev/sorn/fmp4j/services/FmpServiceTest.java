@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.types.FmpApiKey;
+import dev.sorn.fmp4j.types.FmpLimit;
+import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -34,15 +36,20 @@ class FmpServiceTest {
 
     private ConcreteFmpService service;
 
+    private MultiRequiredFmpService multiRequiredService;
+
     @BeforeEach
     void setup() {
         openMocks(this);
         when(mockConfig.fmpApiKey()).thenReturn(new FmpApiKey("abcdefghij1234567890abcdefghij12"));
         service = new ConcreteFmpService(mockConfig, mockHttpClient);
+
+        multiRequiredService = new MultiRequiredFmpService(mockConfig, mockHttpClient);
     }
 
     @Test
-    void accepts_list_with_correct_type() {
+    @DisplayName("Should accept List with correct element type")
+    void shouldAcceptListWithCorrectType() {
         // given
         List<FmpSymbol> symbols = List.of(symbol("AAPL"), symbol("GOOGL"), symbol("MSFT"));
 
@@ -139,6 +146,30 @@ class FmpServiceTest {
         assertThrows(FmpServiceException.class, () -> service.param("symbol", nestedList));
     }
 
+    @Test
+    void should_show_all_missing_required_params() {
+        // given no input param
+        // when
+        FmpServiceException thrownEx = assertThrows(FmpServiceException.class, multiRequiredService::download);
+        var msg = thrownEx.getMessage();
+        //then
+        assertTrue(
+                msg.contains("limit") || msg.contains("page"),
+                "Expected exception message to mention either 'limit' and 'page' as the required param, but got: "
+                        + msg);
+    }
+
+    @Test
+    void should_not_throw_missing_required_params() {
+        // given
+        multiRequiredService.param("page", FmpPage.page(10));
+        multiRequiredService.param("limit", FmpLimit.limit(10));
+
+        // when then
+        assertDoesNotThrow(multiRequiredService::download);
+    }
+
+    // Concrete implementation for testing
     private static class ConcreteFmpService extends FmpService<String> {
         public ConcreteFmpService(FmpConfig cfg, FmpHttpClient http) {
             super(cfg, http, new TypeReference<String>() {});
@@ -152,6 +183,27 @@ class FmpServiceTest {
         @Override
         protected Map<String, Class<?>> optionalParams() {
             return Map.of("from", LocalDate.class, "to", LocalDate.class);
+        }
+
+        @Override
+        protected String relativeUrl() {
+            return "/test/endpoint";
+        }
+    }
+
+    private static class MultiRequiredFmpService extends FmpService<String> {
+        public MultiRequiredFmpService(FmpConfig cfg, FmpHttpClient http) {
+            super(cfg, http, new TypeReference<String>() {});
+        }
+
+        @Override
+        protected Map<String, Class<?>> requiredParams() {
+            return Map.of("limit", FmpLimit.class, "page", FmpPage.class);
+        }
+
+        @Override
+        protected Map<String, Class<?>> optionalParams() {
+            return Map.of();
         }
 
         @Override
