@@ -1,9 +1,6 @@
 package dev.sorn.fmp4j;
 
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
-import static dev.sorn.fmp4j.TestUtils.csvTestResource;
-import static dev.sorn.fmp4j.TestUtils.jsonTestResource;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.types.FmpCik.cik;
 import static dev.sorn.fmp4j.types.FmpCusip.cusip;
 import static dev.sorn.fmp4j.types.FmpInterval.interval;
@@ -26,15 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatement;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatementGrowth;
 import dev.sorn.fmp4j.models.FmpCashFlowStatement;
@@ -85,12 +75,9 @@ import dev.sorn.fmp4j.models.FmpSecFilingsSearchBySymbol;
 import dev.sorn.fmp4j.models.FmpStock;
 import dev.sorn.fmp4j.models.FmpStockPriceChange;
 import dev.sorn.fmp4j.models.FmpTreasuryRate;
-import dev.sorn.fmp4j.types.FmpApiKey;
+import dev.sorn.fmp4j.services.HttpTest;
 import dev.sorn.fmp4j.types.FmpSymbol;
-import java.net.URI;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -100,43 +87,33 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class FmpClientTest {
-    private static final String BASE_URL = "https://financialmodelingprep.com/stable";
-    private static final FmpApiKey API_KEY = new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");
-    private final FmpConfig fmpConfig = mock(FmpConfig.class);
-    private final FmpHttpClient fmpHttpClient = mock(FmpHttpClient.class);
+class FmpClientTest extends HttpTest {
     private FmpClient fmpClient;
 
     @BeforeEach
     void setUp() {
-        when(fmpConfig.fmpBaseUrl()).thenReturn(BASE_URL);
-        when(fmpConfig.fmpApiKey()).thenReturn(API_KEY);
-        fmpClient = new FmpClient(fmpConfig, fmpHttpClient);
+        fmpClient = new FmpClient(config, client);
     }
 
     @Test
     void testConstructor_doesNotThrowAndCreatesInstance() {
+        // given
         setProperty(FmpConfigImpl.FMP4J_API_KEY_ENV, "ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");
         setProperty(FmpConfigImpl.FMP4J_BASE_URL_ENV, "https://financialmodelingprep.com/stable");
 
-        assertDoesNotThrow(() -> new FmpClient());
-        FmpClient client = new FmpClient();
-        assertNotNull(client);
+        // when // then
+        assertNotNull(assertDoesNotThrow(() -> new FmpClient(config, client)));
     }
 
     @Test
     void searchPressReleases() {
         // given
         var symbol = symbol("V");
-        var typeRef = typeRef(FmpSearchPressRelease[].class);
         var endpoint = "news/press-releases";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbols", symbol));
         var file = format("stable/%s/?symbols=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().pressReleases(symbol);
 
         // then
@@ -147,15 +124,11 @@ class FmpClientTest {
     void searchByIsin() {
         // given
         var isin = isin("NL0012969182");
-        var typeRef = typeRef(FmpSearchByIsin[].class);
         var endpoint = "search-isin";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("isin", isin));
         var file = format("stable/%s/?isin=%s.json", endpoint, isin);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().byIsin(isin);
 
         // then
@@ -166,15 +139,11 @@ class FmpClientTest {
     void searchByName() {
         // given
         var query = "ADYEN";
-        var typeRef = typeRef(FmpSearchByName[].class);
         var endpoint = "search-name";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("query", query));
         var file = format("stable/%s/?query=%s.json", endpoint, query);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().byName(query);
 
         // then
@@ -187,15 +156,11 @@ class FmpClientTest {
         // given
         var year = year("2025");
         var period = period(p);
-        var typeRef = typeRef(FmpCashFlowStatementGrowth[].class);
         var endpoint = "cash-flow-statement-growth-bulk";
-        var uri = buildUri(endpoint);
-        var headers = Map.of("Content-Type", "text/csv");
-        var params = buildParams(Map.of("year", year, "period", period));
         var file = format("stable/%s/?year=%s&period=%s.csv", endpoint, year, period);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.bulk().cashFlowStatementGrowth(year, period);
 
         // then
@@ -206,15 +171,11 @@ class FmpClientTest {
     void searchByCusip() {
         // given
         var cusip = cusip("037833100");
-        var typeRef = typeRef(FmpSearchByCusip[].class);
         var endpoint = "search-cusip";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("cusip", cusip));
         var file = format("stable/%s/?cusip=%s.json", endpoint, cusip);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().byCusip(cusip);
 
         // then
@@ -225,15 +186,11 @@ class FmpClientTest {
     void searchBySymbol() {
         // given
         var query = symbol("ADYEN");
-        var typeRef = typeRef(FmpSearchBySymbol[].class);
         var endpoint = "search-symbol";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("query", query));
         var file = format("stable/%s/?query=%s.json", endpoint, query);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().bySymbol(query);
 
         // then
@@ -244,15 +201,11 @@ class FmpClientTest {
     void searchByCik() {
         // given
         var cik = cik("0000320193");
-        var typeRef = typeRef(FmpSearchByCik[].class);
         var endpoint = "search-cik";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("cik", cik));
         var file = format("stable/%s/?cik=%s.json", endpoint, cik);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.search().byCik(cik);
 
         // then
@@ -262,15 +215,11 @@ class FmpClientTest {
     @Test
     void stockDirectory() {
         // given
-        var typeRef = typeRef(FmpStock[].class);
         var endpoint = "stock-list";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of());
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.directory().stocks();
 
         // then
@@ -280,15 +229,11 @@ class FmpClientTest {
     @Test
     void etfDirectory() {
         // given
-        var typeRef = typeRef(FmpEtf[].class);
         var endpoint = "etf-list";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of());
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.directory().etfs();
 
         // then
@@ -298,15 +243,11 @@ class FmpClientTest {
     @Test
     void dividends_calendar() {
         // given
-        var typeRef = typeRef(FmpDividendsCalendar[].class);
         var endpoint = "dividends-calendar";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of());
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().dividends();
 
         // then
@@ -316,16 +257,12 @@ class FmpClientTest {
     @Test
     void dividends() {
         // given
-        var typeRef = typeRef(FmpDividend[].class);
         var endpoint = "dividends";
         var symbol = symbol("AAPL");
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().dividends(symbol);
 
         // then
@@ -335,15 +272,11 @@ class FmpClientTest {
     @Test
     void earnings_calendar() {
         // given
-        var typeRef = typeRef(FmpEarningsCalendar[].class);
         var endpoint = "earnings-calendar";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of());
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().earnings();
 
         // then
@@ -357,16 +290,12 @@ class FmpClientTest {
     @Test
     void earnings() {
         // given
-        var typeRef = typeRef(FmpEarning[].class);
         var endpoint = "earnings";
         var symbol = symbol("AAPL");
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().earnings(symbol);
 
         // then
@@ -379,15 +308,11 @@ class FmpClientTest {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
-        var typeRef = typeRef(FmpIposCalendar[].class);
         var endpoint = "ipos-calendar";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("from", from, "to", to));
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().ipos(from, to);
 
         // then
@@ -399,15 +324,11 @@ class FmpClientTest {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
-        var typeRef = typeRef(FmpIposDisclosure[].class);
         var endpoint = "ipos-disclosure";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("from", from, "to", to));
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().disclosures(from, to);
 
         // then
@@ -419,15 +340,11 @@ class FmpClientTest {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
-        var typeRef = typeRef(FmpIposProspectus[].class);
         var endpoint = "ipos-prospectus";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("from", from, "to", to));
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.calendar().prospectus(from, to);
 
         // then
@@ -437,18 +354,14 @@ class FmpClientTest {
     @Test
     void historicalPriceEodLight() {
         // given
-        var typeRef = typeRef(FmpHistoricalPriceEodLight[].class);
         var endpoint = "historical-price-eod/light";
         var symbol = symbol("AAPL");
         var from = LocalDate.parse("2024-02-22");
         var to = LocalDate.parse("2024-02-28");
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "from", from, "to", to));
         var file = format("stable/%s/?symbol=%s&from=%s&to=%s.json", endpoint, symbol, from, to);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.chart().historicalPriceEodLight(symbol, Optional.of(from), Optional.of(to));
 
         // then
@@ -458,18 +371,14 @@ class FmpClientTest {
     @Test
     void historicalPriceEodFull() {
         // given
-        var typeRef = typeRef(FmpHistoricalPriceEodFull[].class);
         var endpoint = "historical-price-eod/full";
         var symbol = symbol("AAPL");
         var from = LocalDate.parse("2024-02-22");
         var to = LocalDate.parse("2024-02-28");
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "from", from, "to", to));
         var file = format("stable/%s/?symbol=%s&from=%s&to=%s.json", endpoint, symbol, from, to);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.chart().historicalPriceEodFull(symbol, Optional.of(from), Optional.of(to));
 
         // then
@@ -477,25 +386,18 @@ class FmpClientTest {
     }
 
     @ParameterizedTest
-    @ValueSource(
-            strings = {
-                "1min", "5min", "15min", "30min", "1hour", "4hour",
-            })
+    @ValueSource(strings = {"1min", "5min", "15min", "30min", "1hour", "4hour"})
     void historicalChart(String intervalStr) {
         // given
-        var typeRef = typeRef(FmpHistoricalChart[].class);
         var endpoint = "historical-chart/" + intervalStr;
         var symbol = symbol("AAPL");
         var interval = interval(intervalStr);
         var from = LocalDate.parse("2024-01-01");
         var to = LocalDate.parse("2024-01-02");
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "from", from, "to", to));
         var file = format("stable/%s/?symbol=%s&from=%s&to=%s.json", endpoint, symbol, from, to);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.chart().historical(symbol, interval, Optional.of(from), Optional.of(to));
 
         // then
@@ -506,15 +408,11 @@ class FmpClientTest {
     void company() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpCompany[].class);
         var endpoint = "profile";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.company().bySymbol(symbol);
 
         // then
@@ -525,15 +423,11 @@ class FmpClientTest {
     void companies() {
         // given
         var part = part("0");
-        var typeRef = typeRef(FmpCompanies[].class);
         var endpoint = "profile-bulk";
-        var uri = buildUri(endpoint);
-        var headers = Map.of("Content-Type", "text/csv");
-        var params = buildParams(Map.of("part", part));
         var file = format("stable/%s/?part=%s.csv", endpoint, part);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.bulk().companies(part);
 
         // then
@@ -547,15 +441,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpIncomeStatement[].class);
         var endpoint = "income-statement";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().income(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -567,15 +457,11 @@ class FmpClientTest {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpIncomeStatement[].class);
         var endpoint = "income-statement-ttm";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "limit", limit));
         var file = format("stable/%s/?symbol=%s&limit=%s.json", endpoint, symbol, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().incomeTtm(symbol, Optional.of(limit));
 
         // then
@@ -589,15 +475,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpIncomeStatementGrowth[].class);
         var endpoint = "income-statement-growth";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().incomeGrowth(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -611,15 +493,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("KO");
         var limit = limit(2);
-        var typeRef = typeRef(FmpFinancialStatementAsReported[].class);
         var endpoint = "income-statement-as-reported";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().incomeAsReported(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -633,15 +511,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpBalanceSheetStatement[].class);
         var endpoint = "balance-sheet-statement";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().balanceSheet(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -654,15 +528,11 @@ class FmpClientTest {
         // given
         var period = period(periodType);
         var year = year("2023");
-        var typeRef = typeRef(FmpBalanceSheetStatement[].class);
         var endpoint = "balance-sheet-statement-bulk";
-        var uri = buildUri(endpoint);
-        var headers = Map.of("Content-Type", "text/csv");
-        var params = buildParams(Map.of("year", year, "period", period));
         var file = String.format("stable/%s/?year=%s&period=%s.csv", endpoint, year, period);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.bulk().balanceSheetStatements(year, period);
 
         // then
@@ -674,15 +544,11 @@ class FmpClientTest {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpBalanceSheetStatement[].class);
         var endpoint = "balance-sheet-statement-ttm";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "limit", limit));
         var file = format("stable/%s/?symbol=%s&limit=%s.json", endpoint, symbol, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().balanceSheetTtm(symbol, Optional.of(limit));
 
         // then
@@ -697,15 +563,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpBalanceSheetStatementGrowth[].class);
         var endpoint = "balance-sheet-statement-growth";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().balanceSheetGrowth(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -719,15 +581,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("KO");
         var limit = limit(2);
-        var typeRef = typeRef(FmpFinancialStatementAsReported[].class);
         var endpoint = "balance-sheet-statement-as-reported";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().balanceSheetAsReported(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -741,15 +599,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpCashFlowStatement[].class);
         var endpoint = "cash-flow-statement";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().cashFlow(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -762,15 +616,11 @@ class FmpClientTest {
         // given
         var period = period(p);
         var year = year("2023");
-        var typeRef = typeRef(FmpCashFlowStatement[].class);
         var endpoint = "cash-flow-statement-bulk";
-        var uri = buildUri(endpoint);
-        var headers = Map.of("Content-Type", "text/csv");
-        var params = buildParams(Map.of("year", year, "period", period));
         var file = String.format("stable/%s/?year=%s&period=%s.csv", endpoint, year, period);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.bulk().cashFlowStatements(year, period);
 
         // then
@@ -782,15 +632,11 @@ class FmpClientTest {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpCashFlowStatement[].class);
         var endpoint = "cash-flow-statement-ttm";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "limit", limit));
         var file = format("stable/%s/?symbol=%s&limit=%s.json", endpoint, symbol, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().cashFlowTtm(symbol, Optional.of(limit));
 
         // then
@@ -804,15 +650,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpCashFlowStatementGrowth[].class);
         var endpoint = "cash-flow-statement-growth";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().cashFlowGrowth(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -826,15 +668,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("KO");
         var limit = limit(2);
-        var typeRef = typeRef(FmpFinancialStatementAsReported[].class);
         var endpoint = "cash-flow-statement-as-reported";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().cashFlowAsReported(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -848,15 +686,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(2);
-        var typeRef = typeRef(FmpFinancialGrowth[].class);
         var endpoint = "financial-growth";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().financialGrowth(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -879,15 +713,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpRatio[].class);
         var endpoint = "ratios";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().ratios(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -898,15 +728,11 @@ class FmpClientTest {
     void ratiosTtm() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpRatioTtm[].class);
         var endpoint = "ratios-ttm";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().ratiosTtm(symbol);
 
         // then
@@ -920,15 +746,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpKeyMetric[].class);
         var endpoint = "key-metrics";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().keyMetrics(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -939,15 +761,11 @@ class FmpClientTest {
     void keyMetricsTtm() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpKeyMetricTtm[].class);
         var endpoint = "key-metrics-ttm";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().keyMetricsTtm(symbol);
 
         // then
@@ -961,15 +779,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var limit = limit(3);
-        var typeRef = typeRef(FmpEnterpriseValue[].class);
         var endpoint = "enterprise-values";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "limit", limit));
         var file = format("stable/%s/?symbol=%s&period=%s&limit=%s.json", endpoint, symbol, period, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.statement().enterpriseValues(symbol, Optional.of(period), Optional.of(limit));
 
         // then
@@ -983,15 +797,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var structure = FLAT;
-        var typeRef = typeRef(FmpRevenueProductSegmentation[].class);
         var endpoint = "revenue-product-segmentation";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "structure", structure));
         var file = format("stable/%s/?symbol=%s&period=%s&structure=%s.json", endpoint, symbol, period, structure);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result =
                 fmpClient.statement().revenueProductSegmentations(symbol, Optional.of(period), Optional.of(structure));
 
@@ -1006,15 +816,11 @@ class FmpClientTest {
         var period = period(p);
         var symbol = symbol("AAPL");
         var structure = FLAT;
-        var typeRef = typeRef(FmpRevenueGeographicSegmentation[].class);
         var endpoint = "revenue-geographic-segmentation";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "period", period, "structure", structure));
         var file = format("stable/%s/?symbol=%s&period=%s&structure=%s.json", endpoint, symbol, period, structure);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient
                 .statement()
                 .revenueGeographicSegmentations(symbol, Optional.of(period), Optional.of(structure));
@@ -1027,15 +833,11 @@ class FmpClientTest {
     void etfAssetExposure() {
         // given
         var symbol = symbol("NVO");
-        var typeRef = typeRef(FmpEtfAssetExposure[].class);
         var endpoint = "etf/asset-exposure";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.etf().assetExposure(symbol);
 
         // then
@@ -1046,15 +848,11 @@ class FmpClientTest {
     void etfCountryWeightings() {
         // given
         var symbol = symbol("SPY");
-        var typeRef = typeRef(FmpEtfCountryWeighting[].class);
         var endpoint = "etf/country-weightings";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.etf().countryWeightings(symbol);
 
         // then
@@ -1068,15 +866,11 @@ class FmpClientTest {
     })
     void etfHoldings(FmpSymbol symbol, int holdings) {
         // given
-        var typeRef = typeRef(FmpEtfHolding[].class);
         var endpoint = "etf/holdings";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.etf().holdings(symbol);
 
         // then
@@ -1087,15 +881,11 @@ class FmpClientTest {
     void etfInfo() {
         // given
         var symbol = symbol("SPY");
-        var typeRef = typeRef(FmpEtfInfo[].class);
         var endpoint = "etf/info";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.etf().info(symbol);
 
         // then
@@ -1106,19 +896,13 @@ class FmpClientTest {
     void cryptoNews() {
         // given
         var symbols = Set.of(symbol("BTCUSD"));
-        var typeRef = typeRef(FmpNews[].class);
         var endpoint = "news/crypto";
-        var page = page(0);
-        var limit = limit(100);
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbols", symbols, "page", page, "limit", limit));
         var file = format(
                 "stable/%s/?symbols=%s.json",
                 endpoint, join(",", symbols.stream().map(FmpSymbol::value).toList()));
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.news().crypto(symbols);
 
         // then
@@ -1131,19 +915,13 @@ class FmpClientTest {
         var symbols = new TreeSet<FmpSymbol>(); // guarantee order
         symbols.add(symbol("BTCUSD"));
         symbols.add(symbol("ETHUSD"));
-        var typeRef = typeRef(FmpNews[].class);
         var endpoint = "news/crypto";
-        var page = page(0);
-        var limit = limit(100);
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbols", symbols, "page", page, "limit", limit));
         var file = format(
                 "stable/%s/?symbols=%s.json",
                 endpoint, join(",", symbols.stream().map(FmpSymbol::value).toList()));
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.news().crypto(symbols);
 
         // then
@@ -1154,19 +932,13 @@ class FmpClientTest {
     void forexNews() {
         // given
         var symbols = Set.of(symbol("EURUSD"));
-        var typeRef = typeRef(FmpNews[].class);
         var endpoint = "news/forex";
-        var page = page(0);
-        var limit = limit(100);
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbols", symbols, "page", page, "limit", limit));
         var file = format(
                 "stable/%s/?symbols=%s.json",
                 endpoint, join(",", symbols.stream().map(FmpSymbol::value).toList()));
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.news().forex(symbols);
 
         // then
@@ -1177,19 +949,13 @@ class FmpClientTest {
     void stockNews() {
         // given
         var symbols = Set.of(symbol("AAPL"));
-        var typeRef = typeRef(FmpNews[].class);
         var endpoint = "news/stock";
-        var page = page(0);
-        var limit = limit(100);
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbols", symbols, "page", page, "limit", limit));
         var file = format(
                 "stable/%s/?symbols=%s.json",
                 endpoint, join(",", symbols.stream().map(FmpSymbol::value).toList()));
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.news().stock(symbols);
 
         // then
@@ -1205,22 +971,13 @@ class FmpClientTest {
         var page = page(0);
         var limit = limit(100);
         var endpoint = "news/crypto";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-
-        var params = buildParams(Map.of(
-                "symbols", symbols,
-                "from", from.get(),
-                "to", to.get(),
-                "page", page,
-                "limit", limit));
 
         var file = format(
                 "stable/%s/?symbols=%s.json",
                 endpoint, join(",", symbols.stream().map(FmpSymbol::value).toList()));
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef(FmpNews[].class));
+        mockHttpGetFromFile(file);
         var result = fmpClient.news().crypto(symbols, from, to, Optional.of(page), Optional.of(limit));
 
         // then
@@ -1231,15 +988,11 @@ class FmpClientTest {
     void etfSectorWeightings() {
         // given
         var symbol = symbol("SPY");
-        var typeRef = typeRef(FmpEtfSectorWeighting[].class);
         var endpoint = "etf/sector-weightings";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.etf().sectorWeightings(symbol);
 
         // then
@@ -1250,15 +1003,11 @@ class FmpClientTest {
     void fullQuotes() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpFullQuote[].class);
         var endpoint = "quote";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.quote().full(symbol);
 
         // then
@@ -1269,15 +1018,11 @@ class FmpClientTest {
     void partialQuotes() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpPartialQuote[].class);
         var endpoint = "quote-short";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.quote().partial(symbol);
 
         // then
@@ -1288,15 +1033,11 @@ class FmpClientTest {
     void priceChange() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpStockPriceChange[].class);
         var endpoint = "stock-price-change";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.quote().priceChange(symbol);
 
         // then
@@ -1311,17 +1052,13 @@ class FmpClientTest {
         var to = LocalDate.parse("2025-01-01");
         var page = page(0);
         var limit = limit(2);
-        var typeRef = typeRef(FmpSecFilingsSearchBySymbol[].class);
         var endpoint = "sec-filings-search/symbol";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "from", from, "to", to, "page", page, "limit", limit));
         var file = format(
                 "stable/%s/?symbol=%s&from=%s&to=%s&page=%d&limit=%s.json",
                 endpoint, symbol, from, to, page.value(), limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.secFilingsSearch().bySymbol(symbol, from, to, Optional.of(page), Optional.of(limit));
 
         // then
@@ -1333,16 +1070,11 @@ class FmpClientTest {
         // given
         var from = LocalDate.parse("2024-12-30");
         var to = LocalDate.parse("2025-01-01");
-
-        var typeRef = typeRef(FmpTreasuryRate[].class);
         var endpoint = "treasury-rates";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("from", from, "to", to));
         var file = format("stable/%s/?from=%s&to=%s.json", endpoint, from, to);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.economics().treasuryRates(from, to);
 
         // then
@@ -1355,15 +1087,11 @@ class FmpClientTest {
         var symbol = symbol("AAPL");
         var year = year(2020);
         var quarter = quarter(3);
-        var typeRef = typeRef(FmpEarningsCallTranscript[].class);
         var endpoint = "earning-call-transcript";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol, "year", year, "quarter", quarter));
         var file = format("stable/%s/?symbol=%s&year=%s&quarter=%s.json", endpoint, symbol, year, quarter);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.earnings().transcripts(symbol, year, quarter, empty());
 
         // then
@@ -1374,15 +1102,11 @@ class FmpClientTest {
     void earningCallTranscriptDates() {
         // given
         var symbol = symbol("AAPL");
-        var typeRef = typeRef(FmpEarningsCallTranscriptDate[].class);
         var endpoint = "earning-call-transcript-dates";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("symbol", symbol));
         var file = format("stable/%s/?symbol=%s.json", endpoint, symbol);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.earnings().dates(symbol);
 
         // then
@@ -1394,15 +1118,11 @@ class FmpClientTest {
         // given
         var page = page(0);
         var limit = limit(2);
-        var typeRef = typeRef(FmpEarningsCallTranscriptLatest[].class);
         var endpoint = "earning-call-transcript-latest";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of("page", page, "limit", limit));
         var file = format("stable/%s/?page=%s&limit=%s.json", endpoint, page, limit);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.earnings().latest(Optional.of(limit), Optional.of(page));
 
         // then
@@ -1412,47 +1132,15 @@ class FmpClientTest {
     @Test
     void earningsTranscriptList() {
         // given
-        var typeRef = typeRef(FmpEarningsCallTranscriptList[].class);
         var endpoint = "earnings-transcript-list";
-        var uri = buildUri(endpoint);
-        var headers = defaultHeaders();
-        var params = buildParams(Map.of());
         var file = format("stable/%s/excerpt.json", endpoint);
 
         // when
-        mockHttpGet(uri, headers, params, file, typeRef);
+        mockHttpGetFromFile(file);
         var result = fmpClient.earnings().list();
 
         // then
         assertValidResult(result, 4, FmpEarningsCallTranscriptList.class);
-    }
-
-    private URI buildUri(String endpoint) {
-        return URI.create(BASE_URL + "/" + endpoint);
-    }
-
-    private Map<String, String> defaultHeaders() {
-        return Map.of("Content-Type", "application/json");
-    }
-
-    private Map<String, Object> buildParams(Map<String, Object> customParams) {
-        return new HashMap<>() {
-            {
-                putAll(customParams);
-                put("apikey", API_KEY);
-            }
-        };
-    }
-
-    private synchronized <T> void mockHttpGet(
-            URI uri, Map<String, String> headers, Map<String, Object> params, String file, TypeReference<T> typeRef) {
-        if (file.endsWith(".json")) {
-            when(fmpHttpClient.get(any(), eq(uri), eq(headers), eq(params)))
-                    .thenReturn(jsonTestResource(typeRef, file));
-        }
-        if (file.endsWith(".csv")) {
-            when(fmpHttpClient.get(any(), eq(uri), eq(headers), eq(params))).thenReturn(csvTestResource(typeRef, file));
-        }
     }
 
     private <T> void assertValidResult(T[] result, int expectedLength, Class<?> expectedType) {

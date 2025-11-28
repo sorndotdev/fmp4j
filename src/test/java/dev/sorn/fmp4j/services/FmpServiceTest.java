@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
@@ -22,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 class FmpServiceTest {
 
@@ -35,37 +35,34 @@ class FmpServiceTest {
     private ConcreteFmpService service;
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void setup() {
+        openMocks(this);
         when(mockConfig.fmpApiKey()).thenReturn(new FmpApiKey("abcdefghij1234567890abcdefghij12"));
         service = new ConcreteFmpService(mockConfig, mockHttpClient);
     }
 
     @Test
-    @DisplayName("Should accept List with correct element type")
-    void shouldAcceptListWithCorrectType() {
+    void accepts_list_with_correct_type() {
         // given
         List<FmpSymbol> symbols = List.of(symbol("AAPL"), symbol("GOOGL"), symbol("MSFT"));
 
-        // then
+        // when // then
         assertDoesNotThrow(() -> service.param("symbol", symbols));
         assertEquals(symbols, service.params.get("symbol"));
     }
 
     @Test
-    @DisplayName("Should accept Set with correct element type")
-    void shouldAcceptSetWithCorrectType() {
+    void accepts_set_with_correct_type() {
         // given
         Set<FmpSymbol> symbols = Set.of(symbol("AAPL"), symbol("APPL"), symbol("MSFT"));
 
-        // then
+        // when // then
         assertDoesNotThrow(() -> service.param("symbol", symbols));
         assertEquals(symbols, service.params.get("symbol"));
     }
 
     @Test
-    @DisplayName("Should reject Collection with incorrect element type")
-    void shouldRejectCollectionWithIncorrectType() {
+    void rejects_collection_with_incorrect_type() {
         // given
         List<Integer> invalidList = Arrays.asList(1, 2, 3);
 
@@ -80,27 +77,25 @@ class FmpServiceTest {
     }
 
     @Test
-    @DisplayName("Should handle empty Collection gracefully")
-    void shouldHandleEmptyCollection() {
-        // given when then
+    void handles_empty_collection() {
+        // given // when // then
         assertDoesNotThrow(() -> service.param("symbol", List.of()));
         assertEquals(List.of(), service.params.get("symbol"));
     }
 
     @Test
     @DisplayName("Should accept Optional with correct type")
-    void shouldAcceptOptionalWithCorrectType() {
+    void accepts_optional_with_correct_type() {
         // given
         Optional<FmpSymbol> optionalSymbol = Optional.of(symbol("AAPL"));
 
-        // then
+        // when // then
         assertDoesNotThrow(() -> service.param("symbol", optionalSymbol));
         assertEquals(optionalSymbol, service.params.get("symbol"));
     }
 
     @Test
-    @DisplayName("Should reject Optional with incorrect type")
-    void shouldRejectOptionalWithIncorrectType() {
+    void rejects_optional_with_incorrect_type() {
         // given
         Optional<Integer> invalidOptional = Optional.of(123);
 
@@ -115,8 +110,7 @@ class FmpServiceTest {
     }
 
     @Test
-    @DisplayName("Should handle empty Optional gracefully")
-    void shouldHandleEmptyOptional() {
+    void handles_empty_optional() {
         // given
         Optional<String> emptyOptional = Optional.empty();
 
@@ -126,28 +120,25 @@ class FmpServiceTest {
     }
 
     @Test
-    @DisplayName("Should reject invalid type for optional parameter")
-    void shouldRejectInvalidTypeForOptionalParam() {
+    void rejects_invalid_type_for_optional_param() {
         assertThrows(FmpServiceException.class, () -> service.param("from", "2025-01-01"));
     }
 
     @Test
-    @DisplayName("Should throw NPE for null key")
-    void shouldHandleNullKey() {
+    void handles_null_key() {
         assertThrows(NullPointerException.class, () -> service.param(null, "value"));
     }
 
     @Test
     @DisplayName("Should reject nested Collection")
-    void shouldValidateNestedCollections() {
-        // given a nested list
+    void validates_nested_collections() {
+        // given: a nested list
         List<List<String>> nestedList = Arrays.asList(Arrays.asList("AAPL", "GOOGL"));
 
-        // when then
+        // when // then
         assertThrows(FmpServiceException.class, () -> service.param("symbol", nestedList));
     }
 
-    // Concrete implementation for testing
     private static class ConcreteFmpService extends FmpService<String> {
         public ConcreteFmpService(FmpConfig cfg, FmpHttpClient http) {
             super(cfg, http, new TypeReference<String>() {});

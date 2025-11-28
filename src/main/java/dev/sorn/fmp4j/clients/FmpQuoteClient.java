@@ -5,9 +5,9 @@ import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpFullQuote;
 import dev.sorn.fmp4j.models.FmpPartialQuote;
 import dev.sorn.fmp4j.models.FmpStockPriceChange;
+import dev.sorn.fmp4j.services.FmpPartialQuoteService;
 import dev.sorn.fmp4j.services.FmpQuoteService;
 import dev.sorn.fmp4j.services.FmpService;
-import dev.sorn.fmp4j.services.FmpShortQuoteService;
 import dev.sorn.fmp4j.services.FmpStockPriceChangeService;
 import dev.sorn.fmp4j.types.FmpSymbol;
 
@@ -18,7 +18,7 @@ public class FmpQuoteClient {
 
     public FmpQuoteClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.quoteService = new FmpQuoteService(fmpConfig, fmpHttpClient);
-        this.shortQuoteService = new FmpShortQuoteService(fmpConfig, fmpHttpClient);
+        this.shortQuoteService = new FmpPartialQuoteService(fmpConfig, fmpHttpClient);
         this.stockPriceChangeService = new FmpStockPriceChangeService(fmpConfig, fmpHttpClient);
     }
 

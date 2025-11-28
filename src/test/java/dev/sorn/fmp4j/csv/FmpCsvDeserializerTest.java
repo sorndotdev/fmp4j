@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import dev.sorn.fmp4j.TestCsvObject;
+import dev.sorn.fmp4j.exceptions.FmpDeserializationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -121,7 +122,7 @@ class FmpCsvDeserializerTest {
 
         // when // then
         var e = assertThrows(
-                FmpCsvException.class,
+                FmpDeserializationException.class,
                 () -> FMP_CSV_DESERIALIZER.deserialize(malformedCsv, typeRef(TestCsvObject[].class)));
         assertEquals(
                 """

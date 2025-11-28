@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import dev.sorn.fmp4j.exceptions.FmpDeserializationException;
 import dev.sorn.fmp4j.http.FmpDeserializer;
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ public final class FmpJsonDeserializer implements FmpDeserializer {
         try {
             return OBJECT_MAPPER.readValue(json, type);
         } catch (IOException e) {
-            throw new FmpJsonException(
+            throw new FmpDeserializationException(
                     e, "Failed to deserialize JSON to '%s': %s", type.getType().getTypeName(), json);
         }
     }

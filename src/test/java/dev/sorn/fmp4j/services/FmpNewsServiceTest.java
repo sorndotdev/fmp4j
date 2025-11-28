@@ -1,17 +1,11 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.NewsTestData;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
@@ -21,15 +15,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class FmpNewsServiceTest implements NewsTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
+class FmpNewsServiceTest extends HttpTest implements NewsTestData {
 
     @ParameterizedTest
     @ValueSource(strings = {"crypto", "forex", "stock"})
     void relative_url(String type) {
         // given
-        var service = new FmpNewsService(new FmpConfigImpl(), http, type);
+        var service = new FmpNewsService(config, client, type);
 
         // when
         var relativeUrl = service.relativeUrl();
@@ -42,7 +34,7 @@ class FmpNewsServiceTest implements NewsTestData {
     @ValueSource(strings = {"crypto", "forex", "stock"})
     void required_params(String path) {
         // given
-        var service = new FmpNewsService(new FmpConfigImpl(), http, path);
+        var service = new FmpNewsService(config, client, path);
 
         // when
         var params = service.requiredParams();
@@ -55,7 +47,7 @@ class FmpNewsServiceTest implements NewsTestData {
     @ValueSource(strings = {"crypto", "forex", "stock"})
     void optional_params(String type) {
         // given
-        var service = new FmpNewsService(new FmpConfigImpl(), http, type);
+        var service = new FmpNewsService(config, client, type);
 
         // when
         var params = service.optionalParams();
@@ -74,7 +66,7 @@ class FmpNewsServiceTest implements NewsTestData {
     })
     void successful_download(String type, FmpSymbol symbol) {
         // given
-        var service = new FmpNewsService(new FmpConfigImpl(), http, type);
+        var service = new FmpNewsService(config, client, type);
         service.param("symbols", symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/news/%s/?symbols=%s.json", type, symbol))

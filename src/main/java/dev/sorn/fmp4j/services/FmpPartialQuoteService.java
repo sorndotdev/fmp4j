@@ -8,8 +8,8 @@ import dev.sorn.fmp4j.models.FmpPartialQuote;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 
-public class FmpShortQuoteService extends FmpService<FmpPartialQuote[]> {
-    public FmpShortQuoteService(FmpConfig cfg, FmpHttpClient http) {
+public class FmpPartialQuoteService extends FmpService<FmpPartialQuote[]> {
+    public FmpPartialQuoteService(FmpConfig cfg, FmpHttpClient http) {
         super(cfg, http, typeRef(FmpPartialQuote[].class));
     }
 

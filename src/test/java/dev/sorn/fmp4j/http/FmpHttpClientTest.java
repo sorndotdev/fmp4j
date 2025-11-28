@@ -1,6 +1,6 @@
 package dev.sorn.fmp4j.http;
 
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
+import static dev.sorn.fmp4j.TestDeserializationRegistry.TEST_DESERIALIZATION_REGISTRY;
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 
 import dev.sorn.fmp4j.TestObject;
 import dev.sorn.fmp4j.TestObjectValue;
-import dev.sorn.fmp4j.json.FmpJsonDeserializer;
 import dev.sorn.fmp4j.types.FmpApiKey;
 import java.io.IOException;
 import java.net.URI;
@@ -31,20 +30,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class FmpHttpClientTest {
     private final HttpClient httpClient = mock(HttpClient.class);
-    private final FmpJsonDeserializer deserializer = FMP_JSON_DESERIALIZER;
     private final ClassicHttpResponse httpResponse = mock(ClassicHttpResponse.class);
     private final URI testUri = URI.create("https://financialmodelingprep.com/stable");
     private FmpHttpClientImpl client;
 
     @BeforeEach
     void setUp() {
-        client = new FmpHttpClientImpl(httpClient, deserializer);
+        client = new FmpHttpClientImpl(httpClient, TEST_DESERIALIZATION_REGISTRY);
     }
 
     @Test
     void get_successful_request_object() throws Exception {
         // given
-        var headers = Map.<String, String>of("Authorization", "Bearer token");
+        var headers = Map.of("Authorization", "Bearer token", "Content-Type", "application/json");
         var params = Map.<String, Object>of("apikey", new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6"));
         var jsonResponse =
                 """
@@ -59,6 +57,7 @@ class FmpHttpClientTest {
         var expected = new TestObject("fmp4j", new TestObjectValue(42));
         when(httpClient.executeOpen(any(), any(HttpGet.class), any())).thenReturn(httpResponse);
         when(httpResponse.getEntity()).thenReturn(new StringEntity(jsonResponse));
+        when(httpResponse.getCode()).thenReturn(200);
 
         // when
         var result = client.get(typeRef(TestObject.class), testUri, headers, params);
@@ -72,7 +71,7 @@ class FmpHttpClientTest {
     @Test
     void get_successful_request_array() throws IOException {
         // given
-        var headers = Map.<String, String>of("some", "header");
+        var headers = Map.of("some", "header", "Content-Type", "application/json");
         var params = Map.<String, Object>of("apikey", new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6"));
         var jsonResponse =
                 """
@@ -97,6 +96,7 @@ class FmpHttpClientTest {
         };
         when(httpClient.executeOpen(any(), any(HttpGet.class), any())).thenReturn(httpResponse);
         when(httpResponse.getEntity()).thenReturn(new StringEntity(jsonResponse));
+        when(httpResponse.getCode()).thenReturn(200);
 
         // when
         var result = client.get(typeRef(TestObject[].class), testUri, headers, params);
@@ -135,7 +135,7 @@ class FmpHttpClientTest {
     @ValueSource(ints = {401, 403})
     void throws_unauthorized_for_code(int code) throws IOException {
         // given
-        var headers = Map.<String, String>of("some", "header");
+        var headers = Map.of("some", "header");
         var params = Map.<String, Object>of("apikey", new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6"));
 
         // when
@@ -148,7 +148,7 @@ class FmpHttpClientTest {
                 FmpUnauthorizedException.class,
                 () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
         assertEquals(
-                "Unauthorized for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{some=header}], queryParams [{apikey=AB****************************y6}];\nresponseBody: {}",
+                "Unauthorized for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{some=header}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 
@@ -169,7 +169,7 @@ class FmpHttpClientTest {
         var e = assertThrows(
                 FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
         assertEquals(
-                "JSON deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=application/json}], queryParams [{apikey=AB****************************y6}]",
+                "Deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=application/json}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 
@@ -190,7 +190,7 @@ class FmpHttpClientTest {
         var e = assertThrows(
                 FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
         assertEquals(
-                "CSV deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=text/csv}], queryParams [{apikey=AB****************************y6}]",
+                "Deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=text/csv}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 }
