@@ -1,32 +1,28 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.csv.FmpCsvDeserializer.FMP_CSV_DESERIALIZER;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpYear.year;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpCashFlowStatement;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpYear;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class FmpBulkCashFlowStatementServiceTest {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER, FMP_CSV_DESERIALIZER);
-    private final FmpService<FmpCashFlowStatement[]> service =
-            new FmpBulkCashFlowStatementService(new FmpConfigImpl(), http);
+class FmpBulkCashFlowStatementServiceTest extends HttpTest {
+    private FmpService<FmpCashFlowStatement[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpBulkCashFlowStatementService(config, client);
+    }
 
     @Test
     void relative_url() {

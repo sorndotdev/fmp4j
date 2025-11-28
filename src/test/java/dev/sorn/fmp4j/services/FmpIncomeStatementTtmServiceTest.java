@@ -1,33 +1,30 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.IncomeStatementTestData;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpIncomeStatement;
 import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FmpIncomeStatementTtmServiceTest implements IncomeStatementTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpIncomeStatement[]> service =
-            new FmpIncomeStatementTtmService(new FmpConfigImpl(), http);
+class FmpIncomeStatementTtmServiceTest extends HttpTest implements IncomeStatementTestData {
+    private FmpService<FmpIncomeStatement[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpIncomeStatementTtmService(config, client);
+    }
 
     @Test
     void relative_url() {
-        // when
+        // given // when
         var relativeUrl = service.relativeUrl();
 
         // then
@@ -36,7 +33,7 @@ class FmpIncomeStatementTtmServiceTest implements IncomeStatementTestData {
 
     @Test
     void required_params() {
-        // when
+        // given // when
         var params = service.requiredParams();
 
         // then
@@ -45,7 +42,7 @@ class FmpIncomeStatementTtmServiceTest implements IncomeStatementTestData {
 
     @Test
     void optional_params() {
-        // when
+        // given // when
         var params = service.optionalParams();
 
         // then

@@ -1,35 +1,33 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.RevenueGeographicSegmentationTestData;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpRevenueGeographicSegmentation;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpStructure;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FmpRevenueGeographicSegmentationServiceTest implements RevenueGeographicSegmentationTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpRevenueGeographicSegmentation[]> service =
-            new FmpRevenueGeographicSegmentationService(new FmpConfigImpl(), http);
+public class FmpRevenueGeographicSegmentationServiceTest extends HttpTest
+        implements RevenueGeographicSegmentationTestData {
+    private FmpService<FmpRevenueGeographicSegmentation[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpRevenueGeographicSegmentationService(config, client);
+    }
 
     @Test
     void relative_url() {
-        // when
+        // given // when
         var relativeUrl = service.relativeUrl();
 
         // then
@@ -38,7 +36,7 @@ public class FmpRevenueGeographicSegmentationServiceTest implements RevenueGeogr
 
     @Test
     void required_params() {
-        // when
+        // given // when
         var params = service.requiredParams();
 
         // then
@@ -47,7 +45,7 @@ public class FmpRevenueGeographicSegmentationServiceTest implements RevenueGeogr
 
     @Test
     void optional_params() {
-        // when
+        // given // when
         var params = service.optionalParams();
 
         // then

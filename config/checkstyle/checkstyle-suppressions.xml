@@ -7,6 +7,7 @@
     <suppress files=".*TestData\.java" checks=".*"/>
     <suppress files=".*TestUtils\.java" checks=".*"/>
     <suppress files=".*Test\.java" checks="AnnotationUseStyle"/>
+    <suppress files=".*Test\.java" checks="AvoidInlineConditionals"/>
     <suppress files=".*Test\.java" checks="MagicNumber"/>
     <suppress files=".*Test\.java" checks="MethodName"/>
     <suppress files=".*Defs\.java" checks=".*"/>

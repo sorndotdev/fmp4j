@@ -1,30 +1,28 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import dev.sorn.fmp4j.HttpClientStub;
 import dev.sorn.fmp4j.QuoteTestData;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpFullQuote;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FmpFullQuoteServiceTest implements QuoteTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpFullQuote[]> service = new FmpQuoteService(new FmpConfigImpl(), http);
+class FmpFullQuoteServiceTest extends HttpTest implements QuoteTestData {
+    private FmpService<FmpFullQuote[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpQuoteService(config, client);
+    }
 
     @Test
     void relative_url() {

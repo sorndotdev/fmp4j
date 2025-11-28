@@ -1,32 +1,29 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dev.sorn.fmp4j.CashFlowStatementTestData;
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpCashFlowStatement;
 import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class FmpCashFlowStatementServiceTest implements CashFlowStatementTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpCashFlowStatement[]> service =
-            new FmpCashFlowStatementService(new FmpConfigImpl(), http);
+class FmpCashFlowStatementServiceTest extends HttpTest implements CashFlowStatementTestData {
+    private FmpService<FmpCashFlowStatement[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpCashFlowStatementService(config, client);
+    }
 
     @Test
     void relative_url() {

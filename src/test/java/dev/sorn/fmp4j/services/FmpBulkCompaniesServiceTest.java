@@ -1,26 +1,23 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.csv.FmpCsvDeserializer.FMP_CSV_DESERIALIZER;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpCompanies;
 import dev.sorn.fmp4j.types.FmpPart;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FmpBulkCompaniesServiceTest {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER, FMP_CSV_DESERIALIZER);
-    private final FmpService<FmpCompanies[]> service = new FmpBulkCompaniesService(new FmpConfigImpl(), http);
+class FmpBulkCompaniesServiceTest extends HttpTest {
+    private FmpService<FmpCompanies[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpBulkCompaniesService(config, client);
+    }
 
     @Test
     void relative_url() {

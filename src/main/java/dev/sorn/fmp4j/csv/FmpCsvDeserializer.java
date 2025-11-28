@@ -6,6 +6,7 @@ import static java.util.stream.IntStream.range;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import dev.sorn.fmp4j.exceptions.FmpDeserializationException;
 import dev.sorn.fmp4j.http.FmpDeserializer;
 import dev.sorn.fmp4j.json.FmpJsonModule;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.lang.reflect.Array;
 
 public final class FmpCsvDeserializer implements FmpDeserializer {
     public static final FmpCsvDeserializer FMP_CSV_DESERIALIZER = new FmpCsvDeserializer();
-
     private static final CsvMapper CSV_MAPPER = (CsvMapper) new CsvMapper()
             .findAndRegisterModules()
             .configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -22,7 +22,9 @@ public final class FmpCsvDeserializer implements FmpDeserializer {
             .configure(JsonReadFeature.ALLOW_TRAILING_COMMA.mappedFeature(), true)
             .registerModule(new FmpJsonModule());
 
-    private FmpCsvDeserializer() {}
+    private FmpCsvDeserializer() {
+        // prevent direct instantiation
+    }
 
     private String removeByteOrderMark(String content) {
         if (content.startsWith("\uFEFF")) {
@@ -46,7 +48,7 @@ public final class FmpCsvDeserializer implements FmpDeserializer {
             range(0, list.size()).forEach(i -> Array.set(array, i, list.get(i)));
             return (T) array;
         } catch (IOException e) {
-            throw new FmpCsvException(
+            throw new FmpDeserializationException(
                     e, "Failed to deserialize CSV to '%s': %s", type.getType().getTypeName(), content);
         }
     }

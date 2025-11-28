@@ -1,34 +1,31 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpHistoricalPriceEodFull;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FmpHistoricalPriceEodFullServiceTest {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpHistoricalPriceEodFull[]> service =
-            new FmpHistoricalPriceEodFullService(new FmpConfigImpl(), http);
+class FmpHistoricalPriceEodFullServiceTest extends HttpTest {
+    private FmpService<FmpHistoricalPriceEodFull[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpHistoricalPriceEodFullService(config, client);
+    }
 
     @Test
     void relative_url() {
-        // when
+        // given // when
         var relativeUrl = service.relativeUrl();
 
         // then
@@ -37,7 +34,7 @@ class FmpHistoricalPriceEodFullServiceTest {
 
     @Test
     void required_params() {
-        // when
+        // given // when
         var params = service.requiredParams();
 
         // then
@@ -46,7 +43,7 @@ class FmpHistoricalPriceEodFullServiceTest {
 
     @Test
     void optional_params() {
-        // when
+        // given // when
         var params = service.optionalParams();
 
         // then

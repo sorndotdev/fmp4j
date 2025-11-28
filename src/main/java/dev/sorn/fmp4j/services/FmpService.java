@@ -1,5 +1,7 @@
 package dev.sorn.fmp4j.services;
 
+import static java.util.Objects.requireNonNull;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -16,10 +18,10 @@ public abstract class FmpService<R> {
     protected final TypeReference<R> typeRef;
 
     protected FmpService(FmpConfig cfg, FmpHttpClient http, TypeReference<R> typeRef) {
-        this.cfg = cfg;
-        this.http = http;
-        this.typeRef = typeRef;
-        this.params.put("apikey", cfg.fmpApiKey());
+        this.cfg = requireNonNull(cfg, "'cfg' is required");
+        this.http = requireNonNull(http, "'http' is required");
+        this.typeRef = requireNonNull(typeRef, "'typeRef' is required");
+        this.params.put("apikey", requireNonNull(cfg.fmpApiKey(), "'apikey' is required"));
     }
 
     protected abstract String relativeUrl();

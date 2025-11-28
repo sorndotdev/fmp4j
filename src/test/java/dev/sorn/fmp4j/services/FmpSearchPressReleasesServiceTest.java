@@ -1,31 +1,28 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.HttpClientStub.httpClientStub;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
-import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dev.sorn.fmp4j.FmpSearchPressReleaseTestData;
-import dev.sorn.fmp4j.HttpClientStub;
-import dev.sorn.fmp4j.cfg.FmpConfigImpl;
-import dev.sorn.fmp4j.http.FmpHttpClient;
-import dev.sorn.fmp4j.http.FmpHttpClientImpl;
 import dev.sorn.fmp4j.models.FmpSearchPressRelease;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FmpSearchPressReleasesServiceTest implements FmpSearchPressReleaseTestData {
-    private final HttpClientStub httpStub = httpClientStub();
-    private final FmpHttpClient http = new FmpHttpClientImpl(httpStub, FMP_JSON_DESERIALIZER);
-    private final FmpService<FmpSearchPressRelease[]> service =
-            new FmpSearchPressReleasesService(new FmpConfigImpl(), http);
+class FmpSearchPressReleasesServiceTest extends HttpTest implements FmpSearchPressReleaseTestData {
+    private FmpService<FmpSearchPressRelease[]> service;
+
+    @BeforeEach
+    void setup() {
+        service = new FmpSearchPressReleasesService(config, client);
+    }
 
     @Test
     void relative_url() {
-        // when
+        // given // when
         var relativeUrl = service.relativeUrl();
 
         // then
@@ -34,7 +31,7 @@ class FmpSearchPressReleasesServiceTest implements FmpSearchPressReleaseTestData
 
     @Test
     void required_params() {
-        // when
+        // given // when
         var params = service.requiredParams();
 
         // then
@@ -43,7 +40,7 @@ class FmpSearchPressReleasesServiceTest implements FmpSearchPressReleaseTestData
 
     @Test
     void optional_params() {
-        // when
+        // given // when
         var params = service.optionalParams();
 
         // then

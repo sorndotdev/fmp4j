@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import dev.sorn.fmp4j.TestObject;
 import dev.sorn.fmp4j.TestObjectValue;
+import dev.sorn.fmp4j.exceptions.FmpDeserializationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,7 +79,7 @@ class FmpJsonDeserializerTest {
 
         // when // then
         var e = assertThrows(
-                FmpJsonException.class,
+                FmpDeserializationException.class,
                 () -> FMP_JSON_DESERIALIZER.deserialize(malformedJson, typeRef(TestObject.class)));
         assertEquals("Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject': {", e.getMessage());
     }
@@ -90,7 +91,7 @@ class FmpJsonDeserializerTest {
 
         // when // then
         var e = assertThrows(
-                FmpJsonException.class,
+                FmpDeserializationException.class,
                 () -> FMP_JSON_DESERIALIZER.deserialize(malformedJson, typeRef(TestObject[].class)));
         assertEquals("Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject[]': [", e.getMessage());
     }
@@ -108,7 +109,7 @@ class FmpJsonDeserializerTest {
 
         // when // then
         var e = assertThrows(
-                FmpJsonException.class,
+                FmpDeserializationException.class,
                 () -> FMP_JSON_DESERIALIZER.deserialize(mismatchedJson, typeRef(TestObject.class)));
         assertEquals(
                 """
@@ -133,7 +134,7 @@ class FmpJsonDeserializerTest {
 
         // when // then
         var e = assertThrows(
-                FmpJsonException.class,
+                FmpDeserializationException.class,
                 () -> FMP_JSON_DESERIALIZER.deserialize(invalidElementJson, typeRef(TestObject[].class)));
         assertEquals(
                 """
