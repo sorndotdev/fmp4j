@@ -76,11 +76,14 @@ public abstract class FmpService<R> {
 
     public final R download() {
         final var required = requiredParams();
-        for (final var req : required.keySet()) {
-            if (!params.containsKey(req)) {
-                throw new FmpServiceException("'%s' is a required query param for endpoint [%s]", req, url());
-            }
+        final var missing = required.keySet().stream()
+                .filter(req -> !params.containsKey(req))
+                .toList();
+
+        if (!missing.isEmpty()) {
+            throw new FmpServiceException("%s are required query params for endpoint [%s]", missing, url());
         }
+
         return filter(http.get(typeRef, url(), headers(), params));
     }
 }
