@@ -69,7 +69,7 @@ The section names, ordering, and endpoints are copy-pasted from FMP docs.
 
 ### Search
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#search
+Copied from [/developer/docs/stable#search](https://site.financialmodelingprep.com/developer/docs/stable#search)
 
 |    | Since | Endpoint                    |
 |:--:|:-----:|-----------------------------|
@@ -83,7 +83,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#search
 
 ### Directory
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#directory
+Copied from [/developer/docs/stable#directory](https://site.financialmodelingprep.com/developer/docs/stable#directory)
 
 |    | Since | Endpoint                           |
 |:--:|:-----:|------------------------------------|
@@ -101,7 +101,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#directory
 
 ### Analyst
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#analyst
+Copied from [/developer/docs/stable#analyst](https://site.financialmodelingprep.com/developer/docs/stable#analyst)
 
 |    | Since | Endpoint                    |
 |:--:|:-----:|-----------------------------|
@@ -120,7 +120,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#analyst
 
 ### Calendar
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#calendar
+Copied from [/developer/docs/stable#calendar](https://site.financialmodelingprep.com/developer/docs/stable#calendar)
 
 |     | Since | Endpoint              |
 |:---:|:-----:|-----------------------|
@@ -136,7 +136,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#calendar
 
 ### Chart
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#chart
+Copied from [/developer/docs/stable#chart](https://site.financialmodelingprep.com/developer/docs/stable#chart)
 
 |    | Since | Endpoint                                   |
 |:--:|:-----:|--------------------------------------------|
@@ -153,7 +153,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#chart
 
 ### Company
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#chart
+Copied from [/developer/docs/stable#company](https://site.financialmodelingprep.com/developer/docs/stable#company)
 
 |    | Since | Endpoint                             |
 |:--:|:-----:|--------------------------------------|
@@ -178,7 +178,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#chart
 
 ### Commitment Of Traders
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#commitment-of-traders
+Copied from [/developer/docs/stable#commitment-of-traders](https://site.financialmodelingprep.com/developer/docs/stable#commitment-of-traders)
 
 |    | Since | Endpoint                          |
 |:--:|:-----:|-----------------------------------|
@@ -188,7 +188,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#commitment-
 
 ### Economics
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#commitment-of-traders
+Copied from [/developer/docs/stable#economics](https://site.financialmodelingprep.com/developer/docs/stable#economics)
 
 |    | Since | Endpoint               |
 |:--:|:-----:|------------------------|
@@ -199,7 +199,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#commitment-
 
 ### ESG
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#esg
+Copied from [/developer/docs/stable#esg](https://site.financialmodelingprep.com/developer/docs/stable#esg)
 
 |    | Since | Endpoint           |
 |:--:|:-----:|--------------------|
@@ -209,7 +209,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#esg
 
 Copy of ### Discounted Cash Flow
 
-https://site.financialmodelingprep.com/developer/docs/stable#discounted-cash-flow
+Copied from [/developer/docs/stable#discounted-cash-flow](https://site.financialmodelingprep.com/developer/docs/stable#discounted-cash-flow)
 
 |    | Since | Endpoint                               |
 |:--:|:-----:|----------------------------------------|
@@ -220,7 +220,7 @@ https://site.financialmodelingprep.com/developer/docs/stable#discounted-cash-flo
 
 ### Statements
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#statements
+Copied from [/developer/docs/stable#statements](https://site.financialmodelingprep.com/developer/docs/stable#statements)
 
 |    | Since | Endpoint                                |
 |:--:|:-----:|-----------------------------------------|
@@ -251,7 +251,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#statements
 
 ### Form 13F
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#form-13f
+Copied from [/developer/docs/stable#form-13f](https://site.financialmodelingprep.com/developer/docs/stable#form-13f)
 
 |    | Since | Endpoint                                              |
 |:--:|:-----:|-------------------------------------------------------|
@@ -265,7 +265,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#form-13f
 
 ### Indexes
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#indexes
+Copied from [/developer/docs/stable#indexes](https://site.financialmodelingprep.com/developer/docs/stable#indexes)
 
 |    | Since | Endpoint                           |
 |:--:|:-----:|------------------------------------|
@@ -287,7 +287,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#indexes
 
 ### Insider Trades
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#insider-trades
+Copied from [/developer/docs/stable#insider-trades](https://site.financialmodelingprep.com/developer/docs/stable#insider-trades)
 
 |    | Since | Endpoint                                |
 |:--:|:-----:|-----------------------------------------|
@@ -300,7 +300,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#insider-tra
 
 ### Market Performance
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#market-performance
+Copied from [/developer/docs/stable#market-performance](https://site.financialmodelingprep.com/developer/docs/stable#market-performance)
 
 |    | Since | Endpoint                           |
 |:--:|:-----:|------------------------------------|
@@ -318,7 +318,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#market-perf
 
 ### Market Hours
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#market-hours
+Copied from [/developer/docs/stable#market-hours](https://site.financialmodelingprep.com/developer/docs/stable#market-hours)
 
 |    | Since | Endpoint                     |
 |:--:|:-----:|------------------------------|
@@ -328,7 +328,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#market-hour
 
 ### ETF & Mutual Funds
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#holdings
+Copied from [/developer/docs/stable#holdings](https://site.financialmodelingprep.com/developer/docs/stable#holdings)
 
 |    | Since | Endpoint                           |
 |:--:|:-----:|------------------------------------|
@@ -344,7 +344,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#holdings
 
 ### Commodities
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#commodities
+Copied from [/developer/docs/stable#commodities](https://site.financialmodelingprep.com/developer/docs/stable#commodities)
 
 |    | Since | Endpoint                      |
 |:--:|:-----:|-------------------------------|
@@ -360,7 +360,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#commodities
 
 ### Fundraisers
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#fundraisers
+Copied from [/developer/docs/stable#fundraisers](https://site.financialmodelingprep.com/developer/docs/stable#fundraisers)
 
 |    | Since | Endpoint                         |
 |:--:|:-----:|----------------------------------|
@@ -373,7 +373,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#fundraisers
 
 ### Crypto
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#crypto
+Copied from [/developer/docs/stable#crypto](https://site.financialmodelingprep.com/developer/docs/stable#crypto)
 
 |    | Since | Endpoint                      |
 |:--:|:-----:|-------------------------------|
@@ -389,7 +389,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#crypto
 
 ### News
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#news
+Copied from [/developer/docs/stable#news](https://site.financialmodelingprep.com/developer/docs/stable#news)
 
 |    | Since | Endpoint                      |
 |:--:|:-----:|-------------------------------|
@@ -406,7 +406,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#news
 
 ### Technical Indicators
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#technical-indicators
+Copied from [/developer/docs/stable#technical-indicators](https://site.financialmodelingprep.com/developer/docs/stable#technical-indicators)
 
 |    | Since | Endpoint                                  |
 |:--:|:-----:|-------------------------------------------|
@@ -422,7 +422,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#technical-i
 
 ### Quote
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#quote
+Copied from [/developer/docs/stable#quote](https://site.financialmodelingprep.com/developer/docs/stable#quote)
 
 |    | Since | Endpoint                   |
 |:--:|:-----:|----------------------------|
@@ -445,7 +445,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#quote
 
 ### SEC Filings
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#sec-filings
+Copied from [/developer/docs/stable#sec-filings](https://site.financialmodelingprep.com/developer/docs/stable#sec-filings)
 
 |    | Since | Endpoint                                   |
 |:--:|:-----:|--------------------------------------------|
@@ -463,7 +463,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#sec-filings
 
 ### Earnings Transcript
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#earnings-transcript
+Copied from [/developer/docs/stable#earnings-transcript](https://site.financialmodelingprep.com/developer/docs/stable#earnings-transcript)
 
 |    | Since | Endpoint                          |
 |:--:|:-----:|-----------------------------------|
@@ -474,7 +474,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#earnings-tr
 
 ### Senate
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#senate
+Copied from [/developer/docs/stable#senate](https://site.financialmodelingprep.com/developer/docs/stable#senate)
 
 |    | Since | Endpoint                 |
 |:--:|:-----:|--------------------------|
@@ -487,7 +487,7 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#senate
 
 ### Bulk
 
-Copy of https://site.financialmodelingprep.com/developer/docs/stable#bulk
+Copied from [/developer/docs/stable#bulk](https://site.financialmodelingprep.com/developer/docs/stable#bulk)
 
 |    | Since | Endpoint                               |
 |:--:|:-----:|----------------------------------------|
@@ -510,10 +510,3 @@ Copy of https://site.financialmodelingprep.com/developer/docs/stable#bulk
 | ❌️ |   -   | `/cash-flow-statement-bulk`            |
 | ❌️ |   -   | `/cash-flow-statement-growth-bulk`     |
 | ❌️ |   -   | `/eod-bulk`                            |
-
-## Dependencies
-
-- `com.fasterxml.jackson.datatype:jackson-datatype-jsr310`
-- `com.fasterxml.jackson.core:jackson-databind`
-- `org.apache.httpcomponents.client5:httpclient5`
-- `org.apache.commons:commons-lang3`
