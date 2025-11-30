@@ -1,4 +1,4 @@
-![](../.github/badges/jacoco.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/803a2adc2f664508a70e050691d31135)](https://app.codacy.com/gh/sorndotdev/fmp4j/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![](../.github/badges/jacoco.svg)
 
 ```txt
 ╔───────────────────────────────────────────╗
