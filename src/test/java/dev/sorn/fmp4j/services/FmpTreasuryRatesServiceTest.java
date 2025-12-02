@@ -2,6 +2,8 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -35,7 +37,7 @@ class FmpTreasuryRatesServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("from", LocalDate.class, "to", LocalDate.class), params);
+        assertEquals(Map.of(PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class), params);
     }
 
     @Test
@@ -52,8 +54,8 @@ class FmpTreasuryRatesServiceTest extends HttpTest {
         // given
         var from = LocalDate.parse("2024-12-30");
         var to = LocalDate.parse("2025-01-01");
-        service.param("from", from);
-        service.param("to", to);
+        service.param(PARAM_FROM, from);
+        service.param(PARAM_TO, to);
         httpStub.configureResponse()
                 .body(testResource("stable/treasury-rates/?from=%s&to=%s.json", from, to))
                 .statusCode(200)

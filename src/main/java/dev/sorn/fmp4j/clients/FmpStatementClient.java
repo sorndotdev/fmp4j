@@ -3,6 +3,10 @@ package dev.sorn.fmp4j.clients;
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPeriod.ANNUAL;
 import static dev.sorn.fmp4j.types.FmpStructure.FLAT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_STRUCTURE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -99,148 +103,148 @@ public class FmpStatementClient {
 
     public synchronized FmpIncomeStatement[] income(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        incomeStatementService.param("symbol", symbol);
-        incomeStatementService.param("period", period.orElse(ANNUAL));
-        incomeStatementService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        incomeStatementService.param(PARAM_SYMBOL, symbol);
+        incomeStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        incomeStatementService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return incomeStatementService.download();
     }
 
     public synchronized FmpFinancialStatementAsReported[] incomeAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        incomeStatementAsReportedService.param("symbol", symbol);
-        incomeStatementAsReportedService.param("period", period.orElse(ANNUAL));
-        incomeStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        incomeStatementAsReportedService.param(PARAM_SYMBOL, symbol);
+        incomeStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        incomeStatementAsReportedService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return incomeStatementAsReportedService.download();
     }
 
     public synchronized FmpIncomeStatementGrowth[] incomeGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        incomeStatementGrowthService.param("symbol", symbol);
-        incomeStatementGrowthService.param("period", period.orElse(ANNUAL));
-        incomeStatementGrowthService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        incomeStatementGrowthService.param(PARAM_SYMBOL, symbol);
+        incomeStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        incomeStatementGrowthService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return incomeStatementGrowthService.download();
     }
 
     public synchronized FmpIncomeStatement[] incomeTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
-        incomeStatementTtmService.param("symbol", symbol);
-        incomeStatementTtmService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        incomeStatementTtmService.param(PARAM_SYMBOL, symbol);
+        incomeStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return incomeStatementTtmService.download();
     }
 
     public synchronized FmpBalanceSheetStatement[] balanceSheet(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        balanceSheetStatementService.param("symbol", symbol);
-        balanceSheetStatementService.param("period", period.orElse(ANNUAL));
-        balanceSheetStatementService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        balanceSheetStatementService.param(PARAM_SYMBOL, symbol);
+        balanceSheetStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        balanceSheetStatementService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementService.download();
     }
 
     public synchronized FmpFinancialStatementAsReported[] balanceSheetAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        balanceSheetStatementAsReportedService.param("symbol", symbol);
-        balanceSheetStatementAsReportedService.param("period", period.orElse(ANNUAL));
-        balanceSheetStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        balanceSheetStatementAsReportedService.param(PARAM_SYMBOL, symbol);
+        balanceSheetStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        balanceSheetStatementAsReportedService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementAsReportedService.download();
     }
 
     public synchronized FmpBalanceSheetStatementGrowth[] balanceSheetGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        balanceSheetStatementGrowthService.param("symbol", symbol);
-        balanceSheetStatementGrowthService.param("period", period.orElse(ANNUAL));
-        balanceSheetStatementGrowthService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        balanceSheetStatementGrowthService.param(PARAM_SYMBOL, symbol);
+        balanceSheetStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        balanceSheetStatementGrowthService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementGrowthService.download();
     }
 
     public synchronized FmpBalanceSheetStatement[] balanceSheetTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
-        balanceSheetStatementTtmService.param("symbol", symbol);
-        balanceSheetStatementTtmService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        balanceSheetStatementTtmService.param(PARAM_SYMBOL, symbol);
+        balanceSheetStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementTtmService.download();
     }
 
     public synchronized FmpCashFlowStatement[] cashFlow(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        cashFlowStatementService.param("symbol", symbol);
-        cashFlowStatementService.param("period", period.orElse(ANNUAL));
-        cashFlowStatementService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        cashFlowStatementService.param(PARAM_SYMBOL, symbol);
+        cashFlowStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        cashFlowStatementService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementService.download();
     }
 
     public synchronized FmpFinancialStatementAsReported[] cashFlowAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        cashFlowStatementAsReportedService.param("symbol", symbol);
-        cashFlowStatementAsReportedService.param("period", period.orElse(ANNUAL));
-        cashFlowStatementAsReportedService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        cashFlowStatementAsReportedService.param(PARAM_SYMBOL, symbol);
+        cashFlowStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        cashFlowStatementAsReportedService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementAsReportedService.download();
     }
 
     public synchronized FmpCashFlowStatementGrowth[] cashFlowGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        cashFlowStatementGrowthService.param("symbol", symbol);
-        cashFlowStatementGrowthService.param("period", period.orElse(ANNUAL));
-        cashFlowStatementGrowthService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        cashFlowStatementGrowthService.param(PARAM_SYMBOL, symbol);
+        cashFlowStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        cashFlowStatementGrowthService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementGrowthService.download();
     }
 
     public synchronized FmpCashFlowStatement[] cashFlowTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
-        cashFlowStatementTtmService.param("symbol", symbol);
-        cashFlowStatementTtmService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        cashFlowStatementTtmService.param(PARAM_SYMBOL, symbol);
+        cashFlowStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementTtmService.download();
     }
 
     public synchronized FmpFinancialGrowth[] financialGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        financialGrowthService.param("symbol", symbol);
-        financialGrowthService.param("period", period.orElse(ANNUAL));
-        financialGrowthService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        financialGrowthService.param(PARAM_SYMBOL, symbol);
+        financialGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        financialGrowthService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return financialGrowthService.download();
     }
 
     public synchronized FmpKeyMetric[] keyMetrics(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        keyMetricService.param("symbol", symbol);
-        keyMetricService.param("period", period.orElse(ANNUAL));
-        keyMetricService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        keyMetricService.param(PARAM_SYMBOL, symbol);
+        keyMetricService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        keyMetricService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return keyMetricService.download();
     }
 
     public synchronized FmpKeyMetricTtm[] keyMetricsTtm(FmpSymbol symbol) {
-        keyMetricTtmService.param("symbol", symbol);
+        keyMetricTtmService.param(PARAM_SYMBOL, symbol);
         return keyMetricTtmService.download();
     }
 
     public synchronized FmpRatio[] ratios(FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        ratioService.param("symbol", symbol);
-        ratioService.param("period", period.orElse(ANNUAL));
-        ratioService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        ratioService.param(PARAM_SYMBOL, symbol);
+        ratioService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        ratioService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return ratioService.download();
     }
 
     public synchronized FmpRatioTtm[] ratiosTtm(FmpSymbol symbol) {
-        ratioTtmService.param("symbol", symbol);
+        ratioTtmService.param(PARAM_SYMBOL, symbol);
         return ratioTtmService.download();
     }
 
     public synchronized FmpEnterpriseValue[] enterpriseValues(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
-        enterpriseValuesService.param("symbol", symbol);
-        enterpriseValuesService.param("period", period.orElse(ANNUAL));
-        enterpriseValuesService.param("limit", limit.orElse(DEFAULT_LIMIT));
+        enterpriseValuesService.param(PARAM_SYMBOL, symbol);
+        enterpriseValuesService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        enterpriseValuesService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return enterpriseValuesService.download();
     }
 
     public synchronized FmpRevenueGeographicSegmentation[] revenueGeographicSegmentations(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpStructure> structure) {
-        revenueGeographicSegmentationService.param("symbol", symbol);
-        revenueGeographicSegmentationService.param("period", period.orElse(ANNUAL));
-        revenueGeographicSegmentationService.param("structure", structure.orElse(FLAT));
+        revenueGeographicSegmentationService.param(PARAM_SYMBOL, symbol);
+        revenueGeographicSegmentationService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        revenueGeographicSegmentationService.param(PARAM_STRUCTURE, structure.orElse(FLAT));
         return revenueGeographicSegmentationService.download();
     }
 
     public synchronized FmpRevenueProductSegmentation[] revenueProductSegmentations(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpStructure> structure) {
-        revenueProductSegmentationService.param("symbol", symbol);
-        revenueProductSegmentationService.param("period", period.orElse(ANNUAL));
-        revenueProductSegmentationService.param("structure", structure.orElse(FLAT));
+        revenueProductSegmentationService.param(PARAM_SYMBOL, symbol);
+        revenueProductSegmentationService.param(PARAM_PERIOD, period.orElse(ANNUAL));
+        revenueProductSegmentationService.param(PARAM_STRUCTURE, structure.orElse(FLAT));
         return revenueProductSegmentationService.download();
     }
 }

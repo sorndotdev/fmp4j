@@ -1,5 +1,7 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOLS;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSearchByCik;
@@ -65,7 +67,7 @@ public class FmpSearchClient {
     }
 
     public synchronized FmpSearchPressRelease[] pressReleases(FmpSymbol symbol) {
-        fmpSearchPressReleasesService.param("symbols", symbol);
+        fmpSearchPressReleasesService.param(PARAM_SYMBOLS, symbol);
         return fmpSearchPressReleasesService.download();
     }
 }

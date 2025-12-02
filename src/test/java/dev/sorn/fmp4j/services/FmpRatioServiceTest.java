@@ -3,6 +3,9 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,7 +43,7 @@ class FmpRatioServiceTest extends HttpTest implements RatioTestData {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @Test
@@ -49,14 +52,14 @@ class FmpRatioServiceTest extends HttpTest implements RatioTestData {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("period", FmpPeriod.class, "limit", FmpLimit.class), params);
+        assertEquals(Map.of(PARAM_PERIOD, FmpPeriod.class, PARAM_LIMIT, FmpLimit.class), params);
     }
 
     @Test
     void successful_download() {
         // given
         var symbol = symbol("AAPL");
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/ratios/?symbol=%s.json", symbol))
                 .statusCode(200)
@@ -77,7 +80,7 @@ class FmpRatioServiceTest extends HttpTest implements RatioTestData {
         // given
         var symbol = symbol("AAPL");
         var limit = 3;
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/ratios/?symbol=%s&period=%s&limit=%d.json", symbol, period, limit))
                 .statusCode(200)

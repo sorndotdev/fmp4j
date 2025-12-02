@@ -1,6 +1,9 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_STRUCTURE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -22,11 +25,11 @@ public class FmpRevenueProductSegmentationService extends FmpService<FmpRevenueP
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("symbol", FmpSymbol.class);
+        return Map.of(PARAM_SYMBOL, FmpSymbol.class);
     }
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("period", FmpPeriod.class, "structure", FmpStructure.class);
+        return Map.of(PARAM_PERIOD, FmpPeriod.class, PARAM_STRUCTURE, FmpStructure.class);
     }
 }

@@ -1,5 +1,7 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpFullQuote;
@@ -23,17 +25,17 @@ public class FmpQuoteClient {
     }
 
     public synchronized FmpFullQuote[] full(FmpSymbol symbol) {
-        quoteService.param("symbol", symbol);
+        quoteService.param(PARAM_SYMBOL, symbol);
         return quoteService.download();
     }
 
     public synchronized FmpPartialQuote[] partial(FmpSymbol symbol) {
-        shortQuoteService.param("symbol", symbol);
+        shortQuoteService.param(PARAM_SYMBOL, symbol);
         return shortQuoteService.download();
     }
 
     public synchronized FmpStockPriceChange[] priceChange(FmpSymbol symbol) {
-        stockPriceChangeService.param("symbol", symbol);
+        stockPriceChangeService.param(PARAM_SYMBOL, symbol);
         return stockPriceChangeService.download();
     }
 }

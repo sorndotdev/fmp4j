@@ -1,5 +1,8 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpTreasuryRate;
@@ -15,8 +18,8 @@ public class FmpEconomicsClient {
     }
 
     public synchronized FmpTreasuryRate[] treasuryRates(LocalDate from, LocalDate to) {
-        fmpTreasuryRatesService.param("from", from);
-        fmpTreasuryRatesService.param("to", to);
+        fmpTreasuryRatesService.param(PARAM_FROM, from);
+        fmpTreasuryRatesService.param(PARAM_TO, to);
         return fmpTreasuryRatesService.download();
     }
 }

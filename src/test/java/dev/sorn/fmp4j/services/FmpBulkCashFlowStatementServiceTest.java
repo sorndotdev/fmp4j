@@ -4,6 +4,8 @@ import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpYear.year;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,7 +41,7 @@ class FmpBulkCashFlowStatementServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("year", FmpYear.class, "period", FmpPeriod.class), params);
+        assertEquals(Map.of(PARAM_YEAR, FmpYear.class, PARAM_PERIOD, FmpPeriod.class), params);
     }
 
     @Test
@@ -57,8 +59,8 @@ class FmpBulkCashFlowStatementServiceTest extends HttpTest {
         // given
         var year = year("2023");
         var period = period(periodString);
-        service.param("year", year);
-        service.param("period", period);
+        service.param(PARAM_YEAR, year);
+        service.param(PARAM_PERIOD, period);
         httpStub.configureResponse()
                 .body(testResource("stable/cash-flow-statement-bulk/?year=%s&period=%s.csv", year, period))
                 .statusCode(200)

@@ -2,6 +2,11 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOLS;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,7 +45,7 @@ class FmpNewsServiceTest extends HttpTest implements NewsTestData {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbols", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOLS, FmpSymbol.class), params);
     }
 
     @ParameterizedTest
@@ -54,7 +59,11 @@ class FmpNewsServiceTest extends HttpTest implements NewsTestData {
 
         // then
         assertEquals(
-                Map.of("from", LocalDate.class, "to", LocalDate.class, "page", FmpPage.class, "limit", FmpLimit.class),
+                Map.of(
+                        PARAM_FROM, LocalDate.class,
+                        PARAM_TO, LocalDate.class,
+                        PARAM_PAGE, FmpPage.class,
+                        PARAM_LIMIT, FmpLimit.class),
                 params);
     }
 
@@ -67,7 +76,7 @@ class FmpNewsServiceTest extends HttpTest implements NewsTestData {
     void successful_download(String type, FmpSymbol symbol) {
         // given
         var service = new FmpNewsService(config, client, type);
-        service.param("symbols", symbol);
+        service.param(PARAM_SYMBOLS, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/news/%s/?symbols=%s.json", type, symbol))
                 .statusCode(200)

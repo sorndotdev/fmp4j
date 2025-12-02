@@ -5,6 +5,11 @@ import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPage.page;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -41,7 +46,8 @@ class FmpSecFilingsSearchBySymbolServiceTest extends HttpTest implements Financi
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class, "from", LocalDate.class, "to", LocalDate.class), params);
+        assertEquals(
+                Map.of(PARAM_SYMBOL, FmpSymbol.class, PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class), params);
     }
 
     @Test
@@ -50,7 +56,7 @@ class FmpSecFilingsSearchBySymbolServiceTest extends HttpTest implements Financi
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("page", FmpPage.class, "limit", FmpLimit.class), params);
+        assertEquals(Map.of(PARAM_PAGE, FmpPage.class, PARAM_LIMIT, FmpLimit.class), params);
     }
 
     @Test
@@ -61,11 +67,11 @@ class FmpSecFilingsSearchBySymbolServiceTest extends HttpTest implements Financi
         var to = LocalDate.parse("2025-01-01");
         var page = page(0);
         var limit = limit(2);
-        service.param("symbol", symbol);
-        service.param("from", from);
-        service.param("to", to);
-        service.param("page", page);
-        service.param("limit", limit);
+        service.param(PARAM_SYMBOL, symbol);
+        service.param(PARAM_FROM, from);
+        service.param(PARAM_TO, to);
+        service.param(PARAM_PAGE, page);
+        service.param(PARAM_LIMIT, limit);
         httpStub.configureResponse()
                 .body(testResource(
                         "stable/sec-filings-search/symbol/?symbol=%s&from=%s&to=%s&page=%d&limit=%d.json",

@@ -1,5 +1,7 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpEtfAssetExposure;
@@ -32,27 +34,27 @@ public class FmpEtfClient {
     }
 
     public synchronized FmpEtfAssetExposure[] assetExposure(FmpSymbol symbol) {
-        etfAssetExposureService.param("symbol", symbol);
+        etfAssetExposureService.param(PARAM_SYMBOL, symbol);
         return etfAssetExposureService.download();
     }
 
     public synchronized FmpEtfCountryWeighting[] countryWeightings(FmpSymbol symbol) {
-        etfCountryWeightingService.param("symbol", symbol);
+        etfCountryWeightingService.param(PARAM_SYMBOL, symbol);
         return etfCountryWeightingService.download();
     }
 
     public synchronized FmpEtfHolding[] holdings(FmpSymbol symbol) {
-        etfHoldingService.param("symbol", symbol);
+        etfHoldingService.param(PARAM_SYMBOL, symbol);
         return etfHoldingService.download();
     }
 
     public synchronized FmpEtfInfo[] info(FmpSymbol symbol) {
-        etfInfoService.param("symbol", symbol);
+        etfInfoService.param(PARAM_SYMBOL, symbol);
         return etfInfoService.download();
     }
 
     public synchronized FmpEtfSectorWeighting[] sectorWeightings(FmpSymbol symbol) {
-        etfSectorWeightingService.param("symbol", symbol);
+        etfSectorWeightingService.param(PARAM_SYMBOL, symbol);
         return etfSectorWeightingService.download();
     }
 }

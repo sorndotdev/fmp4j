@@ -1,5 +1,8 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpBalanceSheetStatement;
@@ -37,20 +40,20 @@ public class FmpBulkClient {
     }
 
     public synchronized FmpBalanceSheetStatement[] balanceSheetStatements(FmpYear year, FmpPeriod period) {
-        fmpBulkBalanceSheetService.param("year", year);
-        fmpBulkBalanceSheetService.param("period", period);
+        fmpBulkBalanceSheetService.param(PARAM_YEAR, year);
+        fmpBulkBalanceSheetService.param(PARAM_PERIOD, period);
         return fmpBulkBalanceSheetService.download();
     }
 
     public synchronized FmpCashFlowStatement[] cashFlowStatements(FmpYear year, FmpPeriod period) {
-        fmpBulkCashFlowService.param("year", year);
-        fmpBulkCashFlowService.param("period", period);
+        fmpBulkCashFlowService.param(PARAM_YEAR, year);
+        fmpBulkCashFlowService.param(PARAM_PERIOD, period);
         return fmpBulkCashFlowService.download();
     }
 
     public synchronized FmpCashFlowStatementGrowth[] cashFlowStatementGrowth(FmpYear year, FmpPeriod period) {
-        fmpBulkCashFlowStatementGrowthService.param("year", year);
-        fmpBulkCashFlowStatementGrowthService.param("period", period);
+        fmpBulkCashFlowStatementGrowthService.param(PARAM_YEAR, year);
+        fmpBulkCashFlowStatementGrowthService.param(PARAM_PERIOD, period);
         return fmpBulkCashFlowStatementGrowthService.download();
     }
 }

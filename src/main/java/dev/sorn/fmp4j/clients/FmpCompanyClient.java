@@ -1,5 +1,7 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpCompany;
@@ -17,7 +19,7 @@ public class FmpCompanyClient {
     }
 
     public synchronized FmpCompany[] bySymbol(FmpSymbol symbol) {
-        fmpCompanyService.param("symbol", symbol);
+        fmpCompanyService.param(PARAM_SYMBOL, symbol);
         return fmpCompanyService.download();
     }
 }

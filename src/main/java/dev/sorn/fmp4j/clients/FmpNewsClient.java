@@ -2,6 +2,11 @@ package dev.sorn.fmp4j.clients;
 
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPage.page;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOLS;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static java.util.Optional.empty;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
@@ -75,11 +80,11 @@ public class FmpNewsClient {
             Optional<LocalDate> to,
             Optional<FmpPage> page,
             Optional<FmpLimit> limit) {
-        service.param("symbols", symbols);
-        from.ifPresent(date -> service.param("from", date));
-        to.ifPresent(date -> service.param("to", date));
-        service.param("page", page.orElse(page(0)));
-        service.param("limit", limit.orElse(limit(100)));
+        service.param(PARAM_SYMBOLS, symbols);
+        from.ifPresent(date -> service.param(PARAM_FROM, date));
+        to.ifPresent(date -> service.param(PARAM_TO, date));
+        service.param(PARAM_PAGE, page.orElse(page(0)));
+        service.param(PARAM_LIMIT, limit.orElse(limit(100)));
         return service.download();
     }
 }
