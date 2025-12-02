@@ -1,5 +1,9 @@
 package dev.sorn.fmp4j.clients;
 
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
+
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpDividend;
@@ -55,7 +59,7 @@ public class FmpCalendarClient {
     }
 
     public synchronized FmpDividend[] dividends(FmpSymbol symbol) {
-        fmpDividendService.param("symbol", symbol);
+        fmpDividendService.param(PARAM_SYMBOL, symbol);
         return fmpDividendService.download();
     }
 
@@ -64,25 +68,25 @@ public class FmpCalendarClient {
     }
 
     public synchronized FmpEarning[] earnings(FmpSymbol symbol) {
-        fmpEarningsService.param("symbol", symbol);
+        fmpEarningsService.param(PARAM_SYMBOL, symbol);
         return fmpEarningsService.download();
     }
 
     public synchronized FmpIposCalendar[] ipos(Optional<LocalDate> from, Optional<LocalDate> to) {
-        fmpIposCalendarService.param("from", from);
-        fmpIposCalendarService.param("to", to);
+        fmpIposCalendarService.param(PARAM_FROM, from);
+        fmpIposCalendarService.param(PARAM_TO, to);
         return fmpIposCalendarService.download();
     }
 
     public synchronized FmpIposDisclosure[] disclosures(Optional<LocalDate> from, Optional<LocalDate> to) {
-        fmpIposDisclosureService.param("from", from);
-        fmpIposDisclosureService.param("to", to);
+        fmpIposDisclosureService.param(PARAM_FROM, from);
+        fmpIposDisclosureService.param(PARAM_TO, to);
         return fmpIposDisclosureService.download();
     }
 
     public synchronized FmpIposProspectus[] prospectus(Optional<LocalDate> from, Optional<LocalDate> to) {
-        fmpIposProspectusService.param("from", from);
-        fmpIposProspectusService.param("to", to);
+        fmpIposProspectusService.param(PARAM_FROM, from);
+        fmpIposProspectusService.param(PARAM_TO, to);
         return fmpIposProspectusService.download();
     }
 
@@ -91,7 +95,7 @@ public class FmpCalendarClient {
     }
 
     public synchronized FmpSplit[] splits(FmpSymbol symbol) {
-        fmpSplitService.param("symbol", symbol);
+        fmpSplitService.param(PARAM_SYMBOL, symbol);
         return fmpSplitService.download();
     }
 }

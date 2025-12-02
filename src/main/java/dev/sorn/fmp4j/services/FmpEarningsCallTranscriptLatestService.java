@@ -1,6 +1,8 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -26,6 +28,6 @@ public class FmpEarningsCallTranscriptLatestService extends FmpService<FmpEarnin
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("limit", FmpLimit.class, "page", FmpPage.class);
+        return Map.of(PARAM_LIMIT, FmpLimit.class, PARAM_PAGE, FmpPage.class);
     }
 }

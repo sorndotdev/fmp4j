@@ -1,6 +1,11 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -23,11 +28,11 @@ public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilings
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("symbol", FmpSymbol.class, "from", LocalDate.class, "to", LocalDate.class);
+        return Map.of(PARAM_SYMBOL, FmpSymbol.class, PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class);
     }
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("page", FmpPage.class, "limit", FmpLimit.class);
+        return Map.of(PARAM_PAGE, FmpPage.class, PARAM_LIMIT, FmpLimit.class);
     }
 }

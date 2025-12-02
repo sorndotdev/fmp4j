@@ -2,6 +2,7 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dev.sorn.fmp4j.RatioTtmTestData;
@@ -34,7 +35,7 @@ class FmpRatioTtmServiceTest extends HttpTest implements RatioTtmTestData {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @Test
@@ -50,7 +51,7 @@ class FmpRatioTtmServiceTest extends HttpTest implements RatioTtmTestData {
     void successful_download() {
         // given
         var symbol = symbol("AAPL");
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/ratios-ttm/?symbol=%s.json", symbol))
                 .statusCode(200)

@@ -4,6 +4,9 @@ import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpYear.year;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_QUARTER;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -37,7 +40,7 @@ class FmpBulkCashFlowStatementGrowthServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("year", FmpYear.class, "period", FmpPeriod.class), params);
+        assertEquals(Map.of(PARAM_YEAR, FmpYear.class, PARAM_PERIOD, FmpPeriod.class), params);
     }
 
     @Test
@@ -53,9 +56,9 @@ class FmpBulkCashFlowStatementGrowthServiceTest extends HttpTest {
     void successful_download() {
         // given
         var year = year("2025");
-        var period = period("quarter");
-        service.param("year", year);
-        service.param("period", period);
+        var period = period(PARAM_QUARTER);
+        service.param(PARAM_YEAR, year);
+        service.param(PARAM_PERIOD, period);
         httpStub.configureResponse()
                 .body(testResource("stable/cash-flow-statement-growth-bulk/?year=%s&period=%s.csv", year, period))
                 .statusCode(200)

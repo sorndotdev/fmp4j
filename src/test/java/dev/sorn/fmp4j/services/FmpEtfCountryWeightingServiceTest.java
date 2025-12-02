@@ -3,6 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -36,7 +37,7 @@ class FmpEtfCountryWeightingServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @Test
@@ -52,7 +53,7 @@ class FmpEtfCountryWeightingServiceTest extends HttpTest {
     void successful_download() {
         // given
         var symbol = symbol("SPY");
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/etf/country-weightings/?symbol=%s.json", symbol))
                 .statusCode(200)

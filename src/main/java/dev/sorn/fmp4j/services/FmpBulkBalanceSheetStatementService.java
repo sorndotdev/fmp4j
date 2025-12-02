@@ -1,6 +1,8 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -21,7 +23,7 @@ public class FmpBulkBalanceSheetStatementService extends FmpService<FmpBalanceSh
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("year", FmpYear.class, "period", FmpPeriod.class);
+        return Map.of(PARAM_YEAR, FmpYear.class, PARAM_PERIOD, FmpPeriod.class);
     }
 
     @Override

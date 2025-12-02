@@ -1,6 +1,11 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,8 +57,8 @@ class FmpServiceTest {
         List<FmpSymbol> symbols = List.of(symbol("AAPL"), symbol("GOOGL"), symbol("MSFT"));
 
         // when // then
-        assertDoesNotThrow(() -> service.param("symbol", symbols));
-        assertEquals(symbols, service.params.get("symbol"));
+        assertDoesNotThrow(() -> service.param(PARAM_SYMBOL, symbols));
+        assertEquals(symbols, service.params.get(PARAM_SYMBOL));
     }
 
     @Test
@@ -62,8 +67,8 @@ class FmpServiceTest {
         Set<FmpSymbol> symbols = Set.of(symbol("AAPL"), symbol("APPL"), symbol("MSFT"));
 
         // when // then
-        assertDoesNotThrow(() -> service.param("symbol", symbols));
-        assertEquals(symbols, service.params.get("symbol"));
+        assertDoesNotThrow(() -> service.param(PARAM_SYMBOL, symbols));
+        assertEquals(symbols, service.params.get(PARAM_SYMBOL));
     }
 
     @Test
@@ -73,7 +78,7 @@ class FmpServiceTest {
 
         // when
         FmpServiceException exception =
-                assertThrows(FmpServiceException.class, () -> service.param("symbol", invalidList));
+                assertThrows(FmpServiceException.class, () -> service.param(PARAM_SYMBOL, invalidList));
 
         // then
         assertTrue(exception.getMessage().contains("Integer"));
@@ -84,8 +89,8 @@ class FmpServiceTest {
     @Test
     void handles_empty_collection() {
         // given // when // then
-        assertDoesNotThrow(() -> service.param("symbol", List.of()));
-        assertEquals(List.of(), service.params.get("symbol"));
+        assertDoesNotThrow(() -> service.param(PARAM_SYMBOL, List.of()));
+        assertEquals(List.of(), service.params.get(PARAM_SYMBOL));
     }
 
     @Test
@@ -94,8 +99,8 @@ class FmpServiceTest {
         Optional<FmpSymbol> optionalSymbol = Optional.of(symbol("AAPL"));
 
         // when // then
-        assertDoesNotThrow(() -> service.param("symbol", optionalSymbol));
-        assertEquals(optionalSymbol, service.params.get("symbol"));
+        assertDoesNotThrow(() -> service.param(PARAM_SYMBOL, optionalSymbol));
+        assertEquals(optionalSymbol, service.params.get(PARAM_SYMBOL));
     }
 
     @Test
@@ -105,7 +110,7 @@ class FmpServiceTest {
 
         // when
         FmpServiceException exception =
-                assertThrows(FmpServiceException.class, () -> service.param("symbol", invalidOptional));
+                assertThrows(FmpServiceException.class, () -> service.param(PARAM_SYMBOL, invalidOptional));
 
         // then
         assertTrue(exception.getMessage().contains("Integer"));
@@ -119,13 +124,13 @@ class FmpServiceTest {
         Optional<String> emptyOptional = Optional.empty();
 
         // when // then
-        assertDoesNotThrow(() -> service.param("symbol", emptyOptional));
-        assertEquals(emptyOptional, service.params.get("symbol"));
+        assertDoesNotThrow(() -> service.param(PARAM_SYMBOL, emptyOptional));
+        assertEquals(emptyOptional, service.params.get(PARAM_SYMBOL));
     }
 
     @Test
     void rejects_invalid_type_for_optional_param() {
-        assertThrows(FmpServiceException.class, () -> service.param("from", "2025-01-01"));
+        assertThrows(FmpServiceException.class, () -> service.param(PARAM_FROM, "2025-01-01"));
     }
 
     @Test
@@ -139,7 +144,7 @@ class FmpServiceTest {
         List<List<String>> nestedList = Arrays.asList(Arrays.asList("AAPL", "GOOGL"));
 
         // when // then
-        assertThrows(FmpServiceException.class, () -> service.param("symbol", nestedList));
+        assertThrows(FmpServiceException.class, () -> service.param(PARAM_SYMBOL, nestedList));
     }
 
     @Test
@@ -149,7 +154,7 @@ class FmpServiceTest {
         var msg = thrownEx.getMessage();
         // then
         assertTrue(
-                msg.contains("limit") || msg.contains("page"),
+                msg.contains(PARAM_LIMIT) || msg.contains(PARAM_PAGE),
                 "Expected exception message to mention either 'limit' and 'page' as the required param, but got: "
                         + msg);
     }
@@ -157,8 +162,8 @@ class FmpServiceTest {
     @Test
     void should_not_throw_missing_required_params() {
         // given
-        multiRequiredService.param("page", FmpPage.page(10));
-        multiRequiredService.param("limit", FmpLimit.limit(10));
+        multiRequiredService.param(PARAM_PAGE, FmpPage.page(10));
+        multiRequiredService.param(PARAM_LIMIT, FmpLimit.limit(10));
 
         // when // then
         assertDoesNotThrow(multiRequiredService::download);
@@ -172,12 +177,12 @@ class FmpServiceTest {
 
         @Override
         protected Map<String, Class<?>> requiredParams() {
-            return Map.of("symbol", FmpSymbol.class);
+            return Map.of(PARAM_SYMBOL, FmpSymbol.class);
         }
 
         @Override
         protected Map<String, Class<?>> optionalParams() {
-            return Map.of("from", LocalDate.class, "to", LocalDate.class);
+            return Map.of(PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class);
         }
 
         @Override
@@ -193,7 +198,7 @@ class FmpServiceTest {
 
         @Override
         protected Map<String, Class<?>> requiredParams() {
-            return Map.of("limit", FmpLimit.class, "page", FmpPage.class);
+            return Map.of(PARAM_LIMIT, FmpLimit.class, PARAM_PAGE, FmpPage.class);
         }
 
         @Override

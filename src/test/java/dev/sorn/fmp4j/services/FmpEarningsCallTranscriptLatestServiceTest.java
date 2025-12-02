@@ -4,6 +4,8 @@ import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPage.page;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,7 +50,7 @@ class FmpEarningsCallTranscriptLatestServiceTest extends HttpTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("limit", FmpLimit.class, "page", FmpPage.class), params);
+        assertEquals(Map.of(PARAM_LIMIT, FmpLimit.class, PARAM_PAGE, FmpPage.class), params);
     }
 
     @Test
@@ -56,8 +58,8 @@ class FmpEarningsCallTranscriptLatestServiceTest extends HttpTest {
         // given
         var page = page(0);
         var limit = limit(2);
-        service.param("page", page);
-        service.param("limit", limit);
+        service.param(PARAM_PAGE, page);
+        service.param(PARAM_LIMIT, limit);
         httpStub.configureResponse()
                 .body(testResource("stable/earning-call-transcript-latest/?page=%s&limit=%s.json", page, limit))
                 .statusCode(200)

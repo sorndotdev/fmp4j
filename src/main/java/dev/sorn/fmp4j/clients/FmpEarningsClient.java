@@ -2,6 +2,11 @@ package dev.sorn.fmp4j.clients;
 
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPage.page;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_QUARTER;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -40,21 +45,21 @@ public class FmpEarningsClient {
 
     public synchronized FmpEarningsCallTranscript[] transcripts(
             FmpSymbol symbol, FmpYear year, FmpQuarter quarter, Optional<FmpLimit> limit) {
-        fmpEarningsCallTranscriptService.param("symbol", symbol);
-        fmpEarningsCallTranscriptService.param("year", year);
-        fmpEarningsCallTranscriptService.param("quarter", quarter);
-        limit.ifPresent(l -> fmpEarningsCallTranscriptService.param("limit", l));
+        fmpEarningsCallTranscriptService.param(PARAM_SYMBOL, symbol);
+        fmpEarningsCallTranscriptService.param(PARAM_YEAR, year);
+        fmpEarningsCallTranscriptService.param(PARAM_QUARTER, quarter);
+        limit.ifPresent(l -> fmpEarningsCallTranscriptService.param(PARAM_LIMIT, l));
         return fmpEarningsCallTranscriptService.download();
     }
 
     public synchronized FmpEarningsCallTranscriptDate[] dates(FmpSymbol symbol) {
-        fmpEarningsCallTranscriptDatesService.param("symbol", symbol);
+        fmpEarningsCallTranscriptDatesService.param(PARAM_SYMBOL, symbol);
         return fmpEarningsCallTranscriptDatesService.download();
     }
 
     public synchronized FmpEarningsCallTranscriptLatest[] latest(Optional<FmpLimit> limit, Optional<FmpPage> page) {
-        fmpEarningsCallTranscriptLatestService.param("limit", limit.orElse(limit(100)));
-        fmpEarningsCallTranscriptLatestService.param("page", page.orElse(page(0)));
+        fmpEarningsCallTranscriptLatestService.param(PARAM_LIMIT, limit.orElse(limit(100)));
+        fmpEarningsCallTranscriptLatestService.param(PARAM_PAGE, page.orElse(page(0)));
         return fmpEarningsCallTranscriptLatestService.download();
     }
 

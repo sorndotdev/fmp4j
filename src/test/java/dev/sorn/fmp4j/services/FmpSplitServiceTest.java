@@ -2,6 +2,7 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
@@ -35,7 +36,7 @@ class FmpSplitServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @Test
@@ -51,7 +52,7 @@ class FmpSplitServiceTest extends HttpTest {
     void successful_download() {
         // given
         var symbol = symbol("AAPL");
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         String jsonResponse =
                 "[{\"symbol\":\"AAPL\",\"date\":\"2020-08-31\",\"numerator\":4,\"denominator\":1,\"label\":\"AAPL split: 4 for 1\"}]";
         httpStub.configureResponse().body(jsonResponse).statusCode(200).apply();

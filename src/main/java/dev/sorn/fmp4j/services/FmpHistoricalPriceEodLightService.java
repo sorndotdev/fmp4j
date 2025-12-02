@@ -1,6 +1,9 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -21,11 +24,11 @@ public class FmpHistoricalPriceEodLightService extends FmpService<FmpHistoricalP
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("symbol", FmpSymbol.class);
+        return Map.of(PARAM_SYMBOL, FmpSymbol.class);
     }
 
     @Override
     protected Map<String, Class<?>> optionalParams() {
-        return Map.of("from", LocalDate.class, "to", LocalDate.class);
+        return Map.of(PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class);
     }
 }

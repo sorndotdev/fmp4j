@@ -3,6 +3,7 @@ package dev.sorn.fmp4j.services;
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOLS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import dev.sorn.fmp4j.FmpSearchPressReleaseTestData;
@@ -35,7 +36,7 @@ class FmpSearchPressReleasesServiceTest extends HttpTest implements FmpSearchPre
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbols", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOLS, FmpSymbol.class), params);
     }
 
     @Test
@@ -51,7 +52,7 @@ class FmpSearchPressReleasesServiceTest extends HttpTest implements FmpSearchPre
     void successful_download() {
         // given
         var symbol = symbol("V");
-        service.param("symbols", symbol);
+        service.param(PARAM_SYMBOLS, symbol);
         httpStub.configureResponse()
                 .body(testResource("stable/news/press-releases/?symbols=%s.json", symbol))
                 .statusCode(200)

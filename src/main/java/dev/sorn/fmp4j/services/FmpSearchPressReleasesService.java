@@ -1,6 +1,7 @@
 package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOLS;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -21,7 +22,7 @@ public class FmpSearchPressReleasesService extends FmpService<FmpSearchPressRele
 
     @Override
     protected Map<String, Class<?>> requiredParams() {
-        return Map.of("symbols", FmpSymbol.class);
+        return Map.of(PARAM_SYMBOLS, FmpSymbol.class);
     }
 
     @Override

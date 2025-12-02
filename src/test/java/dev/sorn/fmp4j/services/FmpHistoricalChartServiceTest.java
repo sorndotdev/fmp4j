@@ -4,6 +4,9 @@ import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpInterval.interval;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +50,7 @@ class FmpHistoricalChartServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @ParameterizedTest
@@ -63,7 +66,7 @@ class FmpHistoricalChartServiceTest extends HttpTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("from", LocalDate.class, "to", LocalDate.class), params);
+        assertEquals(Map.of(PARAM_FROM, LocalDate.class, PARAM_TO, LocalDate.class), params);
     }
 
     @ParameterizedTest
@@ -77,9 +80,9 @@ class FmpHistoricalChartServiceTest extends HttpTest {
         var symbol = symbol("AAPL");
         var from = LocalDate.parse("2024-01-01");
         var to = LocalDate.parse("2024-01-02");
-        service.param("symbol", symbol);
-        service.param("from", from);
-        service.param("to", to);
+        service.param(PARAM_SYMBOL, symbol);
+        service.param(PARAM_FROM, from);
+        service.param(PARAM_TO, to);
         httpStub.configureResponse()
                 .body(testResource(
                         "stable/historical-chart/%s/?symbol=%s&from=%s&to=%s.json", interval, symbol, from, to))

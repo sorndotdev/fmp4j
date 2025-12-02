@@ -2,6 +2,11 @@ package dev.sorn.fmp4j.clients;
 
 import static dev.sorn.fmp4j.types.FmpLimit.limit;
 import static dev.sorn.fmp4j.types.FmpPage.page;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
@@ -25,11 +30,11 @@ public class FmpSecFilingsSearchClient {
 
     public synchronized FmpSecFilingsSearchBySymbol[] bySymbol(
             FmpSymbol symbol, LocalDate from, LocalDate to, Optional<FmpPage> page, Optional<FmpLimit> limit) {
-        fmpSecFilingsSearchBySymbol.param("symbol", symbol);
-        fmpSecFilingsSearchBySymbol.param("from", from);
-        fmpSecFilingsSearchBySymbol.param("to", to);
-        fmpSecFilingsSearchBySymbol.param("page", page.orElse(DEFAULT_PAGE));
-        fmpSecFilingsSearchBySymbol.param("limit", limit.orElse(DEFAULT_LIMIT));
+        fmpSecFilingsSearchBySymbol.param(PARAM_SYMBOL, symbol);
+        fmpSecFilingsSearchBySymbol.param(PARAM_FROM, from);
+        fmpSecFilingsSearchBySymbol.param(PARAM_TO, to);
+        fmpSecFilingsSearchBySymbol.param(PARAM_PAGE, page.orElse(DEFAULT_PAGE));
+        fmpSecFilingsSearchBySymbol.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return fmpSecFilingsSearchBySymbol.download();
     }
 }

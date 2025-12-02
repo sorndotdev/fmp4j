@@ -219,7 +219,7 @@ class FmpSymbolTest {
         // 3. Open the file
         // 4. Replace (CMD+R)
         // 5. Enable regex
-        // 6. Replace \{[^}]*"symbol":\s*"([^"]+)"[^}]*\} with "$1"
+        // 6. Replace \{[^}]*PARAM_SYMBOL:\s*"([^"]+)"[^}]*\} with "$1"
         // 7. Remove @Disabled
         // 8. Run test
 

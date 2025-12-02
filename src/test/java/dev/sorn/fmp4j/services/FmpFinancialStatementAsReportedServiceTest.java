@@ -2,6 +2,10 @@ package dev.sorn.fmp4j.services;
 
 import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_QUARTER;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,7 +46,7 @@ class FmpFinancialStatementAsReportedServiceTest extends HttpTest implements Fin
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class), params);
+        assertEquals(Map.of(PARAM_SYMBOL, FmpSymbol.class), params);
     }
 
     @ParameterizedTest
@@ -55,7 +59,7 @@ class FmpFinancialStatementAsReportedServiceTest extends HttpTest implements Fin
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("period", FmpPeriod.class, "limit", FmpLimit.class), params);
+        assertEquals(Map.of(PARAM_PERIOD, FmpPeriod.class, PARAM_LIMIT, FmpLimit.class), params);
     }
 
     @ParameterizedTest
@@ -64,7 +68,7 @@ class FmpFinancialStatementAsReportedServiceTest extends HttpTest implements Fin
         // given
         var service = new FmpFinancialStatementAsReportedService(config, client, type);
         var limit = 2;
-        service.param("symbol", symbol);
+        service.param(PARAM_SYMBOL, symbol);
         httpStub.configureResponse()
                 .body(testResource(
                         "stable/%s-statement-as-reported/?symbol=%s&period=%s&limit=%d.json",
@@ -83,7 +87,7 @@ class FmpFinancialStatementAsReportedServiceTest extends HttpTest implements Fin
     static Stream<Arguments> reportCompanyProvider() {
         var reports = List.of("income", "balance-sheet", "cash-flow");
         var symbols = List.of("KO", "O");
-        var periods = List.of("annual", "quarter");
+        var periods = List.of("annual", PARAM_QUARTER);
         return reports.stream().flatMap(report -> symbols.stream()
                 .flatMap(company -> periods.stream().map(period -> Arguments.of(report, company, period))));
     }

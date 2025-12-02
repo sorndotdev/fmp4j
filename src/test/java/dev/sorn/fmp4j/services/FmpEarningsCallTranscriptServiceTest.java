@@ -5,6 +5,10 @@ import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpQuarter.quarter;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static dev.sorn.fmp4j.types.FmpYear.year;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_QUARTER;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
+import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 import static java.util.Collections.emptySet;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,7 +46,12 @@ class FmpEarningsCallTranscriptServiceTest extends HttpTest {
         var params = service.requiredParams();
 
         // then
-        assertEquals(Map.of("symbol", FmpSymbol.class, "year", FmpYear.class, "quarter", FmpQuarter.class), params);
+        assertEquals(
+                Map.of(
+                        PARAM_SYMBOL, FmpSymbol.class,
+                        PARAM_YEAR, FmpYear.class,
+                        PARAM_QUARTER, FmpQuarter.class),
+                params);
     }
 
     @Test
@@ -51,7 +60,7 @@ class FmpEarningsCallTranscriptServiceTest extends HttpTest {
         var params = service.optionalParams();
 
         // then
-        assertEquals(Map.of("limit", FmpLimit.class), params);
+        assertEquals(Map.of(PARAM_LIMIT, FmpLimit.class), params);
     }
 
     @Test
@@ -60,9 +69,9 @@ class FmpEarningsCallTranscriptServiceTest extends HttpTest {
         var symbol = symbol("AAPL");
         var year = year(2020);
         var quarter = quarter(3);
-        service.param("symbol", symbol);
-        service.param("year", year);
-        service.param("quarter", quarter);
+        service.param(PARAM_SYMBOL, symbol);
+        service.param(PARAM_YEAR, year);
+        service.param(PARAM_QUARTER, quarter);
         httpStub.configureResponse()
                 .body(testResource(
                         "stable/earning-call-transcript/?symbol=%s&year=%s&quarter=%s.json", symbol, year, quarter))
