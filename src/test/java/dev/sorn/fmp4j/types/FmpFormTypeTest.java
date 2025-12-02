@@ -3,6 +3,9 @@ package dev.sorn.fmp4j.types;
 import static dev.sorn.fmp4j.TestUtils.deserialize;
 import static dev.sorn.fmp4j.TestUtils.serialize;
 import static dev.sorn.fmp4j.types.FmpFormType.FMP_FORM_TYPE_PATTERN;
+import static dev.sorn.fmp4j.types.FmpFormType.FORM_10K;
+import static dev.sorn.fmp4j.types.FmpFormType.FORM_10Q;
+import static dev.sorn.fmp4j.types.FmpFormType.FORM_8K;
 import static dev.sorn.fmp4j.types.FmpFormType.formType;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.lang.String.format;
@@ -22,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class FmpFormTypeTest {
 
     @Test
-    void null_formType_throws() {
+    void null_form_type_throws() {
         // given
         var value = (String) null;
 
@@ -32,7 +35,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void blank_formType_throws() {
+    void blank_form_type_throws() {
         // given
         var value = "   ";
 
@@ -44,7 +47,7 @@ class FmpFormTypeTest {
     @Test
     void is_serializable() throws IOException, ClassNotFoundException {
         // given
-        var before = formType("10-Q");
+        var before = FORM_10Q;
 
         // when
         var after = (FmpFormType) deserialize(serialize(before));
@@ -56,7 +59,7 @@ class FmpFormTypeTest {
     @Test
     void toString_returns_value() {
         // given
-        var s = formType("10-Q");
+        var s = FORM_10Q;
 
         // when
         var str = s.toString();
@@ -81,8 +84,8 @@ class FmpFormTypeTest {
     @Test
     void equals_identical_true() {
         // given
-        var ft1 = formType("10-Q");
-        var ft2 = formType("10-Q");
+        var ft1 = FORM_10Q;
+        var ft2 = FORM_10Q;
 
         // when
         var eq = ft1.equals(ft2);
@@ -94,7 +97,7 @@ class FmpFormTypeTest {
     @Test
     void equals_null_false() {
         // given
-        var ft1 = formType("10-Q");
+        var ft1 = FORM_10Q;
         var ft2 = (FmpFormType) null;
 
         // when
@@ -107,7 +110,7 @@ class FmpFormTypeTest {
     @Test
     void equals_different_false() {
         // given
-        var ft1 = formType("10-Q");
+        var ft1 = FORM_10Q;
         var ft2 = formType("4-K");
 
         // when
@@ -133,7 +136,7 @@ class FmpFormTypeTest {
     @Test
     void compareTo_null_throws() {
         // given
-        var ft1 = formType("10-Q");
+        var ft1 = FORM_10Q;
         var ft2 = (FmpFormType) null;
 
         // when // then
@@ -144,7 +147,7 @@ class FmpFormTypeTest {
     @Test
     void compareTo_less_than() {
         // given
-        var ft1 = formType("10-Q");
+        var ft1 = FORM_10Q;
         var ft2 = formType("4-K");
 
         // when
@@ -158,7 +161,7 @@ class FmpFormTypeTest {
     void compareTo_greater_than() {
         // given
         var ft1 = formType("4-K");
-        var ft2 = formType("10-Q");
+        var ft2 = FORM_10Q;
 
         // when
         int cmp = ft1.compareTo(ft2);
@@ -170,8 +173,8 @@ class FmpFormTypeTest {
     @Test
     void compareTo_equal() {
         // given
-        var ft1 = formType("10-Q");
-        var ft2 = formType("10-Q");
+        var ft1 = FORM_10Q;
+        var ft2 = FORM_10Q;
 
         // when
         int cmp = ft1.compareTo(ft2);
@@ -183,7 +186,7 @@ class FmpFormTypeTest {
     @Test
     void equals_same_instance_true() {
         // given
-        var ft = formType("10-Q");
+        var ft = FORM_10Q;
 
         // when
         var eq = ft.equals(ft);
@@ -195,7 +198,7 @@ class FmpFormTypeTest {
     @Test
     void equals_different_type_false() {
         // given
-        var ft = formType("10-Q");
+        var ft = FORM_10Q;
         var other = "10-Q";
 
         // when
@@ -207,7 +210,7 @@ class FmpFormTypeTest {
 
     @ParameterizedTest
     @MethodSource("validFormTypes")
-    void valid_formTypes(String value) {
+    void valid_form_types(String value) {
         // given // when
         var formType = formType(value);
 
@@ -215,9 +218,17 @@ class FmpFormTypeTest {
         assertEquals(value, formType.value());
     }
 
+    @Test
+    void valid_form_type_constants() {
+        // given // when // then
+        assertEquals("10-K", FORM_10K.value());
+        assertEquals("10-Q", FORM_10Q.value());
+        assertEquals("8-K", FORM_8K.value());
+    }
+
     @ParameterizedTest
     @MethodSource("invalidFormTypes")
-    void invalid_formTypes(String value) {
+    void invalid_form_types(String value) {
         // given // when
         Function<String, FmpFormType> f = FmpFormType::formType;
 

@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 public class FmpFormType implements FmpValueObject<String>, Comparable<FmpFormType> {
 
     public static final Pattern FMP_FORM_TYPE_PATTERN = Pattern.compile("^[0-9A-Z]+(?:[- ][0-9A-Z]+)*(?:/A)?$");
+    public static final FmpFormType FORM_10K = formType("10-K");
+    public static final FmpFormType FORM_10Q = formType("10-Q");
+    public static final FmpFormType FORM_8K = formType("8-K");
 
     @Serial
     private static final long serialVersionUID = -1L;
