@@ -131,7 +131,7 @@ class FmpExchangeTest {
     }
 
     @Test
-    void should_not_null_suffixSymbol() {
+    void should_not_null_suffix_symbol() {
         var nullSuffixSymbol = Arrays.stream(FmpExchange.values())
                 .map(FmpExchange::suffixSymbol)
                 .filter(Objects::isNull)

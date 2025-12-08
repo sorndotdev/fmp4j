@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpJsonDeserializerTest {
+
     private FmpJsonDeserializer deserializer;
 
     @BeforeEach
@@ -31,10 +32,8 @@ class FmpJsonDeserializerTest {
                 }
             }
             """;
-
         // when
         var obj = deserializer.deserialize(json, typeRef(TestObject.class));
-
         // then
         assertEquals("key", obj.key());
         assertEquals(new TestObjectValue(42), obj.object());
@@ -60,10 +59,8 @@ class FmpJsonDeserializerTest {
                 }
             ]
             """;
-
         // when
         var obj = deserializer.deserialize(json, typeRef(TestObject[].class));
-
         // then
         assertEquals(2, obj.length);
         assertEquals("key3", obj[0].key());
@@ -73,10 +70,9 @@ class FmpJsonDeserializerTest {
     }
 
     @Test
-    void deserialize_object_failsOnMalformedJson() {
+    void deserialize_object_fails_on_malformed_json() {
         // given
         var malformedJson = "{";
-
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,
@@ -85,10 +81,9 @@ class FmpJsonDeserializerTest {
     }
 
     @Test
-    void deserialize_array_failsOnMalformedJson() {
+    void deserialize_array_fails_on_malformed_json() {
         // given
         var malformedJson = "[";
-
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,
@@ -97,7 +92,7 @@ class FmpJsonDeserializerTest {
     }
 
     @Test
-    void deserialize_object_failsOnTypeMismatch() {
+    void deserialize_object_fails_on_type_mismatch() {
         // given
         var mismatchedJson =
                 """
@@ -106,7 +101,6 @@ class FmpJsonDeserializerTest {
                 "object": "not_an_object"
             }
             """;
-
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,
@@ -123,7 +117,7 @@ class FmpJsonDeserializerTest {
     }
 
     @Test
-    void deserialize_array_failsOnElementTypeMismatch() {
+    void deserialize_array_fails_on_element_type_mismatch() {
         var invalidElementJson =
                 """
             [
@@ -131,7 +125,6 @@ class FmpJsonDeserializerTest {
                 {"key": "invalid", "object": "not_an_object"}
             ]
             """;
-
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,

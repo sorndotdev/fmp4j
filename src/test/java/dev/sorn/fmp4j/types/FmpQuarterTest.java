@@ -57,7 +57,7 @@ class FmpQuarterTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var quarter = 4;
         var q = quarter(quarter);
@@ -134,7 +134,7 @@ class FmpQuarterTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var q1 = quarter(4);
         var q2 = (FmpQuarter) null;
@@ -145,7 +145,7 @@ class FmpQuarterTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var q1 = quarter(1);
         var q2 = quarter(2);
@@ -158,7 +158,7 @@ class FmpQuarterTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var q1 = quarter(2);
         var q2 = quarter(1);
@@ -171,7 +171,7 @@ class FmpQuarterTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var q1 = quarter(1);
         var q2 = quarter(1);

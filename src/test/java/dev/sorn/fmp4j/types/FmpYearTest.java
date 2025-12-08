@@ -67,7 +67,7 @@ class FmpYearTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var year = 2000;
         var y = year(year);
@@ -144,7 +144,7 @@ class FmpYearTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var y1 = year("1999");
         var y2 = (FmpYear) null;
@@ -155,7 +155,7 @@ class FmpYearTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var y1 = year("1999");
         var y2 = year("2000");
@@ -168,7 +168,7 @@ class FmpYearTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var y1 = year("2000");
         var y2 = year("1999");
@@ -181,7 +181,7 @@ class FmpYearTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var y1 = year("1999");
         var y2 = year("1999");

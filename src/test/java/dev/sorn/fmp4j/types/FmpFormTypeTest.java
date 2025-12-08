@@ -57,7 +57,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var s = FORM_10Q;
 
@@ -69,7 +69,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "10-Q";
         var ft = formType(str);
@@ -134,7 +134,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var ft1 = FORM_10Q;
         var ft2 = (FmpFormType) null;
@@ -145,7 +145,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var ft1 = FORM_10Q;
         var ft2 = formType("4-K");
@@ -158,7 +158,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var ft1 = formType("4-K");
         var ft2 = FORM_10Q;
@@ -171,7 +171,7 @@ class FmpFormTypeTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var ft1 = FORM_10Q;
         var ft2 = FORM_10Q;

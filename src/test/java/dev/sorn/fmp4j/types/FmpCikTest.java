@@ -46,7 +46,7 @@ class FmpCikTest {
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var c = cik("320193");
 
@@ -58,7 +58,7 @@ class FmpCikTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "0000320193";
         var c = cik("320193");
@@ -135,7 +135,7 @@ class FmpCikTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var c1 = cik("320193");
         var c2 = (FmpCik) null;
@@ -146,7 +146,7 @@ class FmpCikTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var c1 = cik("0000000001");
         var c2 = cik("0000000002");
@@ -159,7 +159,7 @@ class FmpCikTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var c1 = cik("0000000002");
         var c2 = cik("0000000001");
@@ -172,7 +172,7 @@ class FmpCikTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var c1 = cik("320193");
         var c2 = cik("320193");

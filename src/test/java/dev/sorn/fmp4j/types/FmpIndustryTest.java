@@ -48,7 +48,7 @@ class FmpIndustryTest {
 
     // toString test
     @Test
-    void testToString() {
+    void test_to_string() {
         // given
         var industry = FmpIndustry.STEEL;
 

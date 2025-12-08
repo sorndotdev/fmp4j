@@ -16,8 +16,13 @@ public final class FmpSymbol implements Comparable<FmpSymbol>, FmpValueObject<St
     // 5. OR
     // 6. Dot separator followed by segment (1-4 characters, starting with letter)
     // 7. End group, repeated zero or more times
-    public static final Pattern FMP_SYMBOL_PATTERN = compile("^(?:[A-Z0-9]{1,5}:)?" + "[A-Z0-9&]{1,16}" + "(?:"
-            + "(?:[-/][A-Z][A-Z0-9]{0,9})" + "|" + "(?:\\.[A-Z][A-Z0-9]{0,3})" + ")*$");
+    public static final Pattern FMP_SYMBOL_PATTERN = compile("^(?:[A-Z0-9]{1,5}:)?"
+            + "[A-Z0-9&]{1,16}"
+            + "(?:"
+            + "(?:[-/][A-Z][A-Z0-9]{0,9})"
+            + "|"
+            + "(?:\\.[A-Z][A-Z0-9]{0,3})"
+            + ")*$");
 
     @Serial
     private static final long serialVersionUID = 1L;

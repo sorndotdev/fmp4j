@@ -125,7 +125,8 @@ public final class TestUtils {
         // Verify against existing snapshot
         byte[] expected = Files.readAllBytes(snapshotPath);
         if (!Arrays.equals(expected, currentData)) {
-            throw new AssertionError("Serialization data mismatch for " + clazz.getSimpleName()
+            throw new AssertionError("Serialization data mismatch for "
+                    + clazz.getSimpleName()
                     + ". Update serialVersionUID if this is intentional.");
         }
     }

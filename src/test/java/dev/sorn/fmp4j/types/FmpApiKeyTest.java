@@ -32,7 +32,7 @@ class FmpApiKeyTest {
     }
 
     @Test
-    void toString_masked() {
+    void to_string_masked() {
         // given
         var apiKey = new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");
 
@@ -86,7 +86,7 @@ class FmpApiKeyTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6";
         var k = new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");

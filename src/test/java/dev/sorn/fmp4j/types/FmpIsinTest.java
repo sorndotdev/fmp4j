@@ -22,11 +22,11 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author chat.deepseek.com
  */
 class FmpIsinTest {
+
     @Test
     void null_isin_throws() {
         // given
         var value = (String) null;
-
         // when // then
         var e = assertThrows(FmpInvalidIsinException.class, () -> isin(value));
         assertEquals("'value' is required", e.getMessage());
@@ -36,35 +36,29 @@ class FmpIsinTest {
     void is_serializable() throws IOException, ClassNotFoundException {
         // given
         var before = isin("US0378331005");
-
         // when
         var after = (FmpIsin) deserialize(serialize(before));
-
         // then
         assertEquals(before, after);
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var i = isin("US0378331005");
-
         // when
         var str = i.toString();
-
         // then
         assertEquals("US0378331005", str);
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "US0378331005";
         var i = isin(str);
-
         // when
         var hc = i.hashCode();
-
         // then
         assertEquals(str.hashCode(), hc);
     }
@@ -73,10 +67,8 @@ class FmpIsinTest {
     void equals_same_true() {
         // given
         var i = isin("US0378331005");
-
         // when
         var eq = i.equals(i);
-
         // then
         assertTrue(eq);
     }
@@ -86,10 +78,8 @@ class FmpIsinTest {
         // given
         var i1 = isin("US0378331005");
         var i2 = isin("US0378331005");
-
         // when
         var eq = i1.equals(i2);
-
         // then
         assertTrue(eq);
     }
@@ -99,10 +89,8 @@ class FmpIsinTest {
         // given
         var i1 = isin("US0378331005");
         var i2 = (FmpIsin) null;
-
         // when
         var eq = i1.equals(i2);
-
         // then
         assertFalse(eq);
     }
@@ -112,10 +100,8 @@ class FmpIsinTest {
         // given
         var i1 = isin("US0378331005");
         var i2 = isin("US5949181045");
-
         // when
         var eq = i1.equals(i2);
-
         // then
         assertFalse(eq);
     }
@@ -125,69 +111,59 @@ class FmpIsinTest {
         // given
         var i1 = isin("US0378331005");
         var i2 = "US0378331005";
-
         // when
         var eq = i1.equals(i2);
-
         // then
         assertFalse(eq);
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var i1 = isin("US0378331005");
         var i2 = (FmpIsin) null;
-
         // when // then
         var e = assertThrows(FmpInvalidIsinException.class, () -> i1.compareTo(i2));
         assertEquals("'that.value' is required", e.getMessage());
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var i1 = isin("US0378331005");
         var i2 = isin("US5949181045");
-
         // when
         int cmp = i1.compareTo(i2);
-
         // then
         assertEquals(-5, cmp);
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var i1 = isin("US5949181045");
         var i2 = isin("US0378331005");
-
         // when
         int cmp = i1.compareTo(i2);
-
         // then
         assertEquals(5, cmp);
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var i1 = isin("US0378331005");
         var i2 = isin("US0378331005");
-
         // when
         int cmp = i1.compareTo(i2);
-
         // then
         assertEquals(0, cmp);
     }
 
     @Test
-    void isValidLuhn_covers_both_branches() {
+    void is_valid_luhn_covers_both_branches() {
         var left = isin("US0378331005");
         assertEquals("US0378331005", left.value());
-
         var right = isin("GB00B03MLX29");
         assertEquals("GB00B03MLX29", right.value());
     }
@@ -197,7 +173,6 @@ class FmpIsinTest {
     void valid_isins(String value) {
         // given // when
         var isin = isin(value);
-
         // then
         assertEquals(value, isin.value());
     }
@@ -207,7 +182,6 @@ class FmpIsinTest {
     void invalid_isins(String value) {
         // given // when
         Function<String, FmpIsin> f = FmpIsin::isin;
-
         // then
         var e = assertThrows(FmpInvalidIsinException.class, () -> f.apply(value));
         assertEquals(
@@ -219,7 +193,6 @@ class FmpIsinTest {
     void invalid_isins_due_to_check_digit(String value) {
         // given // when
         Function<String, FmpIsin> f = FmpIsin::isin;
-
         // then
         var e = assertThrows(FmpInvalidIsinException.class, () -> f.apply(value));
         assertEquals(format("'value' [%s] has invalid check digit", value), e.getMessage());

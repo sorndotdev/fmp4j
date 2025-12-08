@@ -49,7 +49,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var s = symbol("AAPL");
 
@@ -61,7 +61,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "AAPL";
         var s = symbol(str);
@@ -138,7 +138,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var s1 = symbol("AAPL");
         var s2 = (FmpSymbol) null;
@@ -149,7 +149,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var s1 = symbol("A");
         var s2 = symbol("B");
@@ -162,7 +162,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var s1 = symbol("B");
         var s2 = symbol("A");
@@ -175,7 +175,7 @@ class FmpSymbolTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var s1 = symbol("A");
         var s2 = symbol("A");
@@ -214,7 +214,8 @@ class FmpSymbolTest {
     @Test
     void check_all_symbols() {
         // How to set up:
-        // 1. Download JSON: https://financialmodelingprep.com/stable/financial-statement-symbol-list?apikey=yourapikey
+        // 1. Download JSON:
+        // https://financialmodelingprep.com/stable/financial-statement-symbol-list?apikey=yourapikey
         // 2. Add it to `testFixtures/resources/stable/financial-statement-symbol-list/full.json`
         // 3. Open the file
         // 4. Replace (CMD+R)
