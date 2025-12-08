@@ -9,4 +9,6 @@ repositories {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:${spotlessVersion}")
+    implementation("com.github.javaparser:javaparser-core:${javaparserVersion}")
 }

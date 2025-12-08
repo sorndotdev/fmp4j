@@ -1,13 +1,16 @@
+import dev.sorn.fmp4j.CoveragePlugin
+import dev.sorn.fmp4j.SnakeCaseMethodFormatter
+
 plugins {
     id 'java-library'
     id 'java-test-fixtures'
     id 'checkstyle'
     id 'jacoco'
     id 'com.vanniktech.maven.publish' version '0.34.0'
-    id 'com.diffplug.spotless' version '7.2.0'
+    id 'com.diffplug.spotless'
 }
 
-apply plugin: dev.sorn.fmp4j.CoveragePlugin
+apply plugin: CoveragePlugin
 
 group = 'dev.sorn.fmp4j'
 version = projectVersion
@@ -15,6 +18,12 @@ version = projectVersion
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+spotless {
+    java {
+        addStep(new SnakeCaseMethodFormatter())
     }
 }
 
@@ -28,6 +37,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("org.apache.httpcomponents.client5:httpclient5:${apacheHttpComponentsVersion}")
     implementation("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:${spotlessVersion}")
+
     testImplementation("org.mockito:mockito-core:${mockitoCoreVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoJunitVersion}")
     testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
