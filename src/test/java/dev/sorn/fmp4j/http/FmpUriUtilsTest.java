@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class FmpUriUtilsTest {
     @Test
-    void uriWithParams_single_param() {
+    void uri_with_params_single_param() {
         // given
         var uri = uri("https://example.com");
         var params = Map.<String, Object>of("param", 42);
@@ -28,7 +28,7 @@ class FmpUriUtilsTest {
     }
 
     @Test
-    void uriWithParams_multiple_params() {
+    void uri_with_params_multiple_params() {
         // given
         var uri = uri("https://example.com");
         var params = Map.<String, Object>of("param", 42);
@@ -41,7 +41,7 @@ class FmpUriUtilsTest {
     }
 
     @Test
-    void uriWithParams_null_params() {
+    void uri_with_params_null_params() {
         // given
         var uri = uri("https://example.com");
         var params = (Map<String, Object>) null;
@@ -54,7 +54,7 @@ class FmpUriUtilsTest {
     }
 
     @Test
-    void uriWithParams_empty_params() {
+    void uri_with_params_empty_params() {
         // given
         var uri = uri("https://example.com");
         var params = Map.<String, Object>of();
@@ -67,7 +67,7 @@ class FmpUriUtilsTest {
     }
 
     @Test
-    void uriWithParams_illegalQueryKey_throwsFmpHttpException() {
+    void uri_with_params_illegal_query_key_throws_fmp_http_exception() {
         var uri = URI.create("https:/.com");
         var params = Map.<String, Object>of("param", 42);
 
@@ -79,7 +79,7 @@ class FmpUriUtilsTest {
     }
 
     @Test
-    void privateConstructor_throwsAssertionError() throws Exception {
+    void private_constructor_throws_assertion_error() throws Exception {
         Constructor<FmpUriUtils> constructor = FmpUriUtils.class.getDeclaredConstructor();
         constructor.setAccessible(true);
 

@@ -57,7 +57,7 @@ class FmpLimitTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var i = 3;
         var lim = limit(i);

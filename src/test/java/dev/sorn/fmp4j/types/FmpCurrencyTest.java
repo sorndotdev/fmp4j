@@ -45,7 +45,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var c = currency("USD");
 
@@ -57,7 +57,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "USD";
         var c = currency(str);
@@ -134,7 +134,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var c1 = currency("USD");
         var c2 = (FmpCurrency) null;
@@ -145,7 +145,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var c1 = currency("EUR");
         var c2 = currency("USD");
@@ -158,7 +158,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var c1 = currency("USD");
         var c2 = currency("EUR");
@@ -171,7 +171,7 @@ class FmpCurrencyTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var c1 = currency("USD");
         var c2 = currency("USD");

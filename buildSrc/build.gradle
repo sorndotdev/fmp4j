@@ -9,4 +9,15 @@ repositories {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:${spotlessVersion}")
+    implementation("com.github.javaparser:javaparser-core:${javaparserVersion}")
+
+    testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+test {
+    useJUnitPlatform()
 }

@@ -45,7 +45,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void toString_returns_value() {
+    void to_string_returns_value() {
         // given
         var c = cusip("037833100");
 
@@ -57,7 +57,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var str = "037833100";
         var c = cusip(str);
@@ -134,7 +134,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var c1 = cusip("037833100");
         var c2 = (FmpCusip) null;
@@ -145,7 +145,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var c1 = cusip("037833100");
         var c2 = cusip("594918104");
@@ -158,7 +158,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var c1 = cusip("594918104");
         var c2 = cusip("037833100");
@@ -171,7 +171,7 @@ class FmpCusipTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var c1 = cusip("037833100");
         var c2 = cusip("037833100");

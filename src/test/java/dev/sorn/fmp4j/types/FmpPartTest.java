@@ -67,7 +67,7 @@ class FmpPartTest {
     }
 
     @Test
-    void hashCode_value() {
+    void hash_code_value() {
         // given
         var part = 999;
         var p = part(part);
@@ -139,7 +139,7 @@ class FmpPartTest {
     }
 
     @Test
-    void compareTo_null_throws() {
+    void compare_to_null_throws() {
         // given
         var p1 = part("999");
         var p2 = (FmpPart) null;
@@ -150,7 +150,7 @@ class FmpPartTest {
     }
 
     @Test
-    void compareTo_less_than() {
+    void compare_to_less_than() {
         // given
         var p1 = part("1");
         var p2 = part("999");
@@ -163,7 +163,7 @@ class FmpPartTest {
     }
 
     @Test
-    void compareTo_greater_than() {
+    void compare_to_greater_than() {
         // given
         var p1 = part("999");
         var p2 = part("1");
@@ -176,7 +176,7 @@ class FmpPartTest {
     }
 
     @Test
-    void compareTo_equal() {
+    void compare_to_equal() {
         // given
         var p1 = part("1");
         var p2 = part("1");

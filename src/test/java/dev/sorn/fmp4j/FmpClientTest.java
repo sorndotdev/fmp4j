@@ -96,7 +96,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void testConstructor_doesNotThrowAndCreatesInstance() {
+    void test_constructor_does_not_throw_and_creates_instance() {
         // given
         setProperty(FmpConfigImpl.FMP4J_API_KEY_ENV, "ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");
         setProperty(FmpConfigImpl.FMP4J_BASE_URL_ENV, "https://financialmodelingprep.com/stable");
@@ -106,7 +106,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchPressReleases() {
+    void search_press_releases() {
         // given
         var symbol = symbol("V");
         var endpoint = "news/press-releases";
@@ -121,7 +121,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchByIsin() {
+    void search_by_isin() {
         // given
         var isin = isin("NL0012969182");
         var endpoint = "search-isin";
@@ -136,7 +136,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchByName() {
+    void search_by_name() {
         // given
         var query = "ADYEN";
         var endpoint = "search-name";
@@ -168,7 +168,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchByCusip() {
+    void search_by_cusip() {
         // given
         var cusip = cusip("037833100");
         var endpoint = "search-cusip";
@@ -183,7 +183,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchBySymbol() {
+    void search_by_symbol() {
         // given
         var query = symbol("ADYEN");
         var endpoint = "search-symbol";
@@ -198,7 +198,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void searchByCik() {
+    void search_by_cik() {
         // given
         var cik = cik("0000320193");
         var endpoint = "search-cik";
@@ -213,7 +213,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void stockDirectory() {
+    void stock_directory() {
         // given
         var endpoint = "stock-list";
         var file = format("stable/%s/excerpt.json", endpoint);
@@ -227,7 +227,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void etfDirectory() {
+    void etf_directory() {
         // given
         var endpoint = "etf-list";
         var file = format("stable/%s/excerpt.json", endpoint);
@@ -304,7 +304,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void iposCalendar() {
+    void ipos_calendar() {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
@@ -320,7 +320,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void iposDisclosure() {
+    void ipos_disclosure() {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
@@ -336,7 +336,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void iposProspectus() {
+    void ipos_prospectus() {
         // given
         var from = Optional.of(LocalDate.parse("2024-02-28"));
         var to = Optional.of(LocalDate.parse("2025-02-28"));
@@ -352,7 +352,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void historicalPriceEodLight() {
+    void historical_price_eod_light() {
         // given
         var endpoint = "historical-price-eod/light";
         var symbol = symbol("AAPL");
@@ -369,7 +369,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void historicalPriceEodFull() {
+    void historical_price_eod_full() {
         // given
         var endpoint = "historical-price-eod/full";
         var symbol = symbol("AAPL");
@@ -453,7 +453,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void incomeStatementTtm() {
+    void income_statement_ttm() {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
@@ -540,7 +540,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void balanceSheetStatementTtm() {
+    void balance_sheet_statement_ttm() {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
@@ -628,7 +628,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void cashFlowStatementTtm() {
+    void cash_flow_statement_ttm() {
         // given
         var symbol = symbol("AAPL");
         var limit = limit(2);
@@ -725,7 +725,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void ratiosTtm() {
+    void ratios_ttm() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "ratios-ttm";
@@ -758,7 +758,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void keyMetricsTtm() {
+    void key_metrics_ttm() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "key-metrics-ttm";
@@ -830,7 +830,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void etfAssetExposure() {
+    void etf_asset_exposure() {
         // given
         var symbol = symbol("NVO");
         var endpoint = "etf/asset-exposure";
@@ -845,7 +845,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void etfCountryWeightings() {
+    void etf_country_weightings() {
         // given
         var symbol = symbol("SPY");
         var endpoint = "etf/country-weightings";
@@ -878,7 +878,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void etfInfo() {
+    void etf_info() {
         // given
         var symbol = symbol("SPY");
         var endpoint = "etf/info";
@@ -893,7 +893,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void cryptoNews() {
+    void crypto_news() {
         // given
         var symbols = Set.of(symbol("BTCUSD"));
         var endpoint = "news/crypto";
@@ -910,7 +910,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void cryptoNews_multiple() {
+    void crypto_news_multiple() {
         // given
         var symbols = new TreeSet<FmpSymbol>(); // guarantee order
         symbols.add(symbol("BTCUSD"));
@@ -929,7 +929,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void forexNews() {
+    void forex_news() {
         // given
         var symbols = Set.of(symbol("EURUSD"));
         var endpoint = "news/forex";
@@ -946,7 +946,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void stockNews() {
+    void stock_news() {
         // given
         var symbols = Set.of(symbol("AAPL"));
         var endpoint = "news/stock";
@@ -963,7 +963,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void cryptoNews_withFromTo() {
+    void crypto_news_with_from_to() {
         // given
         var symbols = Set.of(symbol("BTCUSD"));
         var from = Optional.of(LocalDate.of(2025, 1, 1));
@@ -985,7 +985,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void etfSectorWeightings() {
+    void etf_sector_weightings() {
         // given
         var symbol = symbol("SPY");
         var endpoint = "etf/sector-weightings";
@@ -1000,7 +1000,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void fullQuotes() {
+    void full_quotes() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "quote";
@@ -1015,7 +1015,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void partialQuotes() {
+    void partial_quotes() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "quote-short";
@@ -1030,7 +1030,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void priceChange() {
+    void price_change() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "stock-price-change";
@@ -1045,7 +1045,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void secFilingsSearchBySymbol() {
+    void sec_filings_search_by_symbol() {
         // given
         var symbol = symbol("AAPL");
         var from = LocalDate.parse("2024-01-01");
@@ -1066,7 +1066,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void treasuryRates() {
+    void treasury_rates() {
         // given
         var from = LocalDate.parse("2024-12-30");
         var to = LocalDate.parse("2025-01-01");
@@ -1082,7 +1082,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void earningCallTranscript() {
+    void earning_call_transcript() {
         // given
         var symbol = symbol("AAPL");
         var year = year(2020);
@@ -1099,7 +1099,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void earningCallTranscriptDates() {
+    void earning_call_transcript_dates() {
         // given
         var symbol = symbol("AAPL");
         var endpoint = "earning-call-transcript-dates";
@@ -1114,7 +1114,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void earningCallTranscriptLatest() {
+    void earning_call_transcript_latest() {
         // given
         var page = page(0);
         var limit = limit(2);
@@ -1130,7 +1130,7 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
-    void earningsTranscriptList() {
+    void earnings_transcript_list() {
         // given
         var endpoint = "earnings-transcript-list";
         var file = format("stable/%s/excerpt.json", endpoint);
