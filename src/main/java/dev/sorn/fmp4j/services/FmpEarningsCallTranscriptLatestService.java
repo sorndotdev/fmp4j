@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
 
@@ -11,9 +10,9 @@ import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import java.util.Map;
 
-public class FmpEarningsCallTranscriptLatestService extends FmpService<FmpEarningsCallTranscriptLatest[]> {
+public class FmpEarningsCallTranscriptLatestService extends FmpService<FmpEarningsCallTranscriptLatest> {
     public FmpEarningsCallTranscriptLatestService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpEarningsCallTranscriptLatest[].class));
+        super(cfg, http, FmpEarningsCallTranscriptLatest.class);
     }
 
     @Override

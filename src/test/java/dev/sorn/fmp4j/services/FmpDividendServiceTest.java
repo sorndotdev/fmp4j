@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpDividendServiceTest extends HttpTest {
-    private FmpService<FmpDividend[]> service;
+    private FmpService<FmpDividend> service;
 
     @BeforeEach
     void setup() {
@@ -64,8 +64,8 @@ class FmpDividendServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(4, result.length);
-        range(0, 4).forEach(i -> assertInstanceOf(FmpDividend.class, result[i]));
-        range(0, 4).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("declarationDate")));
+        assertEquals(4, result.size());
+        range(0, 4).forEach(i -> assertInstanceOf(FmpDividend.class, result.get(i)));
+        range(0, 4).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("declarationDate")));
     }
 }

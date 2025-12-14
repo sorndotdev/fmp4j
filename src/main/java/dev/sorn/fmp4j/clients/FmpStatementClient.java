@@ -48,31 +48,32 @@ import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpStructure;
 import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.List;
 import java.util.Optional;
 
 public class FmpStatementClient {
     protected static final FmpLimit DEFAULT_LIMIT = limit(5);
 
-    protected final FmpService<FmpIncomeStatement[]> incomeStatementService;
-    protected final FmpService<FmpBalanceSheetStatement[]> balanceSheetStatementService;
-    protected final FmpService<FmpCashFlowStatement[]> cashFlowStatementService;
-    protected final FmpService<FmpFinancialStatementAsReported[]> incomeStatementAsReportedService;
-    protected final FmpService<FmpFinancialStatementAsReported[]> balanceSheetStatementAsReportedService;
-    protected final FmpService<FmpFinancialStatementAsReported[]> cashFlowStatementAsReportedService;
-    protected final FmpService<FmpIncomeStatementGrowth[]> incomeStatementGrowthService;
-    protected final FmpService<FmpBalanceSheetStatementGrowth[]> balanceSheetStatementGrowthService;
-    protected final FmpService<FmpCashFlowStatementGrowth[]> cashFlowStatementGrowthService;
-    protected final FmpService<FmpIncomeStatement[]> incomeStatementTtmService;
-    protected final FmpService<FmpBalanceSheetStatement[]> balanceSheetStatementTtmService;
-    protected final FmpService<FmpCashFlowStatement[]> cashFlowStatementTtmService;
-    protected final FmpService<FmpFinancialGrowth[]> financialGrowthService;
-    protected final FmpService<FmpRatio[]> ratioService;
-    protected final FmpService<FmpRatioTtm[]> ratioTtmService;
-    protected final FmpService<FmpKeyMetric[]> keyMetricService;
-    protected final FmpService<FmpKeyMetricTtm[]> keyMetricTtmService;
-    protected final FmpService<FmpEnterpriseValue[]> enterpriseValuesService;
-    protected final FmpService<FmpRevenueGeographicSegmentation[]> revenueGeographicSegmentationService;
-    protected final FmpService<FmpRevenueProductSegmentation[]> revenueProductSegmentationService;
+    protected final FmpService<FmpIncomeStatement> incomeStatementService;
+    protected final FmpService<FmpBalanceSheetStatement> balanceSheetStatementService;
+    protected final FmpService<FmpCashFlowStatement> cashFlowStatementService;
+    protected final FmpService<FmpFinancialStatementAsReported> incomeStatementAsReportedService;
+    protected final FmpService<FmpFinancialStatementAsReported> balanceSheetStatementAsReportedService;
+    protected final FmpService<FmpFinancialStatementAsReported> cashFlowStatementAsReportedService;
+    protected final FmpService<FmpIncomeStatementGrowth> incomeStatementGrowthService;
+    protected final FmpService<FmpBalanceSheetStatementGrowth> balanceSheetStatementGrowthService;
+    protected final FmpService<FmpCashFlowStatementGrowth> cashFlowStatementGrowthService;
+    protected final FmpService<FmpIncomeStatement> incomeStatementTtmService;
+    protected final FmpService<FmpBalanceSheetStatement> balanceSheetStatementTtmService;
+    protected final FmpService<FmpCashFlowStatement> cashFlowStatementTtmService;
+    protected final FmpService<FmpFinancialGrowth> financialGrowthService;
+    protected final FmpService<FmpRatio> ratioService;
+    protected final FmpService<FmpRatioTtm> ratioTtmService;
+    protected final FmpService<FmpKeyMetric> keyMetricService;
+    protected final FmpService<FmpKeyMetricTtm> keyMetricTtmService;
+    protected final FmpService<FmpEnterpriseValue> enterpriseValuesService;
+    protected final FmpService<FmpRevenueGeographicSegmentation> revenueGeographicSegmentationService;
+    protected final FmpService<FmpRevenueProductSegmentation> revenueProductSegmentationService;
 
     public FmpStatementClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.incomeStatementService = new FmpIncomeStatementService(fmpConfig, fmpHttpClient);
@@ -101,7 +102,7 @@ public class FmpStatementClient {
         this.revenueProductSegmentationService = new FmpRevenueProductSegmentationService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpIncomeStatement[] income(
+    public synchronized List<FmpIncomeStatement> income(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         incomeStatementService.param(PARAM_SYMBOL, symbol);
         incomeStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -109,7 +110,7 @@ public class FmpStatementClient {
         return incomeStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] incomeAsReported(
+    public synchronized List<FmpFinancialStatementAsReported> incomeAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         incomeStatementAsReportedService.param(PARAM_SYMBOL, symbol);
         incomeStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -117,7 +118,7 @@ public class FmpStatementClient {
         return incomeStatementAsReportedService.download();
     }
 
-    public synchronized FmpIncomeStatementGrowth[] incomeGrowth(
+    public synchronized List<FmpIncomeStatementGrowth> incomeGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         incomeStatementGrowthService.param(PARAM_SYMBOL, symbol);
         incomeStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -125,13 +126,13 @@ public class FmpStatementClient {
         return incomeStatementGrowthService.download();
     }
 
-    public synchronized FmpIncomeStatement[] incomeTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
+    public synchronized List<FmpIncomeStatement> incomeTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
         incomeStatementTtmService.param(PARAM_SYMBOL, symbol);
         incomeStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return incomeStatementTtmService.download();
     }
 
-    public synchronized FmpBalanceSheetStatement[] balanceSheet(
+    public synchronized List<FmpBalanceSheetStatement> balanceSheet(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         balanceSheetStatementService.param(PARAM_SYMBOL, symbol);
         balanceSheetStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -139,7 +140,7 @@ public class FmpStatementClient {
         return balanceSheetStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] balanceSheetAsReported(
+    public synchronized List<FmpFinancialStatementAsReported> balanceSheetAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         balanceSheetStatementAsReportedService.param(PARAM_SYMBOL, symbol);
         balanceSheetStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -147,7 +148,7 @@ public class FmpStatementClient {
         return balanceSheetStatementAsReportedService.download();
     }
 
-    public synchronized FmpBalanceSheetStatementGrowth[] balanceSheetGrowth(
+    public synchronized List<FmpBalanceSheetStatementGrowth> balanceSheetGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         balanceSheetStatementGrowthService.param(PARAM_SYMBOL, symbol);
         balanceSheetStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -155,13 +156,13 @@ public class FmpStatementClient {
         return balanceSheetStatementGrowthService.download();
     }
 
-    public synchronized FmpBalanceSheetStatement[] balanceSheetTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
+    public synchronized List<FmpBalanceSheetStatement> balanceSheetTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
         balanceSheetStatementTtmService.param(PARAM_SYMBOL, symbol);
         balanceSheetStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return balanceSheetStatementTtmService.download();
     }
 
-    public synchronized FmpCashFlowStatement[] cashFlow(
+    public synchronized List<FmpCashFlowStatement> cashFlow(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         cashFlowStatementService.param(PARAM_SYMBOL, symbol);
         cashFlowStatementService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -169,7 +170,7 @@ public class FmpStatementClient {
         return cashFlowStatementService.download();
     }
 
-    public synchronized FmpFinancialStatementAsReported[] cashFlowAsReported(
+    public synchronized List<FmpFinancialStatementAsReported> cashFlowAsReported(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         cashFlowStatementAsReportedService.param(PARAM_SYMBOL, symbol);
         cashFlowStatementAsReportedService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -177,7 +178,7 @@ public class FmpStatementClient {
         return cashFlowStatementAsReportedService.download();
     }
 
-    public synchronized FmpCashFlowStatementGrowth[] cashFlowGrowth(
+    public synchronized List<FmpCashFlowStatementGrowth> cashFlowGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         cashFlowStatementGrowthService.param(PARAM_SYMBOL, symbol);
         cashFlowStatementGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -185,13 +186,13 @@ public class FmpStatementClient {
         return cashFlowStatementGrowthService.download();
     }
 
-    public synchronized FmpCashFlowStatement[] cashFlowTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
+    public synchronized List<FmpCashFlowStatement> cashFlowTtm(FmpSymbol symbol, Optional<FmpLimit> limit) {
         cashFlowStatementTtmService.param(PARAM_SYMBOL, symbol);
         cashFlowStatementTtmService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return cashFlowStatementTtmService.download();
     }
 
-    public synchronized FmpFinancialGrowth[] financialGrowth(
+    public synchronized List<FmpFinancialGrowth> financialGrowth(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         financialGrowthService.param(PARAM_SYMBOL, symbol);
         financialGrowthService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -199,7 +200,7 @@ public class FmpStatementClient {
         return financialGrowthService.download();
     }
 
-    public synchronized FmpKeyMetric[] keyMetrics(
+    public synchronized List<FmpKeyMetric> keyMetrics(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         keyMetricService.param(PARAM_SYMBOL, symbol);
         keyMetricService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -207,24 +208,24 @@ public class FmpStatementClient {
         return keyMetricService.download();
     }
 
-    public synchronized FmpKeyMetricTtm[] keyMetricsTtm(FmpSymbol symbol) {
+    public synchronized List<FmpKeyMetricTtm> keyMetricsTtm(FmpSymbol symbol) {
         keyMetricTtmService.param(PARAM_SYMBOL, symbol);
         return keyMetricTtmService.download();
     }
 
-    public synchronized FmpRatio[] ratios(FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
+    public synchronized List<FmpRatio> ratios(FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         ratioService.param(PARAM_SYMBOL, symbol);
         ratioService.param(PARAM_PERIOD, period.orElse(ANNUAL));
         ratioService.param(PARAM_LIMIT, limit.orElse(DEFAULT_LIMIT));
         return ratioService.download();
     }
 
-    public synchronized FmpRatioTtm[] ratiosTtm(FmpSymbol symbol) {
+    public synchronized List<FmpRatioTtm> ratiosTtm(FmpSymbol symbol) {
         ratioTtmService.param(PARAM_SYMBOL, symbol);
         return ratioTtmService.download();
     }
 
-    public synchronized FmpEnterpriseValue[] enterpriseValues(
+    public synchronized List<FmpEnterpriseValue> enterpriseValues(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpLimit> limit) {
         enterpriseValuesService.param(PARAM_SYMBOL, symbol);
         enterpriseValuesService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -232,7 +233,7 @@ public class FmpStatementClient {
         return enterpriseValuesService.download();
     }
 
-    public synchronized FmpRevenueGeographicSegmentation[] revenueGeographicSegmentations(
+    public synchronized List<FmpRevenueGeographicSegmentation> revenueGeographicSegmentations(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpStructure> structure) {
         revenueGeographicSegmentationService.param(PARAM_SYMBOL, symbol);
         revenueGeographicSegmentationService.param(PARAM_PERIOD, period.orElse(ANNUAL));
@@ -240,7 +241,7 @@ public class FmpStatementClient {
         return revenueGeographicSegmentationService.download();
     }
 
-    public synchronized FmpRevenueProductSegmentation[] revenueProductSegmentations(
+    public synchronized List<FmpRevenueProductSegmentation> revenueProductSegmentations(
             FmpSymbol symbol, Optional<FmpPeriod> period, Optional<FmpStructure> structure) {
         revenueProductSegmentationService.param(PARAM_SYMBOL, symbol);
         revenueProductSegmentationService.param(PARAM_PERIOD, period.orElse(ANNUAL));

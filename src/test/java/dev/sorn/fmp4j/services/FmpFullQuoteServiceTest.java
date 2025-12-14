@@ -4,13 +4,14 @@ import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static java.lang.String.format;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import dev.sorn.fmp4j.QuoteTestData;
 import dev.sorn.fmp4j.models.FmpFullQuote;
 import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpFullQuoteServiceTest extends HttpTest implements QuoteTestData {
-    private FmpService<FmpFullQuote[]> service;
+    private FmpService<FmpFullQuote> service;
 
     @BeforeEach
     void setup() {
@@ -66,14 +67,14 @@ class FmpFullQuoteServiceTest extends HttpTest implements QuoteTestData {
         var result = service.download();
 
         // then
-        var expected = new FmpFullQuote[] {aFullQuote()};
-        assertArrayEquals(expected, result);
+        var expected = List.of(aFullQuote());
+        assertThat(expected).containsExactlyElementsOf(result);
     }
 
     @Test
     void missing_symbol_throws() {
         // given // when
-        Consumer<FmpService<FmpFullQuote[]>> f = FmpService::download;
+        Consumer<FmpService<FmpFullQuote>> f = FmpService::download;
 
         // then
         var e = assertThrows(FmpServiceException.class, () -> f.accept(service));

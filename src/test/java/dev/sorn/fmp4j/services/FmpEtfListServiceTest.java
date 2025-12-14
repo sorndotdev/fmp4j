@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEtfListServiceTest extends HttpTest {
-    private FmpService<FmpEtf[]> service;
+    private FmpService<FmpEtf> service;
 
     @BeforeEach
     void setup() {
@@ -58,8 +58,8 @@ class FmpEtfListServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(4, result.length);
-        range(0, 4).forEach(i -> assertInstanceOf(FmpEtf.class, result[i]));
-        range(0, 4).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(4, result.size());
+        range(0, 4).forEach(i -> assertInstanceOf(FmpEtf.class, result.get(i)));
+        range(0, 4).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

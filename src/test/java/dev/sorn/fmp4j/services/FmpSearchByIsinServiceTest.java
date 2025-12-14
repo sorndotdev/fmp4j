@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchByIsinServiceTest extends HttpTest {
-    private FmpService<FmpSearchByIsin[]> service;
+    private FmpService<FmpSearchByIsin> service;
 
     @BeforeEach
     void setup() {
@@ -62,8 +62,8 @@ class FmpSearchByIsinServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(3, result.length);
-        range(0, 3).forEach(i -> assertInstanceOf(FmpSearchByIsin.class, result[i]));
-        range(0, 3).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(3, result.size());
+        range(0, 3).forEach(i -> assertInstanceOf(FmpSearchByIsin.class, result.get(i)));
+        range(0, 3).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

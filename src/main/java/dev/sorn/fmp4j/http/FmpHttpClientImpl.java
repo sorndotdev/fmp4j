@@ -3,12 +3,12 @@ package dev.sorn.fmp4j.http;
 import static dev.sorn.fmp4j.http.FmpUriUtils.uriWithParams;
 import static java.util.Objects.requireNonNull;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.exceptions.FmpDeserializationException;
 import dev.sorn.fmp4j.types.FmpApiKey;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.hc.client5.http.classic.HttpClient;
@@ -27,7 +27,7 @@ public final class FmpHttpClientImpl implements FmpHttpClient {
     }
 
     @Override
-    public <T> T get(TypeReference<T> type, URI uri, Map<String, String> headers, Map<String, Object> queryParams) {
+    public <T> List<T> get(Class<T> clazz, URI uri, Map<String, String> headers, Map<String, Object> queryParams) {
         try {
             requireNonNull(headers, "'headers' is required");
             final var contentType = headers.get("Content-Type");
@@ -38,23 +38,23 @@ public final class FmpHttpClientImpl implements FmpHttpClient {
             if (responseBody.isBlank()) {
                 throw new FmpHttpException(
                         "Empty response for type [%s], uri [%s], headers [%s], queryParams [%s]",
-                        type.getType(), uri, headers, queryParams);
+                        clazz.getSimpleName(), uri, headers, queryParams);
             }
             if (statusCode == 401 || statusCode == 403) {
                 throw new FmpUnauthorizedException(
                         "Unauthorized for type [%s], uri [%s], headers [%s], queryParams [%s]",
-                        type.getType(), uri, headers, queryParams, responseBody);
+                        clazz.getSimpleName(), uri, headers, queryParams, responseBody);
             }
             return deserializationRegistry
                     .resolve(FmpContentType.fromContentTypeHeader(contentType))
-                    .deserialize(responseBody, type);
+                    .deserialize(responseBody, clazz);
         } catch (FmpHttpException e) {
             throw e;
         } catch (FmpDeserializationException e) {
             throw new FmpHttpException(
                     e,
                     "Deserialization failed for type [%s], uri [%s], headers [%s], queryParams [%s]",
-                    type.getType(),
+                    clazz.getSimpleName(),
                     uri,
                     headers,
                     queryParams);

@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
 
@@ -11,9 +10,9 @@ import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpYear;
 import java.util.Map;
 
-public class FmpBulkBalanceSheetStatementService extends FmpService<FmpBalanceSheetStatement[]> {
+public class FmpBulkBalanceSheetStatementService extends FmpService<FmpBalanceSheetStatement> {
     public FmpBulkBalanceSheetStatementService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpBalanceSheetStatement[].class));
+        super(cfg, http, FmpBalanceSheetStatement.class);
     }
 
     @Override

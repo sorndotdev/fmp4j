@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
@@ -16,11 +15,11 @@ import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpNewsService extends FmpService<FmpNews[]> {
+public class FmpNewsService extends FmpService<FmpNews> {
     protected final String type;
 
     public FmpNewsService(FmpConfig cfg, FmpHttpClient http, String type) {
-        super(cfg, http, typeRef(FmpNews[].class));
+        super(cfg, http, FmpNews.class);
         this.type = type;
     }
 

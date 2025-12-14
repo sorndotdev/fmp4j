@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FmpKeyMetricTtmServiceTest extends HttpTest implements KeyMetricTtmTestData {
-    private FmpService<FmpKeyMetricTtm[]> service;
+    private FmpService<FmpKeyMetricTtm> service;
 
     @BeforeEach
     void setup() {
@@ -61,7 +61,7 @@ public class FmpKeyMetricTtmServiceTest extends HttpTest implements KeyMetricTtm
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertEquals(aTtmKeyMetric(), result[0]);
+        assertEquals(1, result.size());
+        assertEquals(aTtmKeyMetric(), result.get(0));
     }
 }

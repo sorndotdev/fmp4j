@@ -9,15 +9,16 @@ import dev.sorn.fmp4j.models.FmpTreasuryRate;
 import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.services.FmpTreasuryRatesService;
 import java.time.LocalDate;
+import java.util.List;
 
 public class FmpEconomicsClient {
-    protected final FmpService<FmpTreasuryRate[]> fmpTreasuryRatesService;
+    protected final FmpService<FmpTreasuryRate> fmpTreasuryRatesService;
 
     public FmpEconomicsClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpTreasuryRatesService = new FmpTreasuryRatesService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpTreasuryRate[] treasuryRates(LocalDate from, LocalDate to) {
+    public synchronized List<FmpTreasuryRate> treasuryRates(LocalDate from, LocalDate to) {
         fmpTreasuryRatesService.param(PARAM_FROM, from);
         fmpTreasuryRatesService.param(PARAM_TO, to);
         return fmpTreasuryRatesService.download();

@@ -2,11 +2,11 @@ package dev.sorn.fmp4j.services;
 
 import static java.util.Objects.requireNonNull;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,12 +15,12 @@ public abstract class FmpService<R> {
     protected final FmpConfig cfg;
     protected final FmpHttpClient http;
     protected final ConcurrentHashMap<String, Object> params = new ConcurrentHashMap<>();
-    protected final TypeReference<R> typeRef;
+    protected final Class<R> clazz;
 
-    protected FmpService(FmpConfig cfg, FmpHttpClient http, TypeReference<R> typeRef) {
+    protected FmpService(FmpConfig cfg, FmpHttpClient http, Class<R> clazz) {
         this.cfg = requireNonNull(cfg, "'cfg' is required");
         this.http = requireNonNull(http, "'http' is required");
-        this.typeRef = requireNonNull(typeRef, "'typeRef' is required");
+        this.clazz = requireNonNull(clazz, "'clazz' is required");
         this.params.put("apikey", requireNonNull(cfg.fmpApiKey(), "'apikey' is required"));
     }
 
@@ -34,8 +34,8 @@ public abstract class FmpService<R> {
 
     protected abstract Map<String, Class<?>> optionalParams();
 
-    protected R filter(R r) {
-        return r;
+    protected boolean filter(R r) {
+        return true;
     }
 
     private void validateParamKey(String key) {
@@ -74,7 +74,7 @@ public abstract class FmpService<R> {
         return Map.of("Content-Type", "application/json");
     }
 
-    public final R download() {
+    public final List<R> download() {
         final var required = requiredParams();
         final var missing = required.keySet().stream()
                 .filter(req -> !params.containsKey(req))
@@ -84,6 +84,8 @@ public abstract class FmpService<R> {
             throw new FmpServiceException("%s are required query params for endpoint [%s]", missing, url());
         }
 
-        return filter(http.get(typeRef, url(), headers(), params));
+        return http.get(clazz, url(), headers(), params).stream()
+                .filter(this::filter)
+                .toList();
     }
 }

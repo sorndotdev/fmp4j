@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpIncomeStatementTtmServiceTest extends HttpTest implements IncomeStatementTestData {
-    private FmpService<FmpIncomeStatement[]> service;
+    private FmpService<FmpIncomeStatement> service;
 
     @BeforeEach
     void setup() {
@@ -66,7 +66,7 @@ class FmpIncomeStatementTtmServiceTest extends HttpTest implements IncomeStateme
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

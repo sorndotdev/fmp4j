@@ -22,18 +22,19 @@ import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.types.FmpInterval;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class FmpChartClient {
 
-    protected final FmpService<FmpHistoricalPriceEodLight[]> fmpHistoricalPriceEodLightService;
-    protected final FmpService<FmpHistoricalPriceEodFull[]> fmpHistoricalPriceEodFullService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService5MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService15MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService30MinService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService1HourService;
-    protected final FmpService<FmpHistoricalChart[]> fmpHistoricalChartService4HourService;
+    protected final FmpService<FmpHistoricalPriceEodLight> fmpHistoricalPriceEodLightService;
+    protected final FmpService<FmpHistoricalPriceEodFull> fmpHistoricalPriceEodFullService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService1MinService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService5MinService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService15MinService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService30MinService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService1HourService;
+    protected final FmpService<FmpHistoricalChart> fmpHistoricalChartService4HourService;
 
     public FmpChartClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpHistoricalPriceEodLightService = new FmpHistoricalPriceEodLightService(fmpConfig, fmpHttpClient);
@@ -49,7 +50,7 @@ public class FmpChartClient {
         this.fmpHistoricalChartService4HourService = new FmpHistoricalChartService(fmpConfig, fmpHttpClient, FOUR_HOUR);
     }
 
-    public synchronized FmpHistoricalPriceEodLight[] historicalPriceEodLight(
+    public synchronized List<FmpHistoricalPriceEodLight> historicalPriceEodLight(
             FmpSymbol symbol, Optional<LocalDate> from, Optional<LocalDate> to) {
         fmpHistoricalPriceEodLightService.param(PARAM_SYMBOL, symbol);
         from.ifPresent(date -> fmpHistoricalPriceEodLightService.param(PARAM_FROM, date));
@@ -57,7 +58,7 @@ public class FmpChartClient {
         return fmpHistoricalPriceEodLightService.download();
     }
 
-    public synchronized FmpHistoricalPriceEodFull[] historicalPriceEodFull(
+    public synchronized List<FmpHistoricalPriceEodFull> historicalPriceEodFull(
             FmpSymbol symbol, Optional<LocalDate> from, Optional<LocalDate> to) {
         fmpHistoricalPriceEodFullService.param(PARAM_SYMBOL, symbol);
         from.ifPresent(date -> fmpHistoricalPriceEodFullService.param(PARAM_FROM, date));
@@ -65,7 +66,7 @@ public class FmpChartClient {
         return fmpHistoricalPriceEodFullService.download();
     }
 
-    public synchronized FmpHistoricalChart[] historical(
+    public synchronized List<FmpHistoricalChart> historical(
             FmpSymbol symbol, FmpInterval interval, Optional<LocalDate> from, Optional<LocalDate> to) {
         return switch (interval) {
             case ONE_MINUTE -> {

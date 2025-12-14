@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpCashFlowStatementServiceTest extends HttpTest implements CashFlowStatementTestData {
-    private FmpService<FmpCashFlowStatement[]> service;
+    private FmpService<FmpCashFlowStatement> service;
 
     @BeforeEach
     void setup() {
@@ -69,9 +69,9 @@ class FmpCashFlowStatementServiceTest extends HttpTest implements CashFlowStatem
         var result = service.download();
 
         // then
-        assertEquals(5, result.length);
-        assertEquals(anAnnualCashFlowStatement(), result[0]);
-        range(0, 5).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(5, result.size());
+        assertEquals(anAnnualCashFlowStatement(), result.get(0));
+        range(0, 5).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 
     @ParameterizedTest
@@ -91,7 +91,7 @@ class FmpCashFlowStatementServiceTest extends HttpTest implements CashFlowStatem
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

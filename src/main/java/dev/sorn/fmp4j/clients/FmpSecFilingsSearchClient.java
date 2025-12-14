@@ -17,18 +17,19 @@ import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class FmpSecFilingsSearchClient {
     protected static final FmpPage DEFAULT_PAGE = page(0);
     protected static final FmpLimit DEFAULT_LIMIT = limit(100);
-    protected final FmpService<FmpSecFilingsSearchBySymbol[]> fmpSecFilingsSearchBySymbol;
+    protected final FmpService<FmpSecFilingsSearchBySymbol> fmpSecFilingsSearchBySymbol;
 
     public FmpSecFilingsSearchClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpSecFilingsSearchBySymbol = new FmpSecFilingsSearchBySymbolService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpSecFilingsSearchBySymbol[] bySymbol(
+    public synchronized List<FmpSecFilingsSearchBySymbol> bySymbol(
             FmpSymbol symbol, LocalDate from, LocalDate to, Optional<FmpPage> page, Optional<FmpLimit> limit) {
         fmpSecFilingsSearchBySymbol.param(PARAM_SYMBOL, symbol);
         fmpSecFilingsSearchBySymbol.param(PARAM_FROM, from);

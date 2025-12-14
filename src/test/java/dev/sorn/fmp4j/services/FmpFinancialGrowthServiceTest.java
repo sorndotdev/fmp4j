@@ -22,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpFinancialGrowthServiceTest extends HttpTest implements FinancialGrowthTestData {
-    private FmpService<FmpFinancialGrowth[]> service;
+    private FmpService<FmpFinancialGrowth> service;
 
     @BeforeEach
     void setup() {
@@ -72,10 +72,10 @@ class FmpFinancialGrowthServiceTest extends HttpTest implements FinancialGrowthT
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
+        assertEquals(limit, result.size());
         range(0, limit)
                 .forEach(i -> assertAllFieldsNonNull(
-                        result[i],
+                        result.get(i),
                         Set.of(
                                 "ebitdaGrowth",
                                 "growthCapitalExpenditure",

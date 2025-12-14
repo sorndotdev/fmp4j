@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpSplitServiceTest extends HttpTest {
-    private FmpService<FmpSplit[]> service;
+    private FmpService<FmpSplit> service;
 
     @BeforeEach
     void setup() {
@@ -61,11 +61,11 @@ class FmpSplitServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertInstanceOf(FmpSplit.class, result[0]);
-        assertAllFieldsNonNull(result[0], Set.of());
-        assertEquals(symbol("AAPL"), result[0].symbol());
-        assertEquals(4, result[0].numerator());
-        assertEquals(1, result[0].denominator());
+        assertEquals(1, result.size());
+        assertInstanceOf(FmpSplit.class, result.get(0));
+        assertAllFieldsNonNull(result.get(0), Set.of());
+        assertEquals(symbol("AAPL"), result.get(0).symbol());
+        assertEquals(4, result.get(0).numerator());
+        assertEquals(1, result.get(0).denominator());
     }
 }

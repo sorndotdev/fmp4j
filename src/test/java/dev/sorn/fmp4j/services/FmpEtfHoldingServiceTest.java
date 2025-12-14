@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEtfHoldingServiceTest extends HttpTest {
-    private FmpService<FmpEtfHolding[]> service;
+    private FmpService<FmpEtfHolding> service;
 
     @BeforeEach
     void setup() {
@@ -64,8 +64,8 @@ class FmpEtfHoldingServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(103, result.length);
-        range(0, 103).forEach(i -> assertInstanceOf(FmpEtfHolding.class, result[i]));
-        range(0, 103).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("isin")));
+        assertEquals(103, result.size());
+        range(0, 103).forEach(i -> assertInstanceOf(FmpEtfHolding.class, result.get(i)));
+        range(0, 103).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("isin")));
     }
 }

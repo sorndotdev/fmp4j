@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FmpIposCalendarServiceTest extends HttpTest {
-    private FmpService<FmpIposCalendar[]> service;
+    private FmpService<FmpIposCalendar> service;
 
     @BeforeEach
     void setup() {
@@ -62,8 +62,8 @@ public class FmpIposCalendarServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(2, result.length);
-        range(0, 2).forEach(i -> assertInstanceOf(FmpIposCalendar.class, result[i]));
-        range(0, 2).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("shares", "priceRange", "marketCap")));
+        assertEquals(2, result.size());
+        range(0, 2).forEach(i -> assertInstanceOf(FmpIposCalendar.class, result.get(i)));
+        range(0, 2).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("shares", "priceRange", "marketCap")));
     }
 }

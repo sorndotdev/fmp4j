@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_STRUCTURE;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
@@ -13,9 +12,9 @@ import dev.sorn.fmp4j.types.FmpStructure;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 
-public class FmpRevenueProductSegmentationService extends FmpService<FmpRevenueProductSegmentation[]> {
+public class FmpRevenueProductSegmentationService extends FmpService<FmpRevenueProductSegmentation> {
     public FmpRevenueProductSegmentationService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpRevenueProductSegmentation[].class));
+        super(cfg, http, FmpRevenueProductSegmentation.class);
     }
 
     @Override

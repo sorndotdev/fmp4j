@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEtfInfoServiceTest extends HttpTest {
-    private FmpService<FmpEtfInfo[]> service;
+    private FmpService<FmpEtfInfo> service;
 
     @BeforeEach
     void setup() {
@@ -62,8 +62,8 @@ class FmpEtfInfoServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertInstanceOf(FmpEtfInfo.class, result[0]);
-        assertAllFieldsNonNull(result[0]);
+        assertEquals(1, result.size());
+        assertInstanceOf(FmpEtfInfo.class, result.get(0));
+        assertAllFieldsNonNull(result.get(0));
     }
 }

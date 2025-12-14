@@ -1,15 +1,13 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSplitsCalendar;
 import java.util.Map;
 
-public class FmpSplitsCalendarService extends FmpService<FmpSplitsCalendar[]> {
+public class FmpSplitsCalendarService extends FmpService<FmpSplitsCalendar> {
     public FmpSplitsCalendarService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpSplitsCalendar[].class));
+        super(cfg, http, FmpSplitsCalendar.class);
     }
 
     @Override

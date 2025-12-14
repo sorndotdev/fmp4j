@@ -1,13 +1,10 @@
 package dev.sorn.fmp4j.http;
 
 import static dev.sorn.fmp4j.TestDeserializationRegistry.TEST_DESERIALIZATION_REGISTRY;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import dev.sorn.fmp4j.TestObject;
@@ -37,35 +34,6 @@ class FmpHttpClientTest {
     @BeforeEach
     void setUp() {
         client = new FmpHttpClientImpl(httpClient, TEST_DESERIALIZATION_REGISTRY);
-    }
-
-    @Test
-    void get_successful_request_object() throws Exception {
-        // given
-        var headers = Map.of("Authorization", "Bearer token", "Content-Type", "application/json");
-        var params = Map.<String, Object>of("apikey", new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6"));
-        var jsonResponse =
-                """
-            {
-                "key": "fmp4j",
-                "object": {
-                    "value": 42
-                }
-            }
-            """
-                        .replaceAll("\\s", "");
-        var expected = new TestObject("fmp4j", new TestObjectValue(42));
-        when(httpClient.executeOpen(any(), any(HttpGet.class), any())).thenReturn(httpResponse);
-        when(httpResponse.getEntity()).thenReturn(new StringEntity(jsonResponse));
-        when(httpResponse.getCode()).thenReturn(200);
-
-        // when
-        var result = client.get(typeRef(TestObject.class), testUri, headers, params);
-
-        // then
-        assertNotNull(result);
-        assertEquals(expected, result);
-        verify(httpResponse).close();
     }
 
     @Test
@@ -99,12 +67,12 @@ class FmpHttpClientTest {
         when(httpResponse.getCode()).thenReturn(200);
 
         // when
-        var result = client.get(typeRef(TestObject[].class), testUri, headers, params);
+        var result = client.get(TestObject.class, testUri, headers, params);
 
         // then
-        assertEquals(2, result.length);
-        assertEquals(expected[0], result[0]);
-        assertEquals(expected[1], result[1]);
+        assertEquals(2, result.size());
+        assertEquals(expected[0], result.get(0));
+        assertEquals(expected[1], result.get(1));
     }
 
     @Test
@@ -114,8 +82,7 @@ class FmpHttpClientTest {
         when(httpClient.executeOpen(any(), any(HttpGet.class), any())).thenThrow(new IOException("Connection failed"));
 
         // when // then
-        var e = assertThrows(
-                FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, null, params));
+        var e = assertThrows(FmpHttpException.class, () -> client.get(TestObject.class, testUri, null, params));
         assertEquals("HTTP request failed: https://financialmodelingprep.com/stable", e.getMessage());
     }
 
@@ -126,8 +93,7 @@ class FmpHttpClientTest {
         when(httpResponse.getEntity()).thenThrow(new RuntimeException("Invalid entity"));
 
         // when // then
-        var e = assertThrows(
-                FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, null, null));
+        var e = assertThrows(FmpHttpException.class, () -> client.get(TestObject.class, testUri, null, null));
         assertEquals("HTTP request failed: https://financialmodelingprep.com/stable", e.getMessage());
     }
 
@@ -145,10 +111,9 @@ class FmpHttpClientTest {
 
         // then
         var e = assertThrows(
-                FmpUnauthorizedException.class,
-                () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
+                FmpUnauthorizedException.class, () -> client.get(TestObject.class, testUri, headers, params));
         assertEquals(
-                "Unauthorized for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{some=header}], queryParams [{apikey=AB****************************y6}]",
+                "Unauthorized for type [TestObject], uri [https://financialmodelingprep.com/stable], headers [{some=header}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 
@@ -166,10 +131,9 @@ class FmpHttpClientTest {
         when(httpResponse.getEntity()).thenReturn(new StringEntity(res));
 
         // then
-        var e = assertThrows(
-                FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
+        var e = assertThrows(FmpHttpException.class, () -> client.get(TestObject.class, testUri, headers, params));
         assertEquals(
-                "Deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=application/json}], queryParams [{apikey=AB****************************y6}]",
+                "Deserialization failed for type [TestObject], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=application/json}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 
@@ -187,10 +151,9 @@ class FmpHttpClientTest {
         when(httpResponse.getEntity()).thenReturn(new StringEntity(res));
 
         // then
-        var e = assertThrows(
-                FmpHttpException.class, () -> client.get(typeRef(TestObject[].class), testUri, headers, params));
+        var e = assertThrows(FmpHttpException.class, () -> client.get(TestObject.class, testUri, headers, params));
         assertEquals(
-                "Deserialization failed for type [class [Ldev.sorn.fmp4j.TestObject;], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=text/csv}], queryParams [{apikey=AB****************************y6}]",
+                "Deserialization failed for type [TestObject], uri [https://financialmodelingprep.com/stable], headers [{Content-Type=text/csv}], queryParams [{apikey=AB****************************y6}]",
                 e.getMessage());
     }
 }

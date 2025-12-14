@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEarningServiceTest extends HttpTest {
-    private FmpService<FmpEarning[]> service;
+    private FmpService<FmpEarning> service;
 
     @BeforeEach
     void setup() {
@@ -64,10 +64,10 @@ class FmpEarningServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(4, result.length);
-        range(0, 4).forEach(i -> assertInstanceOf(FmpEarning.class, result[i]));
+        assertEquals(4, result.size());
+        range(0, 4).forEach(i -> assertInstanceOf(FmpEarning.class, result.get(i)));
         range(0, 4)
                 .forEach(i -> assertAllFieldsNonNull(
-                        result[i], Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
+                        result.get(i), Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
     }
 }

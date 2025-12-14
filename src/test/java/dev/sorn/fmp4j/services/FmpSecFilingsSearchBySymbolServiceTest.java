@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpSecFilingsSearchBySymbolServiceTest extends HttpTest implements FinancialGrowthTestData {
-    private FmpService<FmpSecFilingsSearchBySymbol[]> service;
+    private FmpService<FmpSecFilingsSearchBySymbol> service;
 
     @BeforeEach
     void setup() {
@@ -83,7 +83,7 @@ class FmpSecFilingsSearchBySymbolServiceTest extends HttpTest implements Financi
         var result = service.download();
 
         // then
-        assertEquals(limit.value(), result.length);
-        range(0, limit.value()).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit.value(), result.size());
+        range(0, limit.value()).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

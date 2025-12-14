@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpStockPriceChangeServiceTest extends HttpTest implements StockPriceChangeTestData {
-    private FmpService<FmpStockPriceChange[]> service;
+    private FmpService<FmpStockPriceChange> service;
 
     @BeforeEach
     void setup() {
@@ -61,7 +61,7 @@ class FmpStockPriceChangeServiceTest extends HttpTest implements StockPriceChang
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertEquals(aStockPriceChange(), result[0]);
+        assertEquals(1, result.size());
+        assertEquals(aStockPriceChange(), result.get(0));
     }
 }

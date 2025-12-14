@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
@@ -10,9 +9,9 @@ import dev.sorn.fmp4j.models.FmpTreasuryRate;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpTreasuryRatesService extends FmpService<FmpTreasuryRate[]> {
+public class FmpTreasuryRatesService extends FmpService<FmpTreasuryRate> {
     public FmpTreasuryRatesService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpTreasuryRate[].class));
+        super(cfg, http, FmpTreasuryRate.class);
     }
 
     @Override

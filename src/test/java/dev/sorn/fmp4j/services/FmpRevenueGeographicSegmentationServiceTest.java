@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 public class FmpRevenueGeographicSegmentationServiceTest extends HttpTest
         implements RevenueGeographicSegmentationTestData {
-    private FmpService<FmpRevenueGeographicSegmentation[]> service;
+    private FmpService<FmpRevenueGeographicSegmentation> service;
 
     @BeforeEach
     void setup() {
@@ -70,9 +70,9 @@ public class FmpRevenueGeographicSegmentationServiceTest extends HttpTest
         var result = service.download();
 
         // then
-        assertEquals(15, result.length);
-        range(0, 15).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
-        assertEquals(aRevenueGeographicSegmentation(), result[0]);
+        assertEquals(15, result.size());
+        range(0, 15).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
+        assertEquals(aRevenueGeographicSegmentation(), result.get(0));
     }
 
     @Test
@@ -93,8 +93,8 @@ public class FmpRevenueGeographicSegmentationServiceTest extends HttpTest
         var result = service.download();
 
         // then
-        assertEquals(15, result.length);
-        range(0, 15).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
+        assertEquals(15, result.size());
+        range(0, 15).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class FmpRevenueGeographicSegmentationServiceTest extends HttpTest
         var result = service.download();
 
         // then
-        assertEquals(59, result.length);
-        range(0, 59).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
+        assertEquals(59, result.size());
+        range(0, 59).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
     }
 }

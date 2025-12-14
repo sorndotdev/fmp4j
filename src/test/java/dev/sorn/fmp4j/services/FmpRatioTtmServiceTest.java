@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpRatioTtmServiceTest extends HttpTest implements RatioTtmTestData {
-    private FmpService<FmpRatioTtm[]> service;
+    private FmpService<FmpRatioTtm> service;
 
     @BeforeEach
     void setup() {
@@ -61,7 +61,7 @@ class FmpRatioTtmServiceTest extends HttpTest implements RatioTtmTestData {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertEquals(aTtmRatio(), result[0]);
+        assertEquals(1, result.size());
+        assertEquals(aTtmRatio(), result.get(0));
     }
 }

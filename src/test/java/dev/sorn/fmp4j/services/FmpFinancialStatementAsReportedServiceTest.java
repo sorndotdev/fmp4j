@@ -80,8 +80,8 @@ class FmpFinancialStatementAsReportedServiceTest extends HttpTest implements Fin
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
     }
 
     static Stream<Arguments> reportCompanyProvider() {

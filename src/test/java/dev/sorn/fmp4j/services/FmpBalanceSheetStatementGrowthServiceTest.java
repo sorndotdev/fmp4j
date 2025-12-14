@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpBalanceSheetStatementGrowthServiceTest extends HttpTest implements BalanceSheetStatementGrowthTestData {
-    private FmpService<FmpBalanceSheetStatementGrowth[]> service;
+    private FmpService<FmpBalanceSheetStatementGrowth> service;
 
     @BeforeEach
     void setup() {
@@ -73,7 +73,7 @@ class FmpBalanceSheetStatementGrowthServiceTest extends HttpTest implements Bala
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

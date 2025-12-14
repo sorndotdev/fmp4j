@@ -24,7 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class FmpIncomeStatementServiceTest extends HttpTest implements IncomeStatementTestData {
-    private FmpService<FmpIncomeStatement[]> service;
+    private FmpService<FmpIncomeStatement> service;
 
     @BeforeEach
     void setup() {
@@ -72,9 +72,9 @@ class FmpIncomeStatementServiceTest extends HttpTest implements IncomeStatementT
         var result = service.download();
 
         // then
-        assertEquals(5, result.length);
-        assertEquals(anAnnualIncomeStatement(), result[0]);
-        range(0, 5).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(5, result.size());
+        assertEquals(anAnnualIncomeStatement(), result.get(0));
+        range(0, 5).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 
     @ParameterizedTest
@@ -93,7 +93,7 @@ class FmpIncomeStatementServiceTest extends HttpTest implements IncomeStatementT
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("cik")));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("cik")));
     }
 }

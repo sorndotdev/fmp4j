@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
@@ -10,9 +9,9 @@ import dev.sorn.fmp4j.models.FmpIposDisclosure;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpIposDisclosureService extends FmpService<FmpIposDisclosure[]> {
+public class FmpIposDisclosureService extends FmpService<FmpIposDisclosure> {
     public FmpIposDisclosureService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpIposDisclosure[].class));
+        super(cfg, http, FmpIposDisclosure.class);
     }
 
     @Override

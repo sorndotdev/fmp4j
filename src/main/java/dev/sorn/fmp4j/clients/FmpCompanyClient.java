@@ -8,17 +8,18 @@ import dev.sorn.fmp4j.models.FmpCompany;
 import dev.sorn.fmp4j.services.FmpCompanyService;
 import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.List;
 
 public class FmpCompanyClient {
 
     // Alphabetical order
-    protected final FmpService<FmpCompany[]> fmpCompanyService;
+    protected final FmpService<FmpCompany> fmpCompanyService;
 
     public FmpCompanyClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpCompanyService = new FmpCompanyService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpCompany[] bySymbol(FmpSymbol symbol) {
+    public synchronized List<FmpCompany> bySymbol(FmpSymbol symbol) {
         fmpCompanyService.param(PARAM_SYMBOL, symbol);
         return fmpCompanyService.download();
     }

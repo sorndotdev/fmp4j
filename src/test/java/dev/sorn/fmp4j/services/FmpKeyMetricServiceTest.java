@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class FmpKeyMetricServiceTest extends HttpTest implements KeyMetricTestData {
-    private FmpService<FmpKeyMetric[]> service;
+    private FmpService<FmpKeyMetric> service;
 
     @BeforeEach
     void setup() {
@@ -69,9 +69,9 @@ public class FmpKeyMetricServiceTest extends HttpTest implements KeyMetricTestDa
         var result = service.download();
 
         // then
-        assertEquals(5, result.length);
-        assertEquals(anAnnualKeyMetric(), result[0]);
-        range(0, 5).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(5, result.size());
+        assertEquals(anAnnualKeyMetric(), result.get(0));
+        range(0, 5).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 
     @ParameterizedTest
@@ -90,7 +90,7 @@ public class FmpKeyMetricServiceTest extends HttpTest implements KeyMetricTestDa
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

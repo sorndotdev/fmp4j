@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FmpSearchByCikServiceTest extends HttpTest {
-    private FmpService<FmpSearchByCik[]> service;
+    private FmpService<FmpSearchByCik> service;
 
     @BeforeEach
     void setup() {
@@ -60,8 +60,8 @@ public class FmpSearchByCikServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertInstanceOf(FmpSearchByCik.class, result[0]);
-        assertAllFieldsNonNull(result[0]);
+        assertEquals(1, result.size());
+        assertInstanceOf(FmpSearchByCik.class, result.get(0));
+        assertAllFieldsNonNull(result.get(0));
     }
 }

@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_LIMIT;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PAGE;
@@ -16,9 +15,9 @@ import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilingsSearchBySymbol[]> {
+public class FmpSecFilingsSearchBySymbolService extends FmpService<FmpSecFilingsSearchBySymbol> {
     public FmpSecFilingsSearchBySymbolService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpSecFilingsSearchBySymbol[].class));
+        super(cfg, http, FmpSecFilingsSearchBySymbol.class);
     }
 
     @Override
