@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "ADBE",
+    "name": "Adobe Inc.",
+    "sector": "Technology",
+    "subSector": "Software - Infrastructure",
+    "headQuarter": "San Jose, CA",
+    "dateFirstAdded": null,
+    "cik": "0000796343",
+    "founded": "1982-12-01"
+  },
+  {
+    "symbol": "AMAT",
+    "name": "Applied Materials",
+    "sector": "Technology",
+    "subSector": "Semiconductors",
+    "headQuarter": "Santa Clara, CA",
+    "dateFirstAdded": null,
+    "cik": "0000006951",
+    "founded": "1967-11-10"
+  },
+  {
+    "symbol": "CSCO",
+    "name": "Cisco",
+    "sector": "Technology",
+    "subSector": "Communication Equipment",
+    "headQuarter": "San Jose, CA",
+    "dateFirstAdded": null,
+    "cik": "0000858877",
+    "founded": "1984-12-10"
+  }
+]

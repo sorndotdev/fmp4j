@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "ARES",
+    "name": "Ares Management Corporation",
+    "sector": "Financial Services",
+    "subSector": "Asset Management",
+    "headQuarter": "Los Angeles, California",
+    "dateFirstAdded": "2025-12-11",
+    "cik": "0001176948",
+    "founded": "1977-01-01"
+  },
+  {
+    "symbol": "SNDK",
+    "name": "Sandisk Corporation",
+    "sector": "Technology",
+    "subSector": "Hardware, Equipment & Parts",
+    "headQuarter": "Milpitas, ",
+    "dateFirstAdded": "2025-11-28",
+    "cik": "0001000180",
+    "founded": "1988-06-01"
+  },
+  {
+    "symbol": "Q",
+    "name": "Qnity Electronics, Inc.",
+    "sector": "Technology",
+    "subSector": "Semiconductors",
+    "headQuarter": "Wilmington, Delaware",
+    "dateFirstAdded": "2025-11-03",
+    "cik": "0000000000",
+    "founded": "2025-11-02"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "symbol": "NVDA",
+    "name": "Nvidia",
+    "sector": "Technology",
+    "subSector": "Semiconductors",
+    "headQuarter": "Santa Clara, CA",
+    "dateFirstAdded": "2024-11-08",
+    "cik": "0001045810",
+    "founded": "1993-04-05"
+  },
+  {
+    "symbol": "SHW",
+    "name": "Sherwin-Williams",
+    "sector": "Basic Materials",
+    "subSector": "Chemicals - Specialty",
+    "headQuarter": "Cleveland, OH",
+    "dateFirstAdded": "2024-11-08",
+    "cik": "0000089800",
+    "founded": "1866-01-01"
+  },
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.amazon.com",
+    "sector": "Consumer Cyclical",
+    "subSector": "Specialty Retail",
+    "headQuarter": "Seattle, WA",
+    "dateFirstAdded": "2024-02-26",
+    "cik": "0001018724",
+    "founded": "1994-07-05"
+  }
+]
