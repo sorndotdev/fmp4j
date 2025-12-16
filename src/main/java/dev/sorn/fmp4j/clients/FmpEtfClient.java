@@ -16,14 +16,15 @@ import dev.sorn.fmp4j.services.FmpEtfInfoService;
 import dev.sorn.fmp4j.services.FmpEtfSectorWeightingService;
 import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.List;
 
 public class FmpEtfClient {
     // Alphabetical order
-    protected final FmpService<FmpEtfAssetExposure[]> etfAssetExposureService;
-    protected final FmpService<FmpEtfCountryWeighting[]> etfCountryWeightingService;
-    protected final FmpService<FmpEtfHolding[]> etfHoldingService;
-    protected final FmpService<FmpEtfInfo[]> etfInfoService;
-    protected final FmpService<FmpEtfSectorWeighting[]> etfSectorWeightingService;
+    protected final FmpService<FmpEtfAssetExposure> etfAssetExposureService;
+    protected final FmpService<FmpEtfCountryWeighting> etfCountryWeightingService;
+    protected final FmpService<FmpEtfHolding> etfHoldingService;
+    protected final FmpService<FmpEtfInfo> etfInfoService;
+    protected final FmpService<FmpEtfSectorWeighting> etfSectorWeightingService;
 
     public FmpEtfClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.etfAssetExposureService = new FmpEtfAssetExposureService(fmpConfig, fmpHttpClient);
@@ -33,27 +34,27 @@ public class FmpEtfClient {
         this.etfSectorWeightingService = new FmpEtfSectorWeightingService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpEtfAssetExposure[] assetExposure(FmpSymbol symbol) {
+    public synchronized List<FmpEtfAssetExposure> assetExposure(FmpSymbol symbol) {
         etfAssetExposureService.param(PARAM_SYMBOL, symbol);
         return etfAssetExposureService.download();
     }
 
-    public synchronized FmpEtfCountryWeighting[] countryWeightings(FmpSymbol symbol) {
+    public synchronized List<FmpEtfCountryWeighting> countryWeightings(FmpSymbol symbol) {
         etfCountryWeightingService.param(PARAM_SYMBOL, symbol);
         return etfCountryWeightingService.download();
     }
 
-    public synchronized FmpEtfHolding[] holdings(FmpSymbol symbol) {
+    public synchronized List<FmpEtfHolding> holdings(FmpSymbol symbol) {
         etfHoldingService.param(PARAM_SYMBOL, symbol);
         return etfHoldingService.download();
     }
 
-    public synchronized FmpEtfInfo[] info(FmpSymbol symbol) {
+    public synchronized List<FmpEtfInfo> info(FmpSymbol symbol) {
         etfInfoService.param(PARAM_SYMBOL, symbol);
         return etfInfoService.download();
     }
 
-    public synchronized FmpEtfSectorWeighting[] sectorWeightings(FmpSymbol symbol) {
+    public synchronized List<FmpEtfSectorWeighting> sectorWeightings(FmpSymbol symbol) {
         etfSectorWeightingService.param(PARAM_SYMBOL, symbol);
         return etfSectorWeightingService.download();
     }

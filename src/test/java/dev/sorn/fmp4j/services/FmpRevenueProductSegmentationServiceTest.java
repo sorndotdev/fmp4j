@@ -21,7 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpRevenueProductSegmentationServiceTest extends HttpTest implements RevenueProductSegmentationTestData {
-    private FmpService<FmpRevenueProductSegmentation[]> service;
+    private FmpService<FmpRevenueProductSegmentation> service;
 
     @BeforeEach
     void setup() {
@@ -69,9 +69,9 @@ class FmpRevenueProductSegmentationServiceTest extends HttpTest implements Reven
         var result = service.download();
 
         // then
-        assertEquals(15, result.length);
-        range(0, 15).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
-        assertEquals(aRevenueProductSegmentation(), result[0]);
+        assertEquals(15, result.size());
+        range(0, 15).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
+        assertEquals(aRevenueProductSegmentation(), result.get(0));
     }
 
     @Test
@@ -92,8 +92,8 @@ class FmpRevenueProductSegmentationServiceTest extends HttpTest implements Reven
         var result = service.download();
 
         // then
-        assertEquals(15, result.length);
-        range(0, 15).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
+        assertEquals(15, result.size());
+        range(0, 15).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
     }
 
     @Test
@@ -114,7 +114,7 @@ class FmpRevenueProductSegmentationServiceTest extends HttpTest implements Reven
         var result = service.download();
 
         // then
-        assertEquals(42, result.length);
-        range(0, 42).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("reportedCurrency")));
+        assertEquals(42, result.size());
+        range(0, 42).forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("reportedCurrency")));
     }
 }

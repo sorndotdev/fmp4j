@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
@@ -9,9 +8,9 @@ import dev.sorn.fmp4j.models.FmpKeyMetricTtm;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 
-public class FmpKeyMetricTtmService extends FmpService<FmpKeyMetricTtm[]> {
+public class FmpKeyMetricTtmService extends FmpService<FmpKeyMetricTtm> {
     public FmpKeyMetricTtmService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpKeyMetricTtm[].class));
+        super(cfg, http, FmpKeyMetricTtm.class);
     }
 
     @Override

@@ -6,7 +6,6 @@ import static java.lang.String.format;
 import static java.util.Collections.emptySet;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -20,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public final class TestUtils {
@@ -27,14 +27,14 @@ public final class TestUtils {
         throw new AssertionError(TestUtils.class.getSimpleName() + " cannot be instantiated.");
     }
 
-    public static <T> T csvTestResource(TypeReference<T> typeRef, String filename, Object... args) {
+    public static <T> List<T> csvTestResource(Class<T> clazz, String filename, Object... args) {
         final var csv = testResource(filename, args);
-        return FMP_CSV_DESERIALIZER.deserialize(csv, typeRef);
+        return FMP_CSV_DESERIALIZER.deserialize(csv, clazz);
     }
 
-    public static <T> T jsonTestResource(TypeReference<T> typeRef, String filename, Object... args) {
+    public static <T> List<T> jsonTestResource(Class<T> clazz, String filename, Object... args) {
         final var json = testResource(filename, args);
-        return FMP_JSON_DESERIALIZER.deserialize(json, typeRef);
+        return FMP_JSON_DESERIALIZER.deserialize(json, clazz);
     }
 
     public static String testResource(String filename, Object... args) {

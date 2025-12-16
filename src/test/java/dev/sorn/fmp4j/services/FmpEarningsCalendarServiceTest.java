@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEarningsCalendarServiceTest extends HttpTest {
-    private FmpService<FmpEarningsCalendar[]> service;
+    private FmpService<FmpEarningsCalendar> service;
 
     @BeforeEach
     void setup() {
@@ -59,10 +59,10 @@ class FmpEarningsCalendarServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(4, result.length);
-        range(0, 4).forEach(i -> assertInstanceOf(FmpEarningsCalendar.class, result[i]));
+        assertEquals(4, result.size());
+        range(0, 4).forEach(i -> assertInstanceOf(FmpEarningsCalendar.class, result.get(i)));
         range(0, 4)
                 .forEach(i -> assertAllFieldsNonNull(
-                        result[i], Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
+                        result.get(i), Set.of("epsActual", "epsEstimated", "revenueActual", "revenueEstimated")));
     }
 }

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpEtfCountryWeightingServiceTest extends HttpTest {
-    private FmpService<FmpEtfCountryWeighting[]> service;
+    private FmpService<FmpEtfCountryWeighting> service;
 
     @BeforeEach
     void setup() {
@@ -63,8 +63,8 @@ class FmpEtfCountryWeightingServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(6, result.length);
-        range(0, 6).forEach(i -> assertInstanceOf(FmpEtfCountryWeighting.class, result[i]));
-        range(0, 6).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(6, result.size());
+        range(0, 6).forEach(i -> assertInstanceOf(FmpEtfCountryWeighting.class, result.get(i)));
+        range(0, 6).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

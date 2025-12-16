@@ -93,8 +93,8 @@ class FmpHistoricalChartServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(2, result.length);
-        range(0, 2).forEach(i -> assertInstanceOf(FmpHistoricalChart.class, result[i]));
-        range(0, 2).forEach(i -> assertAllFieldsNonNull(result[i], emptySet()));
+        assertEquals(2, result.size());
+        range(0, 2).forEach(i -> assertInstanceOf(FmpHistoricalChart.class, result.get(i)));
+        range(0, 2).forEach(i -> assertAllFieldsNonNull(result.get(i), emptySet()));
     }
 }

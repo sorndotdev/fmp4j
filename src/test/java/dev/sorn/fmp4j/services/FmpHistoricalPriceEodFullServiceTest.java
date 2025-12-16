@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpHistoricalPriceEodFullServiceTest extends HttpTest {
-    private FmpService<FmpHistoricalPriceEodFull[]> service;
+    private FmpService<FmpHistoricalPriceEodFull> service;
 
     @BeforeEach
     void setup() {
@@ -71,8 +71,8 @@ class FmpHistoricalPriceEodFullServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(5, result.length);
-        range(0, 5).forEach(i -> assertInstanceOf(FmpHistoricalPriceEodFull.class, result[i]));
-        range(0, 5).forEach(i -> assertAllFieldsNonNull(result[i], emptySet()));
+        assertEquals(5, result.size());
+        range(0, 5).forEach(i -> assertInstanceOf(FmpHistoricalPriceEodFull.class, result.get(i)));
+        range(0, 5).forEach(i -> assertAllFieldsNonNull(result.get(i), emptySet()));
     }
 }

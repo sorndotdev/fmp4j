@@ -2,6 +2,7 @@ package dev.sorn.fmp4j.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.lang.reflect.Type;
+import java.util.List;
 
 public final class FmpJsonUtils {
     private FmpJsonUtils() {
@@ -13,6 +14,15 @@ public final class FmpJsonUtils {
             @Override
             public Type getType() {
                 return clazz;
+            }
+        };
+    }
+
+    public static <T> TypeReference<List<T>> typeRefList(Class<T> clazz) {
+        return new TypeReference<>() {
+            @Override
+            public Type getType() {
+                return super.getType();
             }
         };
     }

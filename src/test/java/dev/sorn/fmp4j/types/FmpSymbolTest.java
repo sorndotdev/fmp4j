@@ -4,11 +4,9 @@ import static dev.sorn.fmp4j.TestUtils.deserialize;
 import static dev.sorn.fmp4j.TestUtils.serialize;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.types.FmpSymbol.FMP_SYMBOL_PATTERN;
 import static dev.sorn.fmp4j.types.FmpSymbol.symbol;
 import static java.lang.String.format;
-import static java.util.Arrays.stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -226,10 +224,10 @@ class FmpSymbolTest {
 
         // given
         var res = testResource("stable/financial-statement-symbol-list/full.json");
-        var symbols = FMP_JSON_DESERIALIZER.deserialize(res, typeRef(String[].class));
+        var symbols = FMP_JSON_DESERIALIZER.deserialize(res, String.class);
 
         var failedSymbols = new ArrayList<String>();
-        stream(symbols).forEach(symbol -> {
+        symbols.forEach(symbol -> {
             try {
                 symbol(symbol);
             } catch (Exception e) {

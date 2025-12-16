@@ -1,16 +1,14 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpCompanies;
 import dev.sorn.fmp4j.types.FmpPart;
 import java.util.Map;
 
-public class FmpBulkCompaniesService extends FmpService<FmpCompanies[]> {
+public class FmpBulkCompaniesService extends FmpService<FmpCompanies> {
     public FmpBulkCompaniesService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpCompanies[].class));
+        super(cfg, http, FmpCompanies.class);
     }
 
     @Override

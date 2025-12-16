@@ -1,7 +1,6 @@
 package dev.sorn.fmp4j.json;
 
 import static dev.sorn.fmp4j.json.FmpJsonDeserializer.FMP_JSON_DESERIALIZER;
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,25 +17,6 @@ class FmpJsonDeserializerTest {
     @BeforeEach
     void setUp() {
         deserializer = FMP_JSON_DESERIALIZER;
-    }
-
-    @Test
-    void deserialize_object() {
-        // given
-        var json =
-                """
-            {
-                "key": "key",
-                "object": {
-                    "value": 42
-                }
-            }
-            """;
-        // when
-        var obj = deserializer.deserialize(json, typeRef(TestObject.class));
-        // then
-        assertEquals("key", obj.key());
-        assertEquals(new TestObjectValue(42), obj.object());
     }
 
     @Test
@@ -59,25 +39,16 @@ class FmpJsonDeserializerTest {
                 }
             ]
             """;
-        // when
-        var obj = deserializer.deserialize(json, typeRef(TestObject[].class));
-        // then
-        assertEquals(2, obj.length);
-        assertEquals("key3", obj[0].key());
-        assertEquals("key7", obj[1].key());
-        assertEquals(new TestObjectValue(28), obj[0].object());
-        assertEquals(new TestObjectValue(42), obj[1].object());
-    }
 
-    @Test
-    void deserialize_object_fails_on_malformed_json() {
-        // given
-        var malformedJson = "{";
-        // when // then
-        var e = assertThrows(
-                FmpDeserializationException.class,
-                () -> FMP_JSON_DESERIALIZER.deserialize(malformedJson, typeRef(TestObject.class)));
-        assertEquals("Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject': {", e.getMessage());
+        // when
+        var obj = deserializer.deserialize(json, TestObject.class);
+
+        // then
+        assertEquals(2, obj.size());
+        assertEquals("key3", obj.get(0).key());
+        assertEquals("key7", obj.get(1).key());
+        assertEquals(new TestObjectValue(28), obj.get(0).object());
+        assertEquals(new TestObjectValue(42), obj.get(1).object());
     }
 
     @Test
@@ -87,33 +58,8 @@ class FmpJsonDeserializerTest {
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,
-                () -> FMP_JSON_DESERIALIZER.deserialize(malformedJson, typeRef(TestObject[].class)));
-        assertEquals("Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject[]': [", e.getMessage());
-    }
-
-    @Test
-    void deserialize_object_fails_on_type_mismatch() {
-        // given
-        var mismatchedJson =
-                """
-            {
-                "key": "key",
-                "object": "not_an_object"
-            }
-            """;
-        // when // then
-        var e = assertThrows(
-                FmpDeserializationException.class,
-                () -> FMP_JSON_DESERIALIZER.deserialize(mismatchedJson, typeRef(TestObject.class)));
-        assertEquals(
-                """
-            Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject': {
-                "key": "key",
-                "object": "not_an_object"
-            }
-            """
-                        .replaceAll("\\s", ""),
-                e.getMessage().replaceAll("\\s", ""));
+                () -> FMP_JSON_DESERIALIZER.deserialize(malformedJson, TestObject.class));
+        assertEquals("Failed to deserialize JSON to 'TestObject': [", e.getMessage());
     }
 
     @Test
@@ -128,10 +74,10 @@ class FmpJsonDeserializerTest {
         // when // then
         var e = assertThrows(
                 FmpDeserializationException.class,
-                () -> FMP_JSON_DESERIALIZER.deserialize(invalidElementJson, typeRef(TestObject[].class)));
+                () -> FMP_JSON_DESERIALIZER.deserialize(invalidElementJson, TestObject.class));
         assertEquals(
                 """
-            Failed to deserialize JSON to 'dev.sorn.fmp4j.TestObject[]': [
+            Failed to deserialize JSON to 'TestObject': [
                 {"key": "valid", "object": {"value": 1}},
                 {"key": "invalid", "object": "not_an_object"}
             ]

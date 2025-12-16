@@ -24,15 +24,16 @@ import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpQuarter;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import dev.sorn.fmp4j.types.FmpYear;
+import java.util.List;
 import java.util.Optional;
 
 public class FmpEarningsClient {
 
     // Alphabetical order
-    protected final FmpService<FmpEarningsCallTranscript[]> fmpEarningsCallTranscriptService;
-    protected final FmpService<FmpEarningsCallTranscriptDate[]> fmpEarningsCallTranscriptDatesService;
-    protected final FmpService<FmpEarningsCallTranscriptLatest[]> fmpEarningsCallTranscriptLatestService;
-    protected final FmpService<FmpEarningsCallTranscriptList[]> fmpEarningsCallTranscriptListService;
+    protected final FmpService<FmpEarningsCallTranscript> fmpEarningsCallTranscriptService;
+    protected final FmpService<FmpEarningsCallTranscriptDate> fmpEarningsCallTranscriptDatesService;
+    protected final FmpService<FmpEarningsCallTranscriptLatest> fmpEarningsCallTranscriptLatestService;
+    protected final FmpService<FmpEarningsCallTranscriptList> fmpEarningsCallTranscriptListService;
 
     public FmpEarningsClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpEarningsCallTranscriptService = new FmpEarningsCallTranscriptService(fmpConfig, fmpHttpClient);
@@ -43,7 +44,7 @@ public class FmpEarningsClient {
         this.fmpEarningsCallTranscriptListService = new FmpEarningsCallTranscriptListService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpEarningsCallTranscript[] transcripts(
+    public synchronized List<FmpEarningsCallTranscript> transcripts(
             FmpSymbol symbol, FmpYear year, FmpQuarter quarter, Optional<FmpLimit> limit) {
         fmpEarningsCallTranscriptService.param(PARAM_SYMBOL, symbol);
         fmpEarningsCallTranscriptService.param(PARAM_YEAR, year);
@@ -52,18 +53,18 @@ public class FmpEarningsClient {
         return fmpEarningsCallTranscriptService.download();
     }
 
-    public synchronized FmpEarningsCallTranscriptDate[] dates(FmpSymbol symbol) {
+    public synchronized List<FmpEarningsCallTranscriptDate> dates(FmpSymbol symbol) {
         fmpEarningsCallTranscriptDatesService.param(PARAM_SYMBOL, symbol);
         return fmpEarningsCallTranscriptDatesService.download();
     }
 
-    public synchronized FmpEarningsCallTranscriptLatest[] latest(Optional<FmpLimit> limit, Optional<FmpPage> page) {
+    public synchronized List<FmpEarningsCallTranscriptLatest> latest(Optional<FmpLimit> limit, Optional<FmpPage> page) {
         fmpEarningsCallTranscriptLatestService.param(PARAM_LIMIT, limit.orElse(limit(100)));
         fmpEarningsCallTranscriptLatestService.param(PARAM_PAGE, page.orElse(page(0)));
         return fmpEarningsCallTranscriptLatestService.download();
     }
 
-    public synchronized FmpEarningsCallTranscriptList[] list() {
+    public synchronized List<FmpEarningsCallTranscriptList> list() {
         return fmpEarningsCallTranscriptListService.download();
     }
 }

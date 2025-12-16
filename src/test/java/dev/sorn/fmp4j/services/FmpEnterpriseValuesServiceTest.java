@@ -22,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpEnterpriseValuesServiceTest extends HttpTest {
-    private FmpService<FmpEnterpriseValue[]> service;
+    private FmpService<FmpEnterpriseValue> service;
 
     @BeforeEach
     void setup() {
@@ -76,8 +76,8 @@ class FmpEnterpriseValuesServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertInstanceOf(FmpEnterpriseValue.class, result[i]));
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i], emptySet()));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertInstanceOf(FmpEnterpriseValue.class, result.get(i)));
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i), emptySet()));
     }
 }

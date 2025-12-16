@@ -18,15 +18,16 @@ import dev.sorn.fmp4j.types.FmpLimit;
 import dev.sorn.fmp4j.types.FmpPage;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 public class FmpNewsClient {
 
     // Alphabetical order
-    protected FmpService<FmpNews[]> fmpCryptoNewsService;
-    protected FmpService<FmpNews[]> fmpForexNewsService;
-    protected FmpService<FmpNews[]> fmpStockNewsService;
+    protected FmpService<FmpNews> fmpCryptoNewsService;
+    protected FmpService<FmpNews> fmpForexNewsService;
+    protected FmpService<FmpNews> fmpStockNewsService;
 
     public FmpNewsClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpCryptoNewsService = new FmpNewsService(fmpConfig, fmpHttpClient, "crypto");
@@ -34,19 +35,19 @@ public class FmpNewsClient {
         this.fmpStockNewsService = new FmpNewsService(fmpConfig, fmpHttpClient, "stock");
     }
 
-    public synchronized FmpNews[] crypto(Set<FmpSymbol> symbols) {
+    public synchronized List<FmpNews> crypto(Set<FmpSymbol> symbols) {
         return crypto(symbols, empty(), empty(), empty(), empty());
     }
 
-    public synchronized FmpNews[] forex(Set<FmpSymbol> symbols) {
+    public synchronized List<FmpNews> forex(Set<FmpSymbol> symbols) {
         return forex(symbols, empty(), empty(), empty(), empty());
     }
 
-    public synchronized FmpNews[] stock(Set<FmpSymbol> symbols) {
+    public synchronized List<FmpNews> stock(Set<FmpSymbol> symbols) {
         return stock(symbols, empty(), empty(), empty(), empty());
     }
 
-    public synchronized FmpNews[] crypto(
+    public synchronized List<FmpNews> crypto(
             Set<FmpSymbol> symbols,
             Optional<LocalDate> from,
             Optional<LocalDate> to,
@@ -55,7 +56,7 @@ public class FmpNewsClient {
         return news(fmpCryptoNewsService, symbols, from, to, page, limit);
     }
 
-    public synchronized FmpNews[] forex(
+    public synchronized List<FmpNews> forex(
             Set<FmpSymbol> symbols,
             Optional<LocalDate> from,
             Optional<LocalDate> to,
@@ -64,7 +65,7 @@ public class FmpNewsClient {
         return news(fmpForexNewsService, symbols, from, to, page, limit);
     }
 
-    public synchronized FmpNews[] stock(
+    public synchronized List<FmpNews> stock(
             Set<FmpSymbol> symbols,
             Optional<LocalDate> from,
             Optional<LocalDate> to,
@@ -73,8 +74,8 @@ public class FmpNewsClient {
         return news(fmpStockNewsService, symbols, from, to, page, limit);
     }
 
-    protected synchronized FmpNews[] news(
-            FmpService<FmpNews[]> service,
+    protected synchronized List<FmpNews> news(
+            FmpService<FmpNews> service,
             Set<FmpSymbol> symbols,
             Optional<LocalDate> from,
             Optional<LocalDate> to,

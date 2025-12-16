@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpRatioServiceTest extends HttpTest implements RatioTestData {
-    private FmpService<FmpRatio[]> service;
+    private FmpService<FmpRatio> service;
 
     @BeforeEach
     void setup() {
@@ -69,9 +69,9 @@ class FmpRatioServiceTest extends HttpTest implements RatioTestData {
         var result = service.download();
 
         // then
-        assertEquals(5, result.length);
-        assertEquals(anAnnualRatio(), result[0]);
-        range(0, 5).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(5, result.size());
+        assertEquals(anAnnualRatio(), result.get(0));
+        range(0, 5).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 
     @ParameterizedTest
@@ -90,7 +90,7 @@ class FmpRatioServiceTest extends HttpTest implements RatioTestData {
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(limit, result.size());
+        range(0, limit).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

@@ -12,11 +12,12 @@ import dev.sorn.fmp4j.services.FmpQuoteService;
 import dev.sorn.fmp4j.services.FmpService;
 import dev.sorn.fmp4j.services.FmpStockPriceChangeService;
 import dev.sorn.fmp4j.types.FmpSymbol;
+import java.util.List;
 
 public class FmpQuoteClient {
-    protected final FmpService<FmpFullQuote[]> quoteService;
-    protected final FmpService<FmpPartialQuote[]> shortQuoteService;
-    protected final FmpService<FmpStockPriceChange[]> stockPriceChangeService;
+    protected final FmpService<FmpFullQuote> quoteService;
+    protected final FmpService<FmpPartialQuote> shortQuoteService;
+    protected final FmpService<FmpStockPriceChange> stockPriceChangeService;
 
     public FmpQuoteClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.quoteService = new FmpQuoteService(fmpConfig, fmpHttpClient);
@@ -24,17 +25,17 @@ public class FmpQuoteClient {
         this.stockPriceChangeService = new FmpStockPriceChangeService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpFullQuote[] full(FmpSymbol symbol) {
+    public synchronized List<FmpFullQuote> full(FmpSymbol symbol) {
         quoteService.param(PARAM_SYMBOL, symbol);
         return quoteService.download();
     }
 
-    public synchronized FmpPartialQuote[] partial(FmpSymbol symbol) {
+    public synchronized List<FmpPartialQuote> partial(FmpSymbol symbol) {
         shortQuoteService.param(PARAM_SYMBOL, symbol);
         return shortQuoteService.download();
     }
 
-    public synchronized FmpStockPriceChange[] priceChange(FmpSymbol symbol) {
+    public synchronized List<FmpStockPriceChange> priceChange(FmpSymbol symbol) {
         stockPriceChangeService.param(PARAM_SYMBOL, symbol);
         return stockPriceChangeService.download();
     }

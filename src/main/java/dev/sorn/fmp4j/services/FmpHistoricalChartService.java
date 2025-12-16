@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
@@ -13,11 +12,11 @@ import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpHistoricalChartService extends FmpService<FmpHistoricalChart[]> {
+public class FmpHistoricalChartService extends FmpService<FmpHistoricalChart> {
     protected final FmpInterval interval;
 
     public FmpHistoricalChartService(FmpConfig cfg, FmpHttpClient http, FmpInterval interval) {
-        super(cfg, http, typeRef(FmpHistoricalChart[].class));
+        super(cfg, http, FmpHistoricalChart.class);
         this.interval = interval;
     }
 

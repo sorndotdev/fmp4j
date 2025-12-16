@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_SYMBOL;
 
 import dev.sorn.fmp4j.cfg.FmpConfig;
@@ -9,9 +8,9 @@ import dev.sorn.fmp4j.models.FmpDividend;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.util.Map;
 
-public class FmpDividendService extends FmpService<FmpDividend[]> {
+public class FmpDividendService extends FmpService<FmpDividend> {
     public FmpDividendService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpDividend[].class));
+        super(cfg, http, FmpDividend.class);
     }
 
     @Override

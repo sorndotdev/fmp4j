@@ -86,7 +86,7 @@ class FmpNewsServiceTest extends HttpTest implements NewsTestData {
         var result = service.download();
 
         // then
-        assertEquals(2, result.length);
-        range(0, 2).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(2, result.size());
+        range(0, 2).forEach(i -> assertAllFieldsNonNull(result.get(i)));
     }
 }

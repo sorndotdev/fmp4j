@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchPressReleasesServiceTest extends HttpTest implements FmpSearchPressReleaseTestData {
-    private FmpService<FmpSearchPressRelease[]> service;
+    private FmpService<FmpSearchPressRelease> service;
 
     @BeforeEach
     void setup() {
@@ -62,9 +62,9 @@ class FmpSearchPressReleasesServiceTest extends HttpTest implements FmpSearchPre
         var result = service.download();
 
         // then
-        assertEquals(3, result.length);
-        assertAllFieldsNonNull(result[0]);
-        assertEquals("V", result[0].symbol().value());
-        assertEquals("Visa Reports Fiscal Q4 2024 Earnings", result[0].title());
+        assertEquals(3, result.size());
+        assertAllFieldsNonNull(result.get(0));
+        assertEquals("V", result.get(0).symbol().value());
+        assertEquals("Visa Reports Fiscal Q4 2024 Earnings", result.get(0).title());
     }
 }

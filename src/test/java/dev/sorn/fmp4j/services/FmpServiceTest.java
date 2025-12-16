@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.types.FmpApiKey;
@@ -172,7 +171,7 @@ class FmpServiceTest {
     // Concrete implementation for testing
     private static class ConcreteFmpService extends FmpService<String> {
         public ConcreteFmpService(FmpConfig cfg, FmpHttpClient http) {
-            super(cfg, http, new TypeReference<String>() {});
+            super(cfg, http, String.class);
         }
 
         @Override
@@ -193,7 +192,7 @@ class FmpServiceTest {
 
     private static class MultiRequiredFmpService extends FmpService<String> {
         public MultiRequiredFmpService(FmpConfig cfg, FmpHttpClient http) {
-            super(cfg, http, new TypeReference<String>() {});
+            super(cfg, http, String.class);
         }
 
         @Override

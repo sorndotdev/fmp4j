@@ -27,20 +27,21 @@ import dev.sorn.fmp4j.services.FmpSplitService;
 import dev.sorn.fmp4j.services.FmpSplitsCalendarService;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class FmpCalendarClient {
 
     // Alphabetical order
-    protected final FmpService<FmpDividend[]> fmpDividendService;
-    protected final FmpService<FmpDividendsCalendar[]> fmpDividendsCalendarService;
-    protected final FmpService<FmpEarning[]> fmpEarningsService;
-    protected final FmpService<FmpEarningsCalendar[]> fmpEarningsCalendarService;
-    protected final FmpService<FmpIposCalendar[]> fmpIposCalendarService;
-    protected final FmpService<FmpIposDisclosure[]> fmpIposDisclosureService;
-    protected final FmpService<FmpIposProspectus[]> fmpIposProspectusService;
-    protected final FmpService<FmpSplit[]> fmpSplitService;
-    protected final FmpService<FmpSplitsCalendar[]> fmpSplitsCalendarService;
+    protected final FmpService<FmpDividend> fmpDividendService;
+    protected final FmpService<FmpDividendsCalendar> fmpDividendsCalendarService;
+    protected final FmpService<FmpEarning> fmpEarningsService;
+    protected final FmpService<FmpEarningsCalendar> fmpEarningsCalendarService;
+    protected final FmpService<FmpIposCalendar> fmpIposCalendarService;
+    protected final FmpService<FmpIposDisclosure> fmpIposDisclosureService;
+    protected final FmpService<FmpIposProspectus> fmpIposProspectusService;
+    protected final FmpService<FmpSplit> fmpSplitService;
+    protected final FmpService<FmpSplitsCalendar> fmpSplitsCalendarService;
 
     public FmpCalendarClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpDividendService = new FmpDividendService(fmpConfig, fmpHttpClient);
@@ -54,47 +55,47 @@ public class FmpCalendarClient {
         this.fmpSplitsCalendarService = new FmpSplitsCalendarService(fmpConfig, fmpHttpClient);
     }
 
-    public synchronized FmpDividendsCalendar[] dividends() {
+    public synchronized List<FmpDividendsCalendar> dividends() {
         return fmpDividendsCalendarService.download();
     }
 
-    public synchronized FmpDividend[] dividends(FmpSymbol symbol) {
+    public synchronized List<FmpDividend> dividends(FmpSymbol symbol) {
         fmpDividendService.param(PARAM_SYMBOL, symbol);
         return fmpDividendService.download();
     }
 
-    public synchronized FmpEarningsCalendar[] earnings() {
+    public synchronized List<FmpEarningsCalendar> earnings() {
         return fmpEarningsCalendarService.download();
     }
 
-    public synchronized FmpEarning[] earnings(FmpSymbol symbol) {
+    public synchronized List<FmpEarning> earnings(FmpSymbol symbol) {
         fmpEarningsService.param(PARAM_SYMBOL, symbol);
         return fmpEarningsService.download();
     }
 
-    public synchronized FmpIposCalendar[] ipos(Optional<LocalDate> from, Optional<LocalDate> to) {
+    public synchronized List<FmpIposCalendar> ipos(Optional<LocalDate> from, Optional<LocalDate> to) {
         fmpIposCalendarService.param(PARAM_FROM, from);
         fmpIposCalendarService.param(PARAM_TO, to);
         return fmpIposCalendarService.download();
     }
 
-    public synchronized FmpIposDisclosure[] disclosures(Optional<LocalDate> from, Optional<LocalDate> to) {
+    public synchronized List<FmpIposDisclosure> disclosures(Optional<LocalDate> from, Optional<LocalDate> to) {
         fmpIposDisclosureService.param(PARAM_FROM, from);
         fmpIposDisclosureService.param(PARAM_TO, to);
         return fmpIposDisclosureService.download();
     }
 
-    public synchronized FmpIposProspectus[] prospectus(Optional<LocalDate> from, Optional<LocalDate> to) {
+    public synchronized List<FmpIposProspectus> prospectus(Optional<LocalDate> from, Optional<LocalDate> to) {
         fmpIposProspectusService.param(PARAM_FROM, from);
         fmpIposProspectusService.param(PARAM_TO, to);
         return fmpIposProspectusService.download();
     }
 
-    public synchronized FmpSplitsCalendar[] splits() {
+    public synchronized List<FmpSplitsCalendar> splits() {
         return fmpSplitsCalendarService.download();
     }
 
-    public synchronized FmpSplit[] splits(FmpSymbol symbol) {
+    public synchronized List<FmpSplit> splits(FmpSymbol symbol) {
         fmpSplitService.param(PARAM_SYMBOL, symbol);
         return fmpSplitService.download();
     }

@@ -18,7 +18,6 @@ import static java.lang.String.join;
 import static java.lang.System.setProperty;
 import static java.util.Collections.emptySet;
 import static java.util.Optional.empty;
-import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -78,6 +77,7 @@ import dev.sorn.fmp4j.models.FmpTreasuryRate;
 import dev.sorn.fmp4j.services.HttpTest;
 import dev.sorn.fmp4j.types.FmpSymbol;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -1143,15 +1143,15 @@ class FmpClientTest extends HttpTest {
         assertValidResult(result, 4, FmpEarningsCallTranscriptList.class);
     }
 
-    private <T> void assertValidResult(T[] result, int expectedLength, Class<?> expectedType) {
+    private <R> void assertValidResult(List<R> result, int expectedLength, Class<?> expectedType) {
         assertValidResult(result, expectedLength, expectedType, emptySet());
     }
 
-    private <T> void assertValidResult(
-            T[] result, int expectedLength, Class<?> expectedType, Set<String> ignoreFields) {
+    private <R> void assertValidResult(
+            List<R> result, int expectedLength, Class<?> expectedType, Set<String> ignoreFields) {
         assertNotNull(result, "result was null, likely a missing stub");
-        assertEquals(expectedLength, result.length);
-        range(0, expectedLength).forEach(i -> assertInstanceOf(expectedType, result[i]));
-        range(0, expectedLength).forEach(i -> assertAllFieldsNonNull(result[i], ignoreFields));
+        assertEquals(expectedLength, result.size());
+        result.forEach(r -> assertInstanceOf(expectedType, r));
+        result.forEach(r -> assertAllFieldsNonNull(r, ignoreFields));
     }
 }

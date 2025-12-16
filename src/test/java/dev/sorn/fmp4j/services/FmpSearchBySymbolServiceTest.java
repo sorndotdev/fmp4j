@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpSearchBySymbolServiceTest extends HttpTest {
-    private FmpService<FmpSearchBySymbol[]> service;
+    private FmpService<FmpSearchBySymbol> service;
 
     @BeforeEach
     void setup() {
@@ -61,7 +61,7 @@ class FmpSearchBySymbolServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals("Euronext Amsterdam", result[0].exchange().fullName());
+        assertEquals("Euronext Amsterdam", result.get(0).exchange().fullName());
     }
 
     @Test
@@ -78,8 +78,8 @@ class FmpSearchBySymbolServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertInstanceOf(FmpSearchBySymbol.class, result[0]);
-        assertAllFieldsNonNull(result[0]);
+        assertEquals(1, result.size());
+        assertInstanceOf(FmpSearchBySymbol.class, result.get(0));
+        assertAllFieldsNonNull(result.get(0));
     }
 }

@@ -1,14 +1,13 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.TestUtils.assertAllFieldsNonNull;
 import static dev.sorn.fmp4j.TestUtils.testResource;
 import static dev.sorn.fmp4j.types.FmpPeriod.period;
 import static dev.sorn.fmp4j.types.FmpYear.year;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_PERIOD;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_YEAR;
-import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import dev.sorn.fmp4j.TestUtils;
 import dev.sorn.fmp4j.models.FmpCashFlowStatement;
 import dev.sorn.fmp4j.types.FmpPeriod;
 import dev.sorn.fmp4j.types.FmpYear;
@@ -19,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class FmpBulkCashFlowStatementServiceTest extends HttpTest {
-    private FmpService<FmpCashFlowStatement[]> service;
+    private FmpService<FmpCashFlowStatement> service;
 
     @BeforeEach
     void setup() {
@@ -70,7 +69,7 @@ class FmpBulkCashFlowStatementServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(2, result.length);
-        range(0, result.length).forEach(i -> assertAllFieldsNonNull(result[i]));
+        assertEquals(2, result.size());
+        result.forEach(TestUtils::assertAllFieldsNonNull);
     }
 }

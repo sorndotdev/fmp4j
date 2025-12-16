@@ -1,6 +1,5 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_FROM;
 import static dev.sorn.fmp4j.utils.FmpParameters.PARAM_TO;
 
@@ -10,9 +9,9 @@ import dev.sorn.fmp4j.models.FmpIposCalendar;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class FmpIposCalendarService extends FmpService<FmpIposCalendar[]> {
+public class FmpIposCalendarService extends FmpService<FmpIposCalendar> {
     public FmpIposCalendarService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpIposCalendar[].class));
+        super(cfg, http, FmpIposCalendar.class);
     }
 
     @Override

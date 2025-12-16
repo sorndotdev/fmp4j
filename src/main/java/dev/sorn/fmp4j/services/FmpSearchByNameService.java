@@ -1,15 +1,13 @@
 package dev.sorn.fmp4j.services;
 
-import static dev.sorn.fmp4j.json.FmpJsonUtils.typeRef;
-
 import dev.sorn.fmp4j.cfg.FmpConfig;
 import dev.sorn.fmp4j.http.FmpHttpClient;
 import dev.sorn.fmp4j.models.FmpSearchByName;
 import java.util.Map;
 
-public class FmpSearchByNameService extends FmpService<FmpSearchByName[]> {
+public class FmpSearchByNameService extends FmpService<FmpSearchByName> {
     public FmpSearchByNameService(FmpConfig cfg, FmpHttpClient http) {
-        super(cfg, http, typeRef(FmpSearchByName[].class));
+        super(cfg, http, FmpSearchByName.class);
     }
 
     @Override

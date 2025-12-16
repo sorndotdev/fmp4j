@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpBalanceSheetStatementTtmServiceTest extends HttpTest implements BalanceSheetStatementTestData {
-    private FmpService<FmpBalanceSheetStatement[]> service;
+    private FmpService<FmpBalanceSheetStatement> service;
 
     @BeforeEach
     void setup() {
@@ -67,7 +67,8 @@ class FmpBalanceSheetStatementTtmServiceTest extends HttpTest implements Balance
         var result = service.download();
 
         // then
-        assertEquals(limit, result.length);
-        range(0, limit).forEach(i -> assertAllFieldsNonNull(result[i], Set.of("capitalLeaseObligationsNonCurrent")));
+        assertEquals(limit, result.size());
+        range(0, limit)
+                .forEach(i -> assertAllFieldsNonNull(result.get(i), Set.of("capitalLeaseObligationsNonCurrent")));
     }
 }

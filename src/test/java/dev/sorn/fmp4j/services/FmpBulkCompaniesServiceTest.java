@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class FmpBulkCompaniesServiceTest extends HttpTest {
-    private FmpService<FmpCompanies[]> service;
+    private FmpService<FmpCompanies> service;
 
     @BeforeEach
     void setup() {
@@ -61,8 +61,8 @@ class FmpBulkCompaniesServiceTest extends HttpTest {
         var result = service.download();
 
         // then
-        assertEquals(1, result.length);
-        assertInstanceOf(FmpCompanies.class, result[0]);
-        assertAllFieldsNonNull(result[0]);
+        assertEquals(1, result.size());
+        assertInstanceOf(FmpCompanies.class, result.get(0));
+        assertAllFieldsNonNull(result.get(0));
     }
 }

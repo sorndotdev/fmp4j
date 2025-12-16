@@ -41,6 +41,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:${apacheCommonsVersion}")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:${spotlessVersion}")
 
+    testImplementation("org.assertj:assertj-core:${assertJVersion}")
     testImplementation("org.mockito:mockito-core:${mockitoCoreVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoJunitVersion}")
     testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
