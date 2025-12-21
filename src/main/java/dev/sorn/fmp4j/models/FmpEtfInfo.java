@@ -30,7 +30,7 @@ public record FmpEtfInfo(
         List<SectorExposure> sectorsList)
         implements FmpModel {
     @Serial
-    private static final long serialVersionUID = 6L;
+    private static final long serialVersionUID = 7L;
 
     // The first parameter is sector information, however FMP API wrongly returns as "industry"
     // API sample return in stable/etf/info/%3Fsymbol=SPY.json

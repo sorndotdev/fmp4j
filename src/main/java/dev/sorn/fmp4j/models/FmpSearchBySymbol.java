@@ -8,5 +8,5 @@ import java.io.Serial;
 public record FmpSearchBySymbol(FmpSymbol symbol, String name, FmpCurrency currency, FmpExchange exchange)
         implements FmpModel {
     @Serial
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 4L;
 }

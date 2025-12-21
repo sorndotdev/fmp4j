@@ -49,5 +49,5 @@ public record FmpCompany(
         Boolean isFund)
         implements FmpModel {
     @Serial
-    private static final long serialVersionUID = 8L;
+    private static final long serialVersionUID = 9L;
 }

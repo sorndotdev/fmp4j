@@ -10,5 +10,5 @@ public record FmpSearchByCik(
         FmpSymbol symbol, String companyName, FmpCik cik, FmpExchange exchange, FmpCurrency currency)
         implements FmpModel {
     @Serial
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 5L;
 }

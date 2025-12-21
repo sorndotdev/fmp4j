@@ -25,6 +25,8 @@
     <suppress files="FmpIsin.java" checks="AvoidInlineConditionals"/> <!-- isValidLuhn() -->
     <suppress files="FmpKeyMetric.java" checks="AbbreviationAsWordInName"/> <!-- evToEBITDA, netDebtToEBITDA -->
     <suppress files="FmpKeyMetricTtm.java" checks="AbbreviationAsWordInName"/> <!-- evToEBITDATTM, netDebtToEBITDATTM -->
+    <suppress files="FmpMoney.java" checks="MagicNumber"/> <!-- zero, unit, thousand, million -->
+    <suppress files="FmpNumbers.java" checks="MagicNumber"/> <!-- decimal -->
     <suppress files="FmpRatioTtm.java" checks="AbbreviationAsWordInName"/> <!-- netIncomePerEBTTTM -->
     <suppress files="FmpSymbolTest.java" checks="IllegalCatch"/> <!-- check_all_symbols -->
 </suppressions>

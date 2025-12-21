@@ -74,5 +74,5 @@ public record FmpRatio(
         Double dividendPerShare)
         implements FmpModel {
     @Serial
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 5L;
 }
