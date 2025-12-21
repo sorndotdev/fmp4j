@@ -52,5 +52,5 @@ public record FmpCashFlowStatementGrowth(
         Double growthInterestPaid)
         implements FmpModel, FmpStatement {
     @Serial
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 }

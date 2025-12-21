@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 public final class FmpCurrency implements Comparable<FmpCurrency>, FmpValueObject<String> {
     public static final Pattern FMP_CURRENCY_PATTERN = compile("^[A-Z]{3}$");
+    public static final FmpCurrency EUR = currency("EUR");
     public static final FmpCurrency USD = currency("USD");
 
     private final String value;
@@ -25,7 +26,7 @@ public final class FmpCurrency implements Comparable<FmpCurrency>, FmpValueObjec
         if (value == null) {
             throw new FmpInvalidCurrencyException("'value' is required");
         }
-        String normalized = value.toUpperCase();
+        final var normalized = value.toUpperCase();
         if (!FMP_CURRENCY_PATTERN.matcher(normalized).matches()) {
             throw new FmpInvalidCurrencyException(
                     "'value' [%s] does not match pattern [%s]", value, FMP_CURRENCY_PATTERN.pattern());

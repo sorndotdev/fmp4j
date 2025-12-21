@@ -60,5 +60,5 @@ public record FmpCashFlowStatement(
         Long interestPaid)
         implements FmpModel, FmpStatement {
     @Serial
-    private static final long serialVersionUID = 5L;
+    private static final long serialVersionUID = 6L;
 }

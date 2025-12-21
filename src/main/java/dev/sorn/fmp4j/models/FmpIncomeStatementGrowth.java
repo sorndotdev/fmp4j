@@ -44,5 +44,5 @@ public record FmpIncomeStatementGrowth(
         Double growthNetIncomeDeductions)
         implements FmpModel, FmpStatement {
     @Serial
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 }
