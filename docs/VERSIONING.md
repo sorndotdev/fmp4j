@@ -1,6 +1,22 @@
 ````md
 # Versioning
 
+## Setup
+
+In `~/.gradle/gradle.properties`, set:
+
+```
+sonatypeUsername=
+sonatypePassword=
+sonatypeUsername=
+sonatypePassword=
+signing.keyId=
+signing.password=
+signing.secretKeyRingFile=
+```
+
+## Publish
+
 This project follows [Semantic Versioning](https://semver.org/).
 
 **1. Update versions in configuration and documentation**
@@ -14,7 +30,7 @@ Update the version number in the following files:
 
 ```sh
 ./gradlew clean build
-./gradlew publish
+./gradlew publish --no-daemon
 ````
 
 **3. Verify publication**

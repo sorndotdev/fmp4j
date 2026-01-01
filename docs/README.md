@@ -19,9 +19,9 @@
 **fmp4j** is a lightweight Java SDK for accessing the [Financial Modeling Prep (FMP)](https://site.financialmodelingprep.com/) API.
 
 > **DO NOT CONTACT FOR API SUPPORT — WE ARE NOT AFFILIATED WITH FMP.**<br>
-> This is an open-source Java SDK that wraps their API.
-> Please note: their API contains many inconsistencies, poor naming conventions, and is not RESTful. This SDK does *not*
-> attempt to fix or abstract any of these issues.
+> This is an open-source Java SDK that wraps their API.<br>
+> Please note: their API contains many inconsistencies, poor naming conventions, and is not RESTful.<br>
+> This SDK does *not* attempt to fix or abstract any of these issues.
 
 Go to [www.marketdataapi.com](https://www.marketdataapi.com) for more information.
 
