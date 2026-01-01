@@ -1,4 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/803a2adc2f664508a70e050691d31135)](https://app.codacy.com/gh/sorndotdev/fmp4j/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) ![](../.github/badges/jacoco.svg)
+![](../.github/badges/jacoco.svg)
 
 ```txt
 ╔───────────────────────────────────────────╗
@@ -16,28 +16,31 @@
 
 # fmp4j
 
-**fmp4j** is a lightweight Java SDK for accessing
-the [Financial Modeling Prep (FMP)](https://site.financialmodelingprep.com/) API.
+**fmp4j** is a lightweight Java SDK for accessing the [Financial Modeling Prep (FMP)](https://site.financialmodelingprep.com/) API.
 
-> **DO NOT CONTACT ME FOR API SUPPORT — I AM NOT AFFILIATED WITH FMP.**<br>
-> This is an open-source Java SDK that wraps their API. Please note: their API contains many inconsistencies, poor
-> naming conventions, and is not RESTful. This SDK does *not* attempt to fix or abstract any of these issues.
+> **DO NOT CONTACT FOR API SUPPORT — WE ARE NOT AFFILIATED WITH FMP.**<br>
+> This is an open-source Java SDK that wraps their API.
+> Please note: their API contains many inconsistencies, poor naming conventions, and is not RESTful. This SDK does *not*
+> attempt to fix or abstract any of these issues.
+
+Go to [www.marketdataapi.com](https://www.marketdataapi.com) for more information.
 
 ## Usage
 
 **Gradle (build.gradle)**
 
 ```groovy
-implementation 'dev.sorn:fmp4j:0.4.0'
+implementation 'com.marketdataapi:fmp4j:0.100.0'
 ```
 
 **Maven (pom.xml)**
 
 ```xml
+
 <dependency>
-    <groupId>dev.sorn</groupId>
+    <groupId>com.marketdataapi</groupId>
     <artifactId>fmp4j</artifactId>
-    <version>0.4.0</version>
+    <version>0.100.0</version>
 </dependency>
 ```
 
@@ -71,33 +74,33 @@ The section names, ordering, and endpoints are copy-pasted from FMP docs.
 
 Copied from [/developer/docs/stable#search](https://site.financialmodelingprep.com/developer/docs/stable#search)
 
-|    | Since | Endpoint                    |
-|:--:|:-----:|-----------------------------|
-| ✅️ | 0.1.0 | `/search-symbol`            |
-| ✅️ | 0.1.0 | `/search-name`              |
-| ✅️ | 0.2.0 | `/search-cik`               |
-| ✅️ | 0.1.0 | `/search-cusip`             |
-| ✅️ | 0.1.0 | `/search-isin`              |
-| ❌️ |   -   | `/search-exchange-variants` |
-| ❌️ |   -   | `/company-screener`         |
+|    |  Since  | Endpoint                    |
+|:--:|:-------:|-----------------------------|
+| ✅️ | 0.100.0 | `/search-symbol`            |
+| ✅️ | 0.100.0 | `/search-name`              |
+| ✅️ | 0.100.0 | `/search-cik`               |
+| ✅️ | 0.100.0 | `/search-cusip`             |
+| ✅️ | 0.100.0 | `/search-isin`              |
+| ❌️ |    -    | `/search-exchange-variants` |
+| ❌️ |    -    | `/company-screener`         |
 
 ### Directory
 
 Copied from [/developer/docs/stable#directory](https://site.financialmodelingprep.com/developer/docs/stable#directory)
 
-|    | Since | Endpoint                           |
-|:--:|:-----:|------------------------------------|
-| ✅️ | 0.1.0 | `/stock-list`                      |
-| ❌️ |   -   | `/financial-statement-symbol-list` |
-| ❌️ |   -   | `/cik-list`                        |
-| ❌️ |   -   | `/symbol-change`                   |
-| ✅️ | 0.1.0 | `/etf-list`                        |
-| ❌️ |   -   | `/actively-trading-list`           |
-| ✅️ | 0.3.0 | `/earnings-transcript-list`        |
-| ❌️ |   -   | `/available-exchanges`             |
-| ❌️ |   -   | `/available-sectors`               |
-| ❌️ |   -   | `/available-industries`            |
-| ❌️ |   -   | `/available-countries`             |
+|    |  Since  | Endpoint                           |
+|:--:|:-------:|------------------------------------|
+| ✅️ | 0.100.0 | `/stock-list`                      |
+| ❌️ |    -    | `/financial-statement-symbol-list` |
+| ❌️ |    -    | `/cik-list`                        |
+| ❌️ |    -    | `/symbol-change`                   |
+| ✅️ | 0.100.0 | `/etf-list`                        |
+| ❌️ |    -    | `/actively-trading-list`           |
+| ✅️ | 0.100.0 | `/earnings-transcript-list`        |
+| ❌️ |    -    | `/available-exchanges`             |
+| ❌️ |    -    | `/available-sectors`               |
+| ❌️ |    -    | `/available-industries`            |
+| ❌️ |    -    | `/available-countries`             |
 
 ### Analyst
 
@@ -122,63 +125,64 @@ Copied from [/developer/docs/stable#analyst](https://site.financialmodelingprep.
 
 Copied from [/developer/docs/stable#calendar](https://site.financialmodelingprep.com/developer/docs/stable#calendar)
 
-|     | Since | Endpoint              |
-|:---:|:-----:|-----------------------|
-| ✅️  | 0.1.0 | `/dividends`          |
-| ✅️  | 0.1.0 | `/dividends-calendar` |
-| ✅️  | 0.1.0 | `/earnings`           |
-| ✅️  | 0.1.0 | `/earnings-calendar`  |
-| ✅️  | 0.2.0 | `/ipos-calendar`      |
-| ✅️️  | 0.2.0 | `/ipos-disclosure`    |
-| ✅️️  | 0.2.0 | `/ipos-prospectus`    |
-| ❌️  |   -   | `/splits`             |
-| ❌️  |   -   | `/splits-calendar`    |
+|     |  Since  | Endpoint              |
+|:---:|:-------:|-----------------------|
+| ✅️  | 0.100.0 | `/dividends`          |
+| ✅️  | 0.100.0 | `/dividends-calendar` |
+| ✅️  | 0.100.0 | `/earnings`           |
+| ✅️  | 0.100.0 | `/earnings-calendar`  |
+| ✅️  | 0.100.0 | `/ipos-calendar`      |
+| ✅️️ | 0.100.0 | `/ipos-disclosure`    |
+| ✅️️ | 0.100.0 | `/ipos-prospectus`    |
+| ❌️  |    -    | `/splits`             |
+| ❌️  |    -    | `/splits-calendar`    |
 
 ### Chart
 
 Copied from [/developer/docs/stable#chart](https://site.financialmodelingprep.com/developer/docs/stable#chart)
 
-|    | Since | Endpoint                                   |
-|:--:|:-----:|--------------------------------------------|
-| ✅️ | 0.1.0 | `/historical-price-eod/light`              |
-| ✅️ | 0.1.0 | `/historical-price-eod/full`               |
-| ❌️ |   -   | `/historical-price-eod/non-split-adjusted` |
-| ❌️ |   -   | `/historical-price-eod/dividend-adjusted`  |
-| ✅️ | 0.1.0 | `/historical-chart/1min`                   |
-| ✅️ | 0.1.0 | `/historical-chart/5min`                   |
-| ✅️ | 0.1.0 | `/historical-chart/15min`                  |
-| ✅️ | 0.1.0 | `/historical-chart/30min`                  |
-| ✅️ | 0.1.0 | `/historical-chart/1hour`                  |
-| ✅️ | 0.1.0 | `/historical-chart/4hour`                  |
+|    |  Since  | Endpoint                                   |
+|:--:|:-------:|--------------------------------------------|
+| ✅️ | 0.100.0 | `/historical-price-eod/light`              |
+| ✅️ | 0.100.0 | `/historical-price-eod/full`               |
+| ❌️ |    -    | `/historical-price-eod/non-split-adjusted` |
+| ❌️ |    -    | `/historical-price-eod/dividend-adjusted`  |
+| ✅️ | 0.100.0 | `/historical-chart/1min`                   |
+| ✅️ | 0.100.0 | `/historical-chart/5min`                   |
+| ✅️ | 0.100.0 | `/historical-chart/15min`                  |
+| ✅️ | 0.100.0 | `/historical-chart/30min`                  |
+| ✅️ | 0.100.0 | `/historical-chart/1hour`                  |
+| ✅️ | 0.100.0 | `/historical-chart/4hour`                  |
 
 ### Company
 
 Copied from [/developer/docs/stable#company](https://site.financialmodelingprep.com/developer/docs/stable#company)
 
-|    | Since | Endpoint                             |
-|:--:|:-----:|--------------------------------------|
-| ✅️ | 0.1.0 | `/profile`                           |
-| ❌️ |   -   | `/profile-cik`                       |
-| ❌️ |   -   | `/company-notes`                     |
-| ❌️ |   -   | `/stock-peers`                       |
-| ❌️ |   -   | `/delisted-companies`                |
-| ❌️ |   -   | `/employee-count`                    |
-| ❌️ |   -   | `/historical-employee-count`         |
-| ❌️ |   -   | `/market-capitalization`             |
-| ❌️ |   -   | `/market-capitalization`             |
-| ❌️ |   -   | `/market-capitalization-batch`       |
-| ❌️ |   -   | `/historical-market-capitalization`  |
-| ❌️ |   -   | `/shares-float`                      |
-| ❌️ |   -   | `/shares-float-all`                  |
-| ❌️ |   -   | `/mergers-acquisitions-latest`       |
-| ❌️ |   -   | `/mergers-acquisitions-search`       |
-| ❌️ |   -   | `/key-executives`                    |
-| ❌️ |   -   | `/governance-executive-compensation` |
-| ❌️ |   -   | `/executive-compensation-benchmark`  |
+|    |  Since  | Endpoint                             |
+|:--:|:-------:|--------------------------------------|
+| ✅️ | 0.100.0 | `/profile`                           |
+| ❌️ |    -    | `/profile-cik`                       |
+| ❌️ |    -    | `/company-notes`                     |
+| ❌️ |    -    | `/stock-peers`                       |
+| ❌️ |    -    | `/delisted-companies`                |
+| ❌️ |    -    | `/employee-count`                    |
+| ❌️ |    -    | `/historical-employee-count`         |
+| ❌️ |    -    | `/market-capitalization`             |
+| ❌️ |    -    | `/market-capitalization`             |
+| ❌️ |    -    | `/market-capitalization-batch`       |
+| ❌️ |    -    | `/historical-market-capitalization`  |
+| ❌️ |    -    | `/shares-float`                      |
+| ❌️ |    -    | `/shares-float-all`                  |
+| ❌️ |    -    | `/mergers-acquisitions-latest`       |
+| ❌️ |    -    | `/mergers-acquisitions-search`       |
+| ❌️ |    -    | `/key-executives`                    |
+| ❌️ |    -    | `/governance-executive-compensation` |
+| ❌️ |    -    | `/executive-compensation-benchmark`  |
 
 ### Commitment Of Traders
 
-Copied from [/developer/docs/stable#commitment-of-traders](https://site.financialmodelingprep.com/developer/docs/stable#commitment-of-traders)
+Copied
+from [/developer/docs/stable#commitment-of-traders](https://site.financialmodelingprep.com/developer/docs/stable#commitment-of-traders)
 
 |    | Since | Endpoint                          |
 |:--:|:-----:|-----------------------------------|
@@ -190,12 +194,12 @@ Copied from [/developer/docs/stable#commitment-of-traders](https://site.financia
 
 Copied from [/developer/docs/stable#economics](https://site.financialmodelingprep.com/developer/docs/stable#economics)
 
-|    | Since | Endpoint               |
-|:--:|:-----:|------------------------|
-| ✅️ | 0.2.0 | `/treasury-rates`      |
-| ❌️ |   -   | `/economic-indicators` |
-| ❌️ |   -   | `/economic-calendar`   |
-| ❌️ |   -   | `/market-risk-premium` |
+|    |  Since  | Endpoint               |
+|:--:|:-------:|------------------------|
+| ✅️ | 0.100.0 | `/treasury-rates`      |
+| ❌️ |    -    | `/economic-indicators` |
+| ❌️ |    -    | `/economic-calendar`   |
+| ❌️ |    -    | `/market-risk-premium` |
 
 ### ESG
 
@@ -209,7 +213,8 @@ Copied from [/developer/docs/stable#esg](https://site.financialmodelingprep.com/
 
 Copy of ### Discounted Cash Flow
 
-Copied from [/developer/docs/stable#discounted-cash-flow](https://site.financialmodelingprep.com/developer/docs/stable#discounted-cash-flow)
+Copied
+from [/developer/docs/stable#discounted-cash-flow](https://site.financialmodelingprep.com/developer/docs/stable#discounted-cash-flow)
 
 |    | Since | Endpoint                               |
 |:--:|:-----:|----------------------------------------|
@@ -222,32 +227,32 @@ Copied from [/developer/docs/stable#discounted-cash-flow](https://site.financial
 
 Copied from [/developer/docs/stable#statements](https://site.financialmodelingprep.com/developer/docs/stable#statements)
 
-|    | Since | Endpoint                                |
-|:--:|:-----:|-----------------------------------------|
-| ❌️ |   -   | `/latest-financial-statements`          |
-| ❌️ |   -   | `/financial-statement-full-as-reported` |
-| ✅️ | 0.1.0 | `/income-statement`                     |
-| ✅️ | 0.2.0 | `/income-statement-ttm`                 |
-| ✅️ | 0.2.0 | `/income-statement-growth`              |
-| ✅️ | 0.1.0 | `/income-statement-growth-as-reported`  |
-| ✅️ | 0.1.0 | `/balance-sheet-statement`              |
-| ✅️ | 0.2.0 | `/balance-sheet-statement-ttm`          |
-| ✅️ | 0.2.0 | `/balance-sheet-statement-growth`       |
-| ✅️ | 0.1.0 | `/balance-sheet-statement-as-reported`  |
-| ✅️ | 0.1.0 | `/cash-flow-statement`                  |
-| ✅️ | 0.2.0 | `/cash-flow-statement-ttm`              |
-| ✅️ | 0.2.0 | `/cash-flow-statement-growth`           |
-| ✅️ | 0.1.0 | `/cash-flow-statement-as-reported`      |
-| ✅️ | 0.1.0 | `/financial-growth`                     |
-| ✅️ | 0.1.0 | `/ratios`                               |
-| ✅️ | 0.1.0 | `/ratios-ttm`                           |
-| ✅️ | 0.1.0 | `/key-metrics`                          |
-| ✅️ | 0.1.0 | `/key-metrics-ttm`                      |
-| ❌️ |   -   | `/financial-scores`                     |
-| ❌️ |   -   | `/owner-earnings`                       |
-| ✅️ | 0.1.0 | `/enterprise-values`                    |
-| ✅️ | 0.1.0 | `/revenue-product-segmentation`         |
-| ✅️ | 0.1.0 | `/revenue-geographic-segmentation`      |
+|    |  Since  | Endpoint                                |
+|:--:|:-------:|-----------------------------------------|
+| ❌️ |    -    | `/latest-financial-statements`          |
+| ❌️ |    -    | `/financial-statement-full-as-reported` |
+| ✅️ | 0.100.0 | `/income-statement`                     |
+| ✅️ | 0.100.0 | `/income-statement-ttm`                 |
+| ✅️ | 0.100.0 | `/income-statement-growth`              |
+| ✅️ | 0.100.0 | `/income-statement-growth-as-reported`  |
+| ✅️ | 0.100.0 | `/balance-sheet-statement`              |
+| ✅️ | 0.100.0 | `/balance-sheet-statement-ttm`          |
+| ✅️ | 0.100.0 | `/balance-sheet-statement-growth`       |
+| ✅️ | 0.100.0 | `/balance-sheet-statement-as-reported`  |
+| ✅️ | 0.100.0 | `/cash-flow-statement`                  |
+| ✅️ | 0.100.0 | `/cash-flow-statement-ttm`              |
+| ✅️ | 0.100.0 | `/cash-flow-statement-growth`           |
+| ✅️ | 0.100.0 | `/cash-flow-statement-as-reported`      |
+| ✅️ | 0.100.0 | `/financial-growth`                     |
+| ✅️ | 0.100.0 | `/ratios`                               |
+| ✅️ | 0.100.0 | `/ratios-ttm`                           |
+| ✅️ | 0.100.0 | `/key-metrics`                          |
+| ✅️ | 0.100.0 | `/key-metrics-ttm`                      |
+| ❌️ |    -    | `/financial-scores`                     |
+| ❌️ |    -    | `/owner-earnings`                       |
+| ✅️ | 0.100.0 | `/enterprise-values`                    |
+| ✅️ | 0.100.0 | `/revenue-product-segmentation`         |
+| ✅️ | 0.100.0 | `/revenue-geographic-segmentation`      |
 
 ### Form 13F
 
@@ -267,27 +272,28 @@ Copied from [/developer/docs/stable#form-13f](https://site.financialmodelingprep
 
 Copied from [/developer/docs/stable#indexes](https://site.financialmodelingprep.com/developer/docs/stable#indexes)
 
-|    | Since | Endpoint                           |
-|:--:|:-----:|------------------------------------|
-| ❌️ |   -   | `/index-list`                      |
-| ✅️ | 0.1.0 | `/quote`                           |
-| ✅️ | 0.1.0 | `/quote-short`                     |
-| ❌️ |   -   | `/batch-index-quotes`              |
-| ✅️ | 0.1.0 | `/historical-price-eod/light`      |
-| ✅️ | 0.1.0 | `/historical-price-eod/full`       |
-| ✅️ | 0.1.0 | `/historical-chart/1min`           |
-| ✅️ | 0.1.0 | `/historical-chart/5min`           |
-| ✅️ | 0.1.0 | `/historical-chart/1hour`          |
-| ❌️ |   -   | `/sp500-constituent`               |
-| ❌️ |   -   | `/nasdaq-constituent`              |
-| ❌️ |   -   | `/dowjones-constituent`            |
-| ❌️ |   -   | `/historical-sp500-constituent`    |
-| ❌️ |   -   | `/histoircal-nasdaq-constituent`   |
-| ❌️ |   -   | `/historical-dowjones-constituent` |
+|    |  Since  | Endpoint                           |
+|:--:|:-------:|------------------------------------|
+| ❌️ |    -    | `/index-list`                      |
+| ✅️ | 0.100.0 | `/quote`                           |
+| ✅️ | 0.100.0 | `/quote-short`                     |
+| ❌️ |    -    | `/batch-index-quotes`              |
+| ✅️ | 0.100.0 | `/historical-price-eod/light`      |
+| ✅️ | 0.100.0 | `/historical-price-eod/full`       |
+| ✅️ | 0.100.0 | `/historical-chart/1min`           |
+| ✅️ | 0.100.0 | `/historical-chart/5min`           |
+| ✅️ | 0.100.0 | `/historical-chart/1hour`          |
+| ❌️ |    -    | `/sp500-constituent`               |
+| ❌️ |    -    | `/nasdaq-constituent`              |
+| ❌️ |    -    | `/dowjones-constituent`            |
+| ❌️ |    -    | `/historical-sp500-constituent`    |
+| ❌️ |    -    | `/histoircal-nasdaq-constituent`   |
+| ❌️ |    -    | `/historical-dowjones-constituent` |
 
 ### Insider Trades
 
-Copied from [/developer/docs/stable#insider-trades](https://site.financialmodelingprep.com/developer/docs/stable#insider-trades)
+Copied
+from [/developer/docs/stable#insider-trades](https://site.financialmodelingprep.com/developer/docs/stable#insider-trades)
 
 |    | Since | Endpoint                                |
 |:--:|:-----:|-----------------------------------------|
@@ -300,7 +306,8 @@ Copied from [/developer/docs/stable#insider-trades](https://site.financialmodeli
 
 ### Market Performance
 
-Copied from [/developer/docs/stable#market-performance](https://site.financialmodelingprep.com/developer/docs/stable#market-performance)
+Copied
+from [/developer/docs/stable#market-performance](https://site.financialmodelingprep.com/developer/docs/stable#market-performance)
 
 |    | Since | Endpoint                           |
 |:--:|:-----:|------------------------------------|
@@ -318,7 +325,8 @@ Copied from [/developer/docs/stable#market-performance](https://site.financialmo
 
 ### Market Hours
 
-Copied from [/developer/docs/stable#market-hours](https://site.financialmodelingprep.com/developer/docs/stable#market-hours)
+Copied
+from [/developer/docs/stable#market-hours](https://site.financialmodelingprep.com/developer/docs/stable#market-hours)
 
 |    | Since | Endpoint                     |
 |:--:|:-----:|------------------------------|
@@ -330,37 +338,39 @@ Copied from [/developer/docs/stable#market-hours](https://site.financialmodeling
 
 Copied from [/developer/docs/stable#holdings](https://site.financialmodelingprep.com/developer/docs/stable#holdings)
 
-|    | Since | Endpoint                           |
-|:--:|:-----:|------------------------------------|
-| ✅️ | 0.1.0 | `/etf/holdings`                    |
-| ✅️ | 0.1.0 | `/etf/info`                        |
-| ✅️ | 0.1.0 | `/etf/country-weightings`          |
-| ✅️ | 0.1.0 | `/etf/asset-exposure`              |
-| ✅️ | 0.1.0 | `/etf/sector-weightings`           |
-| ❌️ |   -   | `/funds/disclosure`                |
-| ❌️ |   -   | `/funds/disclosure-holders-latest` |
-| ❌️ |   -   | `/funds/disclosure-holders-search` |
-| ❌️ |   -   | `/funds/disclosure-dates`          |
+|    |  Since  | Endpoint                           |
+|:--:|:-------:|------------------------------------|
+| ✅️ | 0.100.0 | `/etf/holdings`                    |
+| ✅️ | 0.100.0 | `/etf/info`                        |
+| ✅️ | 0.100.0 | `/etf/country-weightings`          |
+| ✅️ | 0.100.0 | `/etf/asset-exposure`              |
+| ✅️ | 0.100.0 | `/etf/sector-weightings`           |
+| ❌️ |    -    | `/funds/disclosure`                |
+| ❌️ |    -    | `/funds/disclosure-holders-latest` |
+| ❌️ |    -    | `/funds/disclosure-holders-search` |
+| ❌️ |    -    | `/funds/disclosure-dates`          |
 
 ### Commodities
 
-Copied from [/developer/docs/stable#commodities](https://site.financialmodelingprep.com/developer/docs/stable#commodities)
+Copied
+from [/developer/docs/stable#commodities](https://site.financialmodelingprep.com/developer/docs/stable#commodities)
 
-|    | Since | Endpoint                      |
-|:--:|:-----:|-------------------------------|
-| ❌️ |   -   | `/commodities-list`           |
-| ✅️ | 0.1.0 | `/quote`                      |
-| ✅️ | 0.1.0 | `/quote-short`                |
-| ❌️ |   -   | `/batch-commodities-quotes`   |
-| ✅️ | 0.1.0 | `/historical-price-eod/light` |
-| ✅️ | 0.1.0 | `/historical-price-eod/full`  |
-| ✅️ | 0.1.0 | `/historical-chart/1min`      |
-| ✅️ | 0.1.0 | `/historical-chart/5min`      |
-| ✅️ | 0.1.0 | `/historical-chart/1hour`     |
+|    |  Since  | Endpoint                      |
+|:--:|:-------:|-------------------------------|
+| ❌️ |    -    | `/commodities-list`           |
+| ✅️ | 0.100.0 | `/quote`                      |
+| ✅️ | 0.100.0 | `/quote-short`                |
+| ❌️ |    -    | `/batch-commodities-quotes`   |
+| ✅️ | 0.100.0 | `/historical-price-eod/light` |
+| ✅️ | 0.100.0 | `/historical-price-eod/full`  |
+| ✅️ | 0.100.0 | `/historical-chart/1min`      |
+| ✅️ | 0.100.0 | `/historical-chart/5min`      |
+| ✅️ | 0.100.0 | `/historical-chart/1hour`     |
 
 ### Fundraisers
 
-Copied from [/developer/docs/stable#fundraisers](https://site.financialmodelingprep.com/developer/docs/stable#fundraisers)
+Copied
+from [/developer/docs/stable#fundraisers](https://site.financialmodelingprep.com/developer/docs/stable#fundraisers)
 
 |    | Since | Endpoint                         |
 |:--:|:-----:|----------------------------------|
@@ -375,38 +385,39 @@ Copied from [/developer/docs/stable#fundraisers](https://site.financialmodelingp
 
 Copied from [/developer/docs/stable#crypto](https://site.financialmodelingprep.com/developer/docs/stable#crypto)
 
-|    | Since | Endpoint                      |
-|:--:|:-----:|-------------------------------|
-| ❌️ |   -   | `/cryptocurrency-list`        |
-| ❌️ |   -   | `/batch-crypto-quotes`        |
-| ✅️ | 0.1.0 | `/quote`                      |
-| ✅️ | 0.1.0 | `/quote-short`                |
-| ✅️ | 0.1.0 | `/historical-price-eod/light` |
-| ✅️ | 0.1.0 | `/historical-price-eod/full`  |
-| ✅️ | 0.1.0 | `/historical-chart/1min`      |
-| ✅️ | 0.1.0 | `/historical-chart/5min`      |
-| ✅️ | 0.1.0 | `/historical-chart/1hour`     |
+|    |  Since  | Endpoint                      |
+|:--:|:-------:|-------------------------------|
+| ❌️ |    -    | `/cryptocurrency-list`        |
+| ❌️ |    -    | `/batch-crypto-quotes`        |
+| ✅️ | 0.100.0 | `/quote`                      |
+| ✅️ | 0.100.0 | `/quote-short`                |
+| ✅️ | 0.100.0 | `/historical-price-eod/light` |
+| ✅️ | 0.100.0 | `/historical-price-eod/full`  |
+| ✅️ | 0.100.0 | `/historical-chart/1min`      |
+| ✅️ | 0.100.0 | `/historical-chart/5min`      |
+| ✅️ | 0.100.0 | `/historical-chart/1hour`     |
 
 ### News
 
 Copied from [/developer/docs/stable#news](https://site.financialmodelingprep.com/developer/docs/stable#news)
 
-|    | Since | Endpoint                      |
-|:--:|:-----:|-------------------------------|
-| ❌️ |   -   | `/fmp-articles`               |
-| ❌️ |   -   | `/news/general-latest`        |
-| ❌️ |   -   | `/news/press-releases`        |
-| ❌️ |   -   | `/news/press-releases-latest` |
-| ✅️ | 0.1.0 | `/news/stock`                 |
-| ❌️ |   -   | `/news/stock-latest`          |
-| ✅️ | 0.1.0 | `/news/crypto`                |
-| ❌️ |   -   | `/news/crypto-latest`         |
-| ✅️ | 0.1.0 | `/news/forex`                 |
-| ❌️ |   -   | `/news/forex-latest`          |
+|    |  Since  | Endpoint                      |
+|:--:|:-------:|-------------------------------|
+| ❌️ |    -    | `/fmp-articles`               |
+| ❌️ |    -    | `/news/general-latest`        |
+| ❌️ |    -    | `/news/press-releases`        |
+| ❌️ |    -    | `/news/press-releases-latest` |
+| ✅️ | 0.100.0 | `/news/stock`                 |
+| ❌️ |    -    | `/news/stock-latest`          |
+| ✅️ | 0.100.0 | `/news/crypto`                |
+| ❌️ |    -    | `/news/crypto-latest`         |
+| ✅️ | 0.100.0 | `/news/forex`                 |
+| ❌️ |    -    | `/news/forex-latest`          |
 
 ### Technical Indicators
 
-Copied from [/developer/docs/stable#technical-indicators](https://site.financialmodelingprep.com/developer/docs/stable#technical-indicators)
+Copied
+from [/developer/docs/stable#technical-indicators](https://site.financialmodelingprep.com/developer/docs/stable#technical-indicators)
 
 |    | Since | Endpoint                                  |
 |:--:|:-----:|-------------------------------------------|
@@ -424,53 +435,55 @@ Copied from [/developer/docs/stable#technical-indicators](https://site.financial
 
 Copied from [/developer/docs/stable#quote](https://site.financialmodelingprep.com/developer/docs/stable#quote)
 
-|    | Since | Endpoint                   |
-|:--:|:-----:|----------------------------|
-| ✅️ | 0.1.0 | `/quote`                   |
-| ✅️ | 0.1.0 | `/quote-short`             |
-| ❌️ |   -   | `/aftermarket-trade`       |
-| ❌️ |   -   | `/aftermarket-quote`       |
-| ❌️ |   -   | `/stock-price-change`      |
-| ❌️ |   -   | `/batch-quote`             |
-| ❌️ |   -   | `/batch-quote-short`       |
-| ❌️ |   -   | `/batch-aftermarket-trade` |
-| ❌️ |   -   | `/batch-aftermarket-quote` |
-| ❌️ |   -   | `/batch-exchange-quote`    |
-| ❌️ |   -   | `/batch-mutaulfund-quotes` |
-| ❌️ |   -   | `/batch-etf-quotes`        |
-| ❌️ |   -   | `/batch-commodity-quotes`  |
-| ❌️ |   -   | `/batch-crypto-quotes`     |
-| ❌️ |   -   | `/batch-forex-quotes`      |
-| ❌️ |   -   | `/batch-index-quotes`      |
+|    |  Since  | Endpoint                   |
+|:--:|:-------:|----------------------------|
+| ✅️ | 0.100.0 | `/quote`                   |
+| ✅️ | 0.100.0 | `/quote-short`             |
+| ❌️ |    -    | `/aftermarket-trade`       |
+| ❌️ |    -    | `/aftermarket-quote`       |
+| ❌️ |    -    | `/stock-price-change`      |
+| ❌️ |    -    | `/batch-quote`             |
+| ❌️ |    -    | `/batch-quote-short`       |
+| ❌️ |    -    | `/batch-aftermarket-trade` |
+| ❌️ |    -    | `/batch-aftermarket-quote` |
+| ❌️ |    -    | `/batch-exchange-quote`    |
+| ❌️ |    -    | `/batch-mutaulfund-quotes` |
+| ❌️ |    -    | `/batch-etf-quotes`        |
+| ❌️ |    -    | `/batch-commodity-quotes`  |
+| ❌️ |    -    | `/batch-crypto-quotes`     |
+| ❌️ |    -    | `/batch-forex-quotes`      |
+| ❌️ |    -    | `/batch-index-quotes`      |
 
 ### SEC Filings
 
-Copied from [/developer/docs/stable#sec-filings](https://site.financialmodelingprep.com/developer/docs/stable#sec-filings)
+Copied
+from [/developer/docs/stable#sec-filings](https://site.financialmodelingprep.com/developer/docs/stable#sec-filings)
 
-|    | Since | Endpoint                                   |
-|:--:|:-----:|--------------------------------------------|
-| ❌️ |   -   | `/sec-filings-8k`                          |
-| ❌️ |   -   | `/sec-filings-financials`                  |
-| ❌️ |   -   | `/sec-filings-search/form-type`            |
-| ❌️ |   -   | `/sec-filings-search/cik`                  |
-| ❌️ |   -   | `/sec-filings-company-search/name`         |
-| ✅️ | 0.1.0 | `/sec-filings-company-search/symbol`       |
-| ❌️ |   -   | `/sec-filings-company-search/cik`          |
-| ❌️ |   -   | `/sec-profile`                             |
-| ❌️ |   -   | `/standard-industrial-classification-list` |
-| ❌️ |   -   | `/industry-classification-search`          |
-| ❌️ |   -   | `/all-industry-classification`             |
+|    |  Since  | Endpoint                                   |
+|:--:|:-------:|--------------------------------------------|
+| ❌️ |    -    | `/sec-filings-8k`                          |
+| ❌️ |    -    | `/sec-filings-financials`                  |
+| ❌️ |    -    | `/sec-filings-search/form-type`            |
+| ❌️ |    -    | `/sec-filings-search/cik`                  |
+| ❌️ |    -    | `/sec-filings-company-search/name`         |
+| ✅️ | 0.100.0 | `/sec-filings-company-search/symbol`       |
+| ❌️ |    -    | `/sec-filings-company-search/cik`          |
+| ❌️ |    -    | `/sec-profile`                             |
+| ❌️ |    -    | `/standard-industrial-classification-list` |
+| ❌️ |    -    | `/industry-classification-search`          |
+| ❌️ |    -    | `/all-industry-classification`             |
 
 ### Earnings Transcript
 
-Copied from [/developer/docs/stable#earnings-transcript](https://site.financialmodelingprep.com/developer/docs/stable#earnings-transcript)
+Copied
+from [/developer/docs/stable#earnings-transcript](https://site.financialmodelingprep.com/developer/docs/stable#earnings-transcript)
 
-|    | Since | Endpoint                          |
-|:--:|:-----:|-----------------------------------|
-| ✅️ | 0.3.0 | `/earning-call-transcript-latest` |
-| ✅️ | 0.3.0 | `/earning-call-transcript`        |
-| ✅️ | 0.3.0 | `/earning-call-transcript-dates`  |
-| ✅️ | 0.3.0 | `/earnings-transcript-list`       |
+|    |  Since  | Endpoint                          |
+|:--:|:-------:|-----------------------------------|
+| ✅️ | 0.100.0 | `/earning-call-transcript-latest` |
+| ✅️ | 0.100.0 | `/earning-call-transcript`        |
+| ✅️ | 0.100.0 | `/earning-call-transcript-dates`  |
+| ✅️ | 0.100.0 | `/earnings-transcript-list`       |
 
 ### Senate
 
@@ -489,24 +502,24 @@ Copied from [/developer/docs/stable#senate](https://site.financialmodelingprep.c
 
 Copied from [/developer/docs/stable#bulk](https://site.financialmodelingprep.com/developer/docs/stable#bulk)
 
-|    | Since | Endpoint                               |
-|:--:|:-----:|----------------------------------------|
-| ✅️ | 0.3.0 | `/profile-bulk`                        |
-| ❌️ |   -   | `/rating-bulk`                         |
-| ❌️ |   -   | `/dcf-bulk`                            |
-| ❌️ |   -   | `/scores-bulk`                         |
-| ❌️ |   -   | `/price-target-summary-bulk`           |
-| ❌️ |   -   | `/etf-holder-bulk`                     |
-| ❌️ |   -   | `/upgrades-downgrades-consensus-bulk`  |
-| ❌️ |   -   | `/key-metrics-ttm-bulk`                |
-| ❌️ |   -   | `/ratios-ttm-bulk`                     |
-| ❌️ |   -   | `/ratios-ttm-bulk`                     |
-| ❌️ |   -   | `/peers-bulk`                          |
-| ❌️ |   -   | `/earnings-surprises-bulk`             |
-| ❌️ |   -   | `/income-statement-bulk`               |
-| ❌️ |   -   | `/income-statement-growth-bulk`        |
-| ✅️ | 0.3.0 | `/balance-sheet-statement-bulk`        |
-| ❌️ |   -   | `/balance-sheet-statement-growth-bulk` |
-| ❌️ |   -   | `/cash-flow-statement-bulk`            |
-| ❌️ |   -   | `/cash-flow-statement-growth-bulk`     |
-| ❌️ |   -   | `/eod-bulk`                            |
+|    |  Since  | Endpoint                               |
+|:--:|:-------:|----------------------------------------|
+| ✅️ | 0.100.0 | `/profile-bulk`                        |
+| ❌️ |    -    | `/rating-bulk`                         |
+| ❌️ |    -    | `/dcf-bulk`                            |
+| ❌️ |    -    | `/scores-bulk`                         |
+| ❌️ |    -    | `/price-target-summary-bulk`           |
+| ❌️ |    -    | `/etf-holder-bulk`                     |
+| ❌️ |    -    | `/upgrades-downgrades-consensus-bulk`  |
+| ❌️ |    -    | `/key-metrics-ttm-bulk`                |
+| ❌️ |    -    | `/ratios-ttm-bulk`                     |
+| ❌️ |    -    | `/ratios-ttm-bulk`                     |
+| ❌️ |    -    | `/peers-bulk`                          |
+| ❌️ |    -    | `/earnings-surprises-bulk`             |
+| ❌️ |    -    | `/income-statement-bulk`               |
+| ❌️ |    -    | `/income-statement-growth-bulk`        |
+| ✅️ | 0.100.0 | `/balance-sheet-statement-bulk`        |
+| ❌️ |    -    | `/balance-sheet-statement-growth-bulk` |
+| ❌️ |    -    | `/cash-flow-statement-bulk`            |
+| ❌️ |    -    | `/cash-flow-statement-growth-bulk`     |
+| ❌️ |    -    | `/eod-bulk`                            |

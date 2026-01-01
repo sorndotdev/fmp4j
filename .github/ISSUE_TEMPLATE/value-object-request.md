@@ -9,7 +9,7 @@ assignees: ''
 
 **Instructions**
 Replace *all* example values below with your actual implementation details. Do **not** keep the examples as-is. Make
-sure to read the full [documentation](https://github.com/sorndotdev/fmp4j/tree/master/docs) before contributing.
+sure to read the full [documentation](https://github.com/marketdataapi/fmp4j/tree/master/docs) before contributing.
 
 ---
 

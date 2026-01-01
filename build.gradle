@@ -1,5 +1,5 @@
-import dev.sorn.fmp4j.CoveragePlugin
-import dev.sorn.fmp4j.SnakeCaseMethodFormatter
+import com.marketdataapi.fmp4j.CoveragePlugin
+import com.marketdataapi.fmp4j.SnakeCaseMethodFormatter
 
 plugins {
     id 'java-library'
@@ -12,7 +12,7 @@ plugins {
 
 apply plugin: CoveragePlugin
 
-group = 'dev.sorn.fmp4j'
+group = 'com.marketdataapi.fmp4j'
 version = projectVersion
 
 java {

@@ -30,7 +30,7 @@ java version "17"
 ## 2. Clone the Project
 
 ```bash
-git clone https://github.com/sorndotdev/fmp4j.git
+git clone https://github.com/marketdataapi/fmp4j.git
 cd fmp4j
 ```
 

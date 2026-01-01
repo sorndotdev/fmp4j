@@ -1,0 +1,27 @@
+package com.marketdataapi.fmp4j.services;
+
+import com.marketdataapi.fmp4j.cfg.FmpConfig;
+import com.marketdataapi.fmp4j.http.FmpHttpClient;
+import com.marketdataapi.fmp4j.models.FmpEtf;
+import java.util.Map;
+
+public class FmpEtfListService extends FmpService<FmpEtf> {
+    public FmpEtfListService(FmpConfig cfg, FmpHttpClient http) {
+        super(cfg, http, FmpEtf.class);
+    }
+
+    @Override
+    protected String relativeUrl() {
+        return "/etf-list";
+    }
+
+    @Override
+    protected Map<String, Class<?>> requiredParams() {
+        return Map.of();
+    }
+
+    @Override
+    protected Map<String, Class<?>> optionalParams() {
+        return Map.of();
+    }
+}
