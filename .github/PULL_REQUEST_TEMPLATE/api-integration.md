@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Instructions**  
-This PR should correspond to an [API Integration issue](https://github.com/sorndotdev/fmp4j/issues).
+This PR should correspond to an [API Integration issue](https://github.com/marketdataapi/fmp4j/issues).
 Replace *all* example values with real implementation details. Do **not** leave placeholders or examples unchanged.
 
 ---

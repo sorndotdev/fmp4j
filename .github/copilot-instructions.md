@@ -15,7 +15,7 @@ Do not introduce new abstractions or unrelated refactors.
     - `ZERO` instead of `BigDecimal.ZERO`
     - `emptyMap()` instead of `Map.of()`
     - `symbol(String)` instead of `FmpSymbol.symbol(String)`
-- Prefer value objects from `dev.sorn.fmp4j.types`
+- Prefer value objects from `com.marketdataapi.fmp4j.types`
 - For value objects/types, create a static factory method named after the type
   - Example: `symbol(String)` instead of `FmpSymbol.of(String)`
 - All models are Java 16+ records
@@ -26,7 +26,7 @@ Do not introduce new abstractions or unrelated refactors.
 
 - Only implement FMP stable endpoints
 - Add required and optional parameters as per FMP docs
-- Use appropriate value types from `dev.sorn.fmp4j.types`
+- Use appropriate value types from `com.marketdataapi.fmp4j.types`
 - Prefer reusing existing models for exact matches
 - Prefix new models with `Fmp`
 - Service naming: `Fmp<Model>Service`

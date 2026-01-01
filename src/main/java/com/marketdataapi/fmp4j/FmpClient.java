@@ -1,0 +1,146 @@
+package com.marketdataapi.fmp4j;
+
+import com.marketdataapi.fmp4j.cfg.FmpConfig;
+import com.marketdataapi.fmp4j.clients.FmpBulkClient;
+import com.marketdataapi.fmp4j.clients.FmpCalendarClient;
+import com.marketdataapi.fmp4j.clients.FmpChartClient;
+import com.marketdataapi.fmp4j.clients.FmpCompanyClient;
+import com.marketdataapi.fmp4j.clients.FmpDirectoryClient;
+import com.marketdataapi.fmp4j.clients.FmpEarningsClient;
+import com.marketdataapi.fmp4j.clients.FmpEconomicsClient;
+import com.marketdataapi.fmp4j.clients.FmpEtfClient;
+import com.marketdataapi.fmp4j.clients.FmpNewsClient;
+import com.marketdataapi.fmp4j.clients.FmpQuoteClient;
+import com.marketdataapi.fmp4j.clients.FmpSearchClient;
+import com.marketdataapi.fmp4j.clients.FmpSecFilingsSearchClient;
+import com.marketdataapi.fmp4j.clients.FmpStatementClient;
+import com.marketdataapi.fmp4j.http.FmpHttpClient;
+
+public class FmpClient {
+    protected final FmpConfig fmpConfig;
+    protected final FmpHttpClient fmpHttpClient;
+
+    // Alphabetical order
+    protected final FmpBulkClient fmpBulkClient;
+    protected final FmpCalendarClient fmpCalendarClient;
+    protected final FmpChartClient fmpChartClient;
+    protected final FmpCompanyClient fmpCompanyClient;
+    protected final FmpDirectoryClient fmpDirectoryClient;
+    protected final FmpEarningsClient fmpEarningsClient;
+    protected final FmpEconomicsClient fmpEconomicsClient;
+    protected final FmpEtfClient fmpEtfClient;
+    protected final FmpNewsClient fmpNewsClient;
+    protected final FmpQuoteClient fmpQuoteClient;
+    protected final FmpSearchClient fmpSearchClient;
+    protected final FmpSecFilingsSearchClient fmpSecFilingsSearchClient;
+    protected final FmpStatementClient fmpStatementClient;
+
+    public FmpClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
+        this(
+                fmpConfig,
+                fmpHttpClient,
+
+                // Alphabetical order
+                new FmpBulkClient(fmpConfig, fmpHttpClient),
+                new FmpCalendarClient(fmpConfig, fmpHttpClient),
+                new FmpChartClient(fmpConfig, fmpHttpClient),
+                new FmpCompanyClient(fmpConfig, fmpHttpClient),
+                new FmpDirectoryClient(fmpConfig, fmpHttpClient),
+                new FmpEarningsClient(fmpConfig, fmpHttpClient),
+                new FmpEconomicsClient(fmpConfig, fmpHttpClient),
+                new FmpEtfClient(fmpConfig, fmpHttpClient),
+                new FmpNewsClient(fmpConfig, fmpHttpClient),
+                new FmpQuoteClient(fmpConfig, fmpHttpClient),
+                new FmpSearchClient(fmpConfig, fmpHttpClient),
+                new FmpSecFilingsSearchClient(fmpConfig, fmpHttpClient),
+                new FmpStatementClient(fmpConfig, fmpHttpClient));
+    }
+
+    public FmpClient(
+            FmpConfig fmpConfig,
+            FmpHttpClient fmpHttpClient,
+
+            // Alphabetical order
+            FmpBulkClient fmpBulkClient,
+            FmpCalendarClient fmpCalendarClient,
+            FmpChartClient fmpChartClient,
+            FmpCompanyClient fmpCompanyClient,
+            FmpDirectoryClient fmpDirectoryClient,
+            FmpEarningsClient fmpEarningsClient,
+            FmpEconomicsClient fmpEconomicsClient,
+            FmpEtfClient fmpEtfClient,
+            FmpNewsClient fmpNewsClient,
+            FmpQuoteClient fmpQuoteClient,
+            FmpSearchClient fmpSearchClient,
+            FmpSecFilingsSearchClient fmpSecFilingsSearchClient,
+            FmpStatementClient fmpStatementClient) {
+        // Alphabetical order
+        this.fmpBulkClient = fmpBulkClient;
+        this.fmpConfig = fmpConfig;
+        this.fmpHttpClient = fmpHttpClient;
+        this.fmpCalendarClient = fmpCalendarClient;
+        this.fmpChartClient = fmpChartClient;
+        this.fmpCompanyClient = fmpCompanyClient;
+        this.fmpDirectoryClient = fmpDirectoryClient;
+        this.fmpEarningsClient = fmpEarningsClient;
+        this.fmpEconomicsClient = fmpEconomicsClient;
+        this.fmpEtfClient = fmpEtfClient;
+        this.fmpNewsClient = fmpNewsClient;
+        this.fmpQuoteClient = fmpQuoteClient;
+        this.fmpSecFilingsSearchClient = fmpSecFilingsSearchClient;
+        this.fmpSearchClient = fmpSearchClient;
+        this.fmpStatementClient = fmpStatementClient;
+    }
+
+    public FmpBulkClient bulk() {
+        return fmpBulkClient;
+    }
+
+    public FmpCalendarClient calendar() {
+        return fmpCalendarClient;
+    }
+
+    public FmpChartClient chart() {
+        return fmpChartClient;
+    }
+
+    public FmpCompanyClient company() {
+        return fmpCompanyClient;
+    }
+
+    public FmpDirectoryClient directory() {
+        return fmpDirectoryClient;
+    }
+
+    public FmpEarningsClient earnings() {
+        return fmpEarningsClient;
+    }
+
+    public FmpEconomicsClient economics() {
+        return fmpEconomicsClient;
+    }
+
+    public FmpEtfClient etf() {
+        return fmpEtfClient;
+    }
+
+    public FmpNewsClient news() {
+        return fmpNewsClient;
+    }
+
+    public FmpQuoteClient quote() {
+        return fmpQuoteClient;
+    }
+
+    public FmpSearchClient search() {
+        return fmpSearchClient;
+    }
+
+    public FmpSecFilingsSearchClient secFilingsSearch() {
+        return fmpSecFilingsSearchClient;
+    }
+
+    public FmpStatementClient statement() {
+        return fmpStatementClient;
+    }
+}
