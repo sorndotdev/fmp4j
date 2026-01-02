@@ -1,9 +1,14 @@
-package com.marketdataapi.fmp4j.http;
+package com.marketdataapi.fmp4j;
 
 import static com.marketdataapi.fmp4j.http.FmpUriUtils.uriWithParams;
 import static java.util.Objects.requireNonNull;
 
 import com.marketdataapi.fmp4j.exceptions.FmpDeserializationException;
+import com.marketdataapi.fmp4j.http.FmpContentType;
+import com.marketdataapi.fmp4j.http.FmpDeserializationRegistry;
+import com.marketdataapi.fmp4j.http.FmpHttpClient;
+import com.marketdataapi.fmp4j.http.FmpHttpException;
+import com.marketdataapi.fmp4j.http.FmpUnauthorizedException;
 import com.marketdataapi.fmp4j.types.FmpApiKey;
 import java.io.IOException;
 import java.net.URI;
@@ -17,11 +22,11 @@ import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
-public final class FmpHttpClientImpl implements FmpHttpClient {
+public final class TestHttpClient implements FmpHttpClient {
     private final HttpClient http;
     private final FmpDeserializationRegistry deserializationRegistry;
 
-    public FmpHttpClientImpl(HttpClient httpClient, FmpDeserializationRegistry deserializationRegistry) {
+    public TestHttpClient(HttpClient httpClient, FmpDeserializationRegistry deserializationRegistry) {
         this.http = requireNonNull(httpClient, "'httpClient' is required");
         this.deserializationRegistry = requireNonNull(deserializationRegistry, "'deserializationRegistry' is required");
     }

@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.marketdataapi.fmp4j.TestHttpClient;
 import com.marketdataapi.fmp4j.TestObject;
 import com.marketdataapi.fmp4j.TestObjectValue;
 import com.marketdataapi.fmp4j.types.FmpApiKey;
@@ -29,11 +30,11 @@ class FmpHttpClientTest {
     private final HttpClient httpClient = mock(HttpClient.class);
     private final ClassicHttpResponse httpResponse = mock(ClassicHttpResponse.class);
     private final URI testUri = URI.create("https://financialmodelingprep.com/stable");
-    private FmpHttpClientImpl client;
+    private TestHttpClient client;
 
     @BeforeEach
     void setUp() {
-        client = new FmpHttpClientImpl(httpClient, TEST_DESERIALIZATION_REGISTRY);
+        client = new TestHttpClient(httpClient, TEST_DESERIALIZATION_REGISTRY);
     }
 
     @Test

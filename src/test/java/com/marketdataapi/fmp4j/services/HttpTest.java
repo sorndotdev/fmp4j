@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.marketdataapi.fmp4j.HttpClientStub;
+import com.marketdataapi.fmp4j.TestHttpClient;
 import com.marketdataapi.fmp4j.cfg.FmpConfig;
-import com.marketdataapi.fmp4j.http.FmpHttpClientImpl;
 import com.marketdataapi.fmp4j.types.FmpApiKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ public class HttpTest {
     protected static final String BASE_URL = "https://financialmodelingprep.com/stable";
     protected static final FmpApiKey API_KEY = new FmpApiKey("ABCDEf0ghIjklmNO1pqRsT2u34VWx5y6");
     protected final HttpClientStub httpStub = httpClientStub();
-    protected final FmpHttpClientImpl client = new FmpHttpClientImpl(httpStub, TEST_DESERIALIZATION_REGISTRY);
+    protected final TestHttpClient client = new TestHttpClient(httpStub, TEST_DESERIALIZATION_REGISTRY);
     protected final FmpConfig config = mock(FmpConfig.class);
 
     @BeforeEach
