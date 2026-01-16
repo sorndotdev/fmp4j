@@ -758,6 +758,20 @@ class FmpClientTest extends HttpTest {
     }
 
     @Test
+    void key_metrics_ttm_bulk() {
+        // given
+        var endpoint = "key-metrics-ttm-bulk";
+        var file = format("stable/%s/.csv", endpoint);
+
+        // when
+        mockHttpGetFromFile(file);
+        var result = fmpClient.bulk().keyMetricsTtm();
+
+        // then
+        assertValidResult(result, 2, FmpKeyMetricTtm.class);
+    }
+
+    @Test
     void key_metrics_ttm() {
         // given
         var symbol = symbol("AAPL");
