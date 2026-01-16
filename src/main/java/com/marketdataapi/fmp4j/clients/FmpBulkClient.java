@@ -9,10 +9,12 @@ import com.marketdataapi.fmp4j.models.FmpBalanceSheetStatement;
 import com.marketdataapi.fmp4j.models.FmpCashFlowStatement;
 import com.marketdataapi.fmp4j.models.FmpCashFlowStatementGrowth;
 import com.marketdataapi.fmp4j.models.FmpCompanies;
+import com.marketdataapi.fmp4j.models.FmpKeyMetricTtm;
 import com.marketdataapi.fmp4j.services.FmpBulkBalanceSheetStatementService;
 import com.marketdataapi.fmp4j.services.FmpBulkCashFlowStatementGrowthService;
 import com.marketdataapi.fmp4j.services.FmpBulkCashFlowStatementService;
 import com.marketdataapi.fmp4j.services.FmpBulkCompaniesService;
+import com.marketdataapi.fmp4j.services.FmpBulkKeyMetricTtmService;
 import com.marketdataapi.fmp4j.services.FmpService;
 import com.marketdataapi.fmp4j.types.FmpPart;
 import com.marketdataapi.fmp4j.types.FmpPeriod;
@@ -26,6 +28,7 @@ public class FmpBulkClient {
     protected final FmpService<FmpBalanceSheetStatement> fmpBulkBalanceSheetService;
     protected final FmpService<FmpCashFlowStatement> fmpBulkCashFlowService;
     protected final FmpService<FmpCashFlowStatementGrowth> fmpBulkCashFlowStatementGrowthService;
+    protected final FmpService<FmpKeyMetricTtm> fmpBulkKeyMetricTtmService;
 
     public FmpBulkClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpBulkCompaniesService = new FmpBulkCompaniesService(fmpConfig, fmpHttpClient);
@@ -33,6 +36,7 @@ public class FmpBulkClient {
         this.fmpBulkCashFlowService = new FmpBulkCashFlowStatementService(fmpConfig, fmpHttpClient);
         this.fmpBulkCashFlowStatementGrowthService =
                 new FmpBulkCashFlowStatementGrowthService(fmpConfig, fmpHttpClient);
+        this.fmpBulkKeyMetricTtmService = new FmpBulkKeyMetricTtmService(fmpConfig, fmpHttpClient);
     }
 
     public synchronized List<FmpCompanies> companies(FmpPart part) {
@@ -56,5 +60,9 @@ public class FmpBulkClient {
         fmpBulkCashFlowStatementGrowthService.param(PARAM_YEAR, year);
         fmpBulkCashFlowStatementGrowthService.param(PARAM_PERIOD, period);
         return fmpBulkCashFlowStatementGrowthService.download();
+    }
+
+    public synchronized List<FmpKeyMetricTtm> keyMetricsTtm() {
+        return fmpBulkKeyMetricTtmService.download();
     }
 }
