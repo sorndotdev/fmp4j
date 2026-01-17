@@ -761,7 +761,7 @@ class FmpClientTest extends HttpTest {
     void key_metrics_ttm_bulk() {
         // given
         var endpoint = "key-metrics-ttm-bulk";
-        var file = format("stable/%s/.csv", endpoint);
+        var file = format("stable/%s/excerpt.csv", endpoint);
 
         // when
         mockHttpGetFromFile(file);

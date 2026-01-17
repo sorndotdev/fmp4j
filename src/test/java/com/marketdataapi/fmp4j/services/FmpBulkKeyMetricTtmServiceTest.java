@@ -49,7 +49,7 @@ class FmpBulkKeyMetricTtmServiceTest extends HttpTest {
     void successful_download() {
         // given
         httpStub.configureResponse()
-                .body(testResource("stable/key-metrics-ttm-bulk/.csv"))
+                .body(testResource("stable/key-metrics-ttm-bulk/excerpt.csv"))
                 .statusCode(200)
                 .apply();
 
